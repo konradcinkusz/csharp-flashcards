@@ -1,29 +1,41 @@
-[![Download PDF](https://img.shields.io/badge/PDF-download-blue)](https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/main.pdf)
-
----
-
 # CSharp FlashCards 2025
 
-A set of Beamer-based flash-card slides for C\#/.NET topics, designed for live classroom or self-study presentations.  
-Each “area” (beginner, intermediate, threading, design, LINQ, etc.) is a Beamer **section** whose first slide shows a mini-table-of-contents of that area, followed by question/answer slides as **subsections**.
+[![PDF download](https://img.shields.io/badge/PDF-download-blue)](https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/main.pdf)
+[![CI](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml/badge.svg)](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+A Beamer slide deck of **Q-and-A flash-cards** that cover C# language basics, LINQ, async/await, Entity Framework, design principles and patterns.  
+Use it for live classes, self-study, interview prep, or conference lightning talks.
 
 ---
 
-## Purpose
+## Features
 
-- **Learn & teach C\#**: turn core concepts into bite-sized Q&A slides.
-- **Reusable slide deck**: easily add/remove topics by dropping in `areas/*.tex`.
-- **Auto-generated TOCs**:
-  - **Global TOC** at the start, chunked into multiple pages.
-  - **Per-section TOC** slide(s) showing only that area’s questions.
+* **“Flip-card” layout** – each question slide is followed by an answer slide.
+* **Section colour-coding** for quick visual orientation.
+* **One-click PDF** built automatically by GitHub Actions on every tagged release.
+* **Easily extensible** – drop a new `areas/*.tex` file and include it in `main.tex`.
 
 ---
 
-## Repository Structure
+## Quick start
 
-```text
+```bash
+git clone https://github.com/konradcinkusz/csharp-flashcards.git
+cd csharp-flashcards
+latexmk -xelatex -shell-escape main.tex   # or just `pdflatex` twice
+```
+
+The compiled `main.pdf` will appear in the repository root.  
+Prefer a browser? Import the repo into Overleaf and press *Re-compile* – Overleaf’s built-in Git sync keeps both copies up-to-date.
+
+---
+
+## Repository structure
+
+```
 .
-├── areas/                       # One .tex per topic-area
+├── areas/
 │   ├── csharp-language-beginner.tex
 │   ├── csharp-language-middle.tex
 │   ├── csharp-language-advanced.tex
@@ -32,89 +44,25 @@ Each “area” (beginner, intermediate, threading, design, LINQ, etc.) is a Bea
 │   ├── design-patterns.tex
 │   ├── entity-framework.tex
 │   └── linq.tex
-├── main.tex                     # Minimal driver: loads class, style, and inputs areas
-├── mybeamer.cls                 # Custom Beamer class (packages, slide hooks)
-├── mybeamer.sty                 # Macros: Q/A slides, chunked TOC helper
-└── README.md                    # (You are here!)
-````
-
----
-
-## Getting Started
-
-### 1. Clone the repo
-
-```bash
-git clone https://github.com/your-org/CSharp-FlashCards-2025.git
-cd CSharp-FlashCards-2025
+├── main.tex
+├── mybeamer.cls / mybeamer.sty
+└── .github/workflows/ci.yml
 ```
-
-### 2. Build locally
-
-You only need a modern TeX distribution with Beamer support. For example:
-
-```bash
-pdflatex main.tex
-# or, for multiple passes (TOC links):
-pdflatex main.tex && bibtex main && pdflatex main.tex
-```
-
-### 3. Online editing
-
-Import the project into Overleaf (or any other online LaTeX editor) by pointing it to this repo.
-
----
-
-## ➕ Adding or Modifying Content
-
-1. **New topic area**
-
-   * Create `areas/your-topic.tex`.
-   * At the top of `main.tex`, add:
-
-     ```latex
-     \section{Your Topic Title}
-     \input{areas/your-topic}
-     ```
-2. **Add Q\&A**
-
-   * In your `.tex` file, use:
-
-     ```latex
-     \QuestionSlide{Your question text?}
-     \AnswerSlide{Your question text?}{%
-       Your full answer here…
-     }
-     ```
-   * Questions automatically number and become subsections.
-3. **Recompile**
-
-   * The global and per-section TOCs will update automatically.
 
 ---
 
 ## Contributing
 
-1. **Fork** the repository.
-2. Create your **feature branch** (`git checkout -b feat/my-topic`).
-3. Make your changes in `areas/...` or adjust styling in `mybeamer.*`.
-4. Commit & **push** (`git push origin feat/my-topic`).
-5. Open a **Pull Request**.
-
-   * Describe your topic or styling changes.
-   * Reference any related issues.
-
-We welcome:
-
-* New topic areas
-* Enhancements to macros or styling
-* Bug reports & typos fixes
+1. **Fork** → create a feature branch.
+2. Add or edit an `areas/*.tex` file, or improve the Beamer style.
+3. Open a **Pull Request** – automated checks will compile the PDF and comment with any LaTeX errors.
 
 ---
 
 ## License
 
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
+This project is released under the **MIT License**.  
+See [LICENSE](LICENSE)
 
 ---
 
