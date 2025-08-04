@@ -1,15 +1,6 @@
-# PDF
+[![Download PDF](https://img.shields.io/badge/PDF-download-blue)](https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/main.pdf)
 
-## 📄 Download Latest PDF
-
-[![Download PDF](https://img.shields.io/badge/PDF-download-blue)](https://github.com/konradcinkusz/CSharp-FlashCards-2025/releases/latest/download/main.pdf)
-
-## 📄 PDF Downloads
-
-| Version | Download Link | Date       | Notes             |
-|---------|---------------|------------|-------------------|
-| v1.1.0  | [PDF](https://github.com/konradcinkusz/CSharp-FlashCards-2025/releases/download/v1.1.0/main.pdf) | 2025-08-04 | Updated abstract |
-| v1.0.0  | [PDF](https://github.com/konradcinkusz/CSharp-FlashCards-2025/releases/download/v1.0.0/main.pdf) | 2025-07-28 | Initial release  |
+---
 
 # CSharp FlashCards 2025
 
