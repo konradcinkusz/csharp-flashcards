@@ -18,10 +18,12 @@ jobs:
           root_file: main.tex
           latexmk_use_xelatex: true
           latexmk_shell_escape: true 
+      - name: Rename PDF
+        run: mv main.pdf "CSharp FlashCards.pdf"
       - uses: actions/upload-artifact@v4
         with:
-          name: main.pdf
-          path: main.pdf
+          name: CSharp FlashCards.pdf
+          path: "CSharp FlashCards.pdf"
 
   release:
     runs-on: ubuntu-latest
@@ -29,7 +31,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: main.pdf
+          name: CSharp FlashCards.pdf
       - uses: softprops/action-gh-release@v2
         with:
-          files: main.pdf
+          files: "CSharp FlashCards.pdf"
