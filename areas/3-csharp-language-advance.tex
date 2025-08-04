@@ -1,0 +1,165 @@
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]{* What is C\#?}
+\begin{frame}[fragile]
+  \frametitle{Answer \theqcounter: * What is C\#?}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,xshift=-0.5cm,yshift=-0.5cm]
+      at (current page.north east)
+      {\CategoryBadge[OOPColor!20]{Language \& Platform}};
+  \end{tikzpicture}
+
+  {\footnotesize
+    C\# is a modern, object-oriented language developed by Microsoft as part of the .NET ecosystem. It features strong static typing, garbage collection, LINQ for data queries, async/await for asynchronous programming, and interoperability across different platforms.
+  }
+
+  \begin{minted}{csharp}
+using System;
+
+public class HelloWorld
+{
+    public static void Main()
+    {
+        Console.WriteLine("Hello, World!");
+    }
+}
+  \end{minted}
+\end{frame}
+
+% 2 ── Span<T>
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Performance}]{*** What is \texttt{Span<T>}?}
+\begin{frame}[fragile]
+  \frametitle{Answer \theqcounter: *** What is \texttt{Span<T>}?}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,xshift=-0.5cm,yshift=-0.5cm]
+      at (current page.north east)
+      {\CategoryBadge[PerfColor!20]{Performance}};
+  \end{tikzpicture}
+
+  {\footnotesize
+    \texttt{Span<T>} is a stack-only struct that provides a safe, memory-efficient “window” over contiguous data (arrays, strings, or unmanaged memory) without allocations. It’s ideal for high-performance scenarios like parsing or buffer manipulation because it avoids copying and heap allocations.
+  }
+
+  \begin{minted}{csharp}
+int[] numbers = { 1, 2, 3, 4, 5 };
+Span<int> slice = numbers.AsSpan(1, 3);  // view [2, 3, 4]
+
+slice[0] = 42;                           // writes into numbers[1]
+Console.WriteLine(numbers[1]);          // outputs 42
+  \end{minted}
+\end{frame}
+
+% 3 ── Code weaving
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]{** What is code weaving in .NET?}
+\begin{frame}[fragile]
+  \frametitle{Answer \theqcounter: ** What is code weaving in .NET?}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,xshift=-0.5cm,yshift=-0.5cm]
+      at (current page.north east)
+      {\CategoryBadge[MetaColor!20]{Metaprogramming}};
+  \end{tikzpicture}
+
+  {\footnotesize
+    Code weaving is a post-compile process where tools (like Fody) inject or modify IL code in assemblies. It’s used for cross-cutting concerns—such as logging, validation, or performance instrumentation—without cluttering source code, though it can make debugging more complex.
+  }
+
+  \begin{minted}{csharp}
+// Example: Fody injecting INotifyPropertyChanged
+public class Person : INotifyPropertyChanged
+{
+    public string Name { get; set; }  // Fody weaves in the change-notification boilerplate
+}
+  \end{minted}
+\end{frame}
+
+% 4 ── Cross-cutting concerns
+\QuestionSlide[\CategoryBadge[ArchColor!20]{Architecture}]{** What are cross-cutting concerns?}
+\begin{frame}[fragile]
+  \frametitle{Answer \theqcounter: ** What are cross-cutting concerns?}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,xshift=-0.5cm,yshift=-0.5cm]
+      at (current page.north east)
+      {\CategoryBadge[ArchColor!20]{Architecture}};
+  \end{tikzpicture}
+
+  {\footnotesize
+    Cross-cutting concerns are aspects that span multiple parts of an application—like logging, security, caching, or error handling. Instead of scattering their code everywhere, you centralize them (via middleware, AOP, or source generators) to keep business logic clean and DRY.
+  }
+
+  \begin{minted}{csharp}
+// Logging via ASP.NET Core middleware
+public class LoggingMiddleware
+{
+    private readonly RequestDelegate _next;
+    public LoggingMiddleware(RequestDelegate next) => _next = next;
+
+    public async Task Invoke(HttpContext context)
+    {
+        Console.WriteLine($"Request: {context.Request.Path}");
+        await _next(context);
+        Console.WriteLine($"Response: {context.Response.StatusCode}");
+    }
+}
+  \end{minted}
+\end{frame}
+
+% 5 ── Source generators
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]{*** What are source generators?}
+\begin{frame}[fragile]
+  \frametitle{Answer \theqcounter: *** What are source generators?}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,xshift=-0.5cm,yshift=-0.5cm]
+      at (current page.north east)
+      {\CategoryBadge[MetaColor!20]{Metaprogramming}};
+  \end{tikzpicture}
+
+  {\footnotesize
+    Source generators run at compile time to analyze your code and produce new C\# files. They eliminate reflection and boilerplate by generating optimized code—ideal for scenarios like JSON serializers, dependency injection makers, or performance-critical scaffolding.
+  }
+
+  \begin{minted}{csharp}
+[Generator]
+public class HelloWorldGenerator : ISourceGenerator
+{
+    public void Initialize(GeneratorInitializationContext context) { }
+
+    public void Execute(GeneratorExecutionContext context)
+    {
+        context.AddSource("Hello.g.cs", @"
+            public static class Hello
+            {
+                public static void SayHi() =>
+                    Console.WriteLine(""Hello from generated code!"");
+            }");
+    }
+}
+  \end{minted}
+\end{frame}
+
+% 6 ── Expression trees
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]{*** What are expression trees?}
+\begin{frame}[fragile]
+  \frametitle{Answer \theqcounter: *** What are expression trees?}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,xshift=-0.5cm,yshift=-0.5cm]
+      at (current page.north east)
+      {\CategoryBadge[MetaColor!20]{Metaprogramming}};
+  \end{tikzpicture}
+
+  {\footnotesize
+    Expression trees represent code as a data structure (e.g.\ \texttt{Expression<Func<T,bool>>}). LINQ providers use them to translate C\# lambda expressions into SQL, JSON queries, or other domain-specific languages.
+  }
+
+  \begin{minted}{csharp}
+using System.Linq.Expressions;
+
+Expression<Func<int, bool>> isEven = x => x % 2 == 0;
+
+// Inspect the tree
+Console.WriteLine(isEven.Body); // prints "(x % 2) == 0"
+  \end{minted}
+\end{frame}

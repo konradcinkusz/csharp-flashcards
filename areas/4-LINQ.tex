@@ -1,0 +1,90 @@
+% 1 ── What is LINQ?
+\QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{** What is LINQ?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[LinqColor!20]{LINQ}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is LINQ?%
+  }
+  {\footnotesize
+  Language Integrated Query enables querying collections with SQL-like syntax or fluent methods (\texttt{Where}, \texttt{Select}, etc.).
+  }
+\end{frame}
+
+% 2 ── .Select() in LINQ
+\QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{* What does \texttt{.Select()} do in LINQ?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[LinqColor!20]{LINQ}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What does \texttt{.Select()} do in LINQ?%
+  }
+  {\footnotesize
+  \texttt{.Select()} projects each element of a sequence into a new form. It returns a collection where each element corresponds 1-to-1 with the input sequence.
+  }
+  \begin{minted}{csharp}
+  // Get customer names from WorldWideImporters
+  var names = context.Customers
+                     .Select(c => c.CustomerName)
+                     .ToList();
+  \end{minted}
+\end{frame}
+
+% 3 ── .SelectMany() in LINQ
+\QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{** What does \texttt{.SelectMany()} do in LINQ?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[LinqColor!20]{LINQ}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What does \texttt{.SelectMany()} do in LINQ?%
+  }
+  {\footnotesize
+  \texttt{.SelectMany()} flattens nested collections. It projects each element to a collection, then merges all collections into a single flat result set.
+  }
+  \begin{minted}{csharp}
+  // Get all InvoiceLines from all Invoices
+  var allLines = context.Invoices
+                        .SelectMany(i => i.InvoiceLines)
+                        .ToList();
+  \end{minted}
+\end{frame}
+
+% 4 ── When to use .SelectMany()
+\QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{** When would you use \texttt{.SelectMany()} instead of \texttt{.Select()}?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[LinqColor!20]{LINQ}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: When would you use \texttt{.SelectMany()} instead of \texttt{.Select()}?%
+  }
+  {\footnotesize
+  Use \texttt{.SelectMany()} when projecting nested collections and you want to work with their individual elements directly in a flat structure.
+  }
+  \begin{minted}{csharp}
+  // .Select() keeps nesting
+  var nested = context.Customers
+                      .Select(c => c.Orders)
+                      .ToList(); // List<ICollection<Order>>
+
+  // .SelectMany() flattens to List<Order>
+  var flat = context.Customers
+                    .SelectMany(c => c.Orders)
+                    .ToList();
+  \end{minted}
+  {\footnotesize
+  \texttt{.Select()} → nested structure  
+  \texttt{.SelectMany()} → flat structure
+  }
+\end{frame}

@@ -1,0 +1,35 @@
+name: Build & Release PDF
+
+on:
+  push:
+    tags:
+      - 'v*'            # trigger on version tags
+
+permissions:
+  contents: write       # needed to create a release via API
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: xu-cheng/latex-action@v4
+        with:
+          root_file: main.tex
+          latexmk_use_xelatex: true
+          latexmk_shell_escape: true 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: main.pdf
+          path: main.pdf
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: main.pdf
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: main.pdf

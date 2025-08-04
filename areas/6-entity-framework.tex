@@ -1,0 +1,206 @@
+% 1 ── What is lazy loading in EF
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is \textbf{lazy loading} in Entity Framework and how can you disable it?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is \textbf{lazy loading} in Entity Framework and how can you disable it?%
+  }
+
+  {\footnotesize
+  Navigation property loads related data on first access via proxy.
+  \begin{itemize}
+    \item Disable by not using proxy classes
+    \item Turning off \texttt{ChangeTracker.LazyLoadingEnabled}
+    \item Using EF Core without \texttt{UseLazyLoadingProxies}
+    \item Prevents N\,+\,1 by switching to eager loading with \texttt{Include()}
+  \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+  // Lazy loading via proxy (EF Core with UseLazyLoadingProxies)
+  public class Blog
+  {
+      public int Id { get; set; }
+      public virtual ICollection<Post> Posts { get; set; }
+  }
+
+  // Disabling lazy loading
+  context.ChangeTracker.LazyLoadingEnabled = false;
+
+  // Eager loading instead
+  var blog = context.Blogs
+                    .Include(b => b.Posts)
+                    .FirstOrDefault();
+  \end{minted}
+\end{frame}
+
+% 2 ── Risk of lazy loading
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What main risk does lazy loading introduce?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What main risk does lazy loading introduce?%
+  }
+
+  {\footnotesize
+  It can generate the \textbf{N+1} problem—one query for the root set and
+  an additional query for each related entity, causing many round-trips
+  and performance degradation.
+  }
+\end{frame}
+
+% 3 ── Enabling eager loading
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{* How do you enable eager loading?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: How do you enable eager loading?%
+  }
+
+  {\footnotesize
+  By chaining \texttt{Include()} / \texttt{ThenInclude()} methods in LINQ.
+  EF Core joins or splits queries so that related data are loaded upfront
+  in as few SQL commands as possible.
+  }
+\end{frame}
+
+% 4 ── Advantage of eager loading
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** Give one advantage of eager loading over lazy loading.}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: Give one advantage of eager loading over lazy loading.%
+  }
+
+  {\footnotesize
+  Eager loading eliminates unnecessary round-trips, preventing the N+1 issue
+  and reducing total query latency when related data are certainly needed.
+  }
+\end{frame}
+
+% 5 ── When to prefer lazy loading
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{* When might lazy loading be preferred?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: When might lazy loading be preferred?%
+  }
+
+  {\footnotesize
+  In highly interactive UIs or prototypes where most related entities
+  are \emph{rarely} accessed, lazy loading avoids fetching large graphs
+  that the user never expands.
+  }
+\end{frame}
+
+% 6 ── SplitQuery vs SingleQuery
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What is \texttt{SplitQuery} vs \texttt{SingleQuery} in eager loading?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is \texttt{SplitQuery} vs \texttt{SingleQuery} in eager loading?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{SingleQuery} loads everything with one SQL statement (using JOINs).
+    \item \textbf{SplitQuery} breaks the load into multiple queries—one per collection—to avoid Cartesian explosion.
+    \item Choose via \texttt{AsSingleQuery()} or \texttt{AsSplitQuery()}.
+  \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+  // SingleQuery: one big SQL with JOINs
+  var blog1 = context.Blogs
+      .Include(b => b.Posts)
+      .AsSingleQuery()
+      .FirstOrDefault();
+
+  // SplitQuery: separate SQL queries per navigation
+  var blog2 = context.Blogs
+      .Include(b => b.Posts) // first navigation
+      .AsSplitQuery()
+      .FirstOrDefault();
+  \end{minted}
+
+  {\tiny
+  per navigation - it means that for each Include(), EF Core will execute one SQL query per relationship rather than combining all relationships into one big query with joins.
+  }
+\end{frame}
+
+% 7 ── TemporalAsOf usage
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** When might \texttt{TemporalAsOf} be preferred?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: When might \texttt{TemporalAsOf} be preferred?%
+  }
+
+  {\footnotesize
+  When analysing how data \emph{looked at a specific point in time},
+  \texttt{TemporalAsOf} lets you query historical snapshots—for auditing,
+  reporting, or reproducing past business logic.
+
+  \begin{itemize}
+    \item Past prices, statuses or other time-sensitive data  
+    \item Debugging data inconsistencies across time  
+    \item Building reports that must reflect a precise “as-of” date
+  \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+  // Historical view as of Jan 1 2013
+  context.StockItems
+         .TemporalAsOf(new DateTime(2013, 1, 1))
+         .Select(si => new { si.StockItemName, si.UnitPrice });
+  \end{minted}
+\end{frame}

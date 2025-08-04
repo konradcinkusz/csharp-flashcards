@@ -1,0 +1,90 @@
+# ─── LaTeX build artifacts from pdflatex, xelatex, lualatex ─────────
+
+# Standard auxiliary files
+*.aux
+*.log
+*.toc
+*.out
+*.fls
+*.synctex.gz
+
+# Lists & tables
+*.lof
+*.lot
+*.lol
+
+# Bibliography (BibTeX, Biber, biblatex)
+*.bbl
+*.blg
+*.run.xml
+*-blx.aux
+
+# Build-tool caches
+*.fdb_latexmk
+.latexmk/
+latexmkrc.*
+
+# Presentation files (Beamer)
+*.nav
+*.snm
+*.vrb
+
+# Glossaries & indexes
+*.glo
+*.glg
+*.gls
+*.ist
+*.idx
+*.ilg
+*.ind
+
+# Nomenclature, algo, to‐do notes, etc.
+*.acn
+*.acr
+*.maf
+*.mtc
+*.mtc0
+*.xdy
+*.pyg
+*.tdo
+*.brf
+
+# Prevent committing generated PDFs (unless explicitly versioned)
+*.pdf
+
+# ─── Generated intermediary/output ─────────────────────────────────────
+*.dvi
+*.ps
+*.synctex.gz
+
+# ─── Temporary, editor and OS junk ──────────────────────────────────────
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+*.sublime-*
+*~                # Backup files (Emacs, some editors)
+~$*               # Temporary MS Office files
+
+# Overleaf-generated sync files
+_*              # e.g., _main.tex (deprecated, but still seen)
+
+# Jupyter/VSCode built files (if included)
+.ipynb_checkpoints/
+
+# ─── Folders to ignore ─────────────────────────────────────────────────
+build/
+_build/
+out/
+
+# ─── Action artifacts (local) ──────────────────────────────────────────
+*.pdf            # redundant consolidation again if needed
+*.tex.run.log
+
+repomix-output.xml

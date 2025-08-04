@@ -1,0 +1,1330 @@
+% 1 ── Dictionary<TKey, TValue>
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** What is \texttt{Dictionary<TKey, TValue>} in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is \texttt{Dictionary<TKey, TValue>} in C\#?%
+  }
+
+  {\footnotesize
+    A \texttt{Dictionary<TKey, TValue>} is a generic collection in C\# that stores key–value pairs and provides fast lookup by key. It uses a hash table internally, offering average \(O(1)\) time complexity for \texttt{Add}, \texttt{Remove}, and \texttt{TryGetValue} operations. Keys must be unique and non-null (for reference types), and must implement a stable \texttt{GetHashCode()} and \texttt{Equals()}.
+  }
+
+  \begin{minted}{csharp}
+var dict = new Dictionary<string, int>();
+dict["apple"] = 3;
+dict["banana"] = 5;
+Console.WriteLine(dict["apple"]); // 3
+  \end{minted}
+\end{frame}
+
+% 2 ── Handling keys
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** How does a dictionary handle keys in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** How does a dictionary handle keys in C\#?%
+  }
+
+  {\footnotesize
+    When inserting or retrieving a value, \texttt{Dictionary} calls the key’s \texttt{GetHashCode()} to locate the bucket and then \texttt{Equals()} to confirm equality. To work reliably, keys should be immutable and must not change their hash code while stored in the dictionary.
+  }
+
+  \begin{minted}{csharp}
+// Good key implementation
+public class MyKey
+{
+    public int Id { get; }
+    public MyKey(int id) => Id = id;
+    public override int GetHashCode() => Id.GetHashCode();
+    public override bool Equals(object obj) =>
+        obj is MyKey other && other.Id == Id;
+}
+
+var dict = new Dictionary<MyKey, string>();
+  \end{minted}
+\end{frame}
+
+% 3 ── Complexity of operations
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** What are the time and space complexities of \texttt{Dictionary<TKey, TValue>}?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are the time and space complexities of \texttt{Dictionary<TKey, TValue>}?%
+  }
+
+  {\footnotesize
+    \textbf{Average-case:}
+    \begin{itemize}
+      \item \texttt{Add}, \texttt{Remove}, \texttt{TryGetValue} – \(O(1)\)
+      \item Iteration – \(O(n)\)
+    \end{itemize}
+    \textbf{Worst-case:}
+    \begin{itemize}
+      \item If many keys collide, operations degrade to \(O(n)\)
+    \end{itemize}
+    \textbf{Space:}
+    \begin{itemize}
+      \item \(O(n)\) for entries plus overhead for buckets and collision resolution
+    \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+// Bad hash example leading to worst-case
+class BadKey
+{
+    public override int GetHashCode() => 1;
+    public override bool Equals(object obj) => true;
+}
+  \end{minted}
+\end{frame}
+
+% 4 ── Best practices
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** What are best practices when using \texttt{Dictionary<TKey, TValue>}?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are best practices when using \texttt{Dictionary<TKey, TValue>}?%
+  }
+
+  {\footnotesize
+    \begin{itemize}
+      \item Use immutable keys (e.g., strings, readonly structs).
+      \item Prefer \texttt{TryGetValue} to avoid exceptions.
+      \item Specify initial capacity when known to reduce resizing.
+      \item Use \texttt{ContainsKey} before index access if unsure.
+    \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+if (dict.TryGetValue("banana", out int qty))
+    Console.WriteLine($"Qty: {qty}");
+else
+    Console.WriteLine("Not found");
+  \end{minted}
+\end{frame}
+
+% 5 ── Average-case complexity
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** What is the average time complexity of dictionary operations in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the average time complexity of dictionary operations in C\#?%
+  }
+
+  {\footnotesize
+    On average, \texttt{Add}, \texttt{Remove}, and \texttt{TryGetValue} all run in \(O(1)\), assuming a good hash distribution and low collision rate.
+  }
+
+  \begin{minted}{csharp}
+dict.Add("key1", 10);
+dict.TryGetValue("key1", out int value);
+dict.Remove("key1");
+  \end{minted}
+\end{frame}
+
+% 6 ── Worst-case complexity
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** What is the worst-case time complexity for dictionary operations?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the worst-case time complexity for dictionary operations?%
+  }
+
+  {\footnotesize
+    In the worst case (e.g., all keys collide), operations degrade to \(O(n)\), since the dictionary must scan a bucket list of all entries.
+  }
+
+  \begin{minted}{csharp}
+// Example of poor key:
+class BadKey { public override int GetHashCode() => 1; public override bool Equals(object o) => true; }
+  \end{minted}
+\end{frame}
+
+% 7 ── Iteration complexity
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** What is the time complexity of iterating over a dictionary?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the time complexity of iterating over a dictionary?%
+  }
+
+  {\footnotesize
+    Iteration runs in \(O(n)\), where \(n\) is the number of entries. The order isn’t sorted and reflects internal bucket organization.
+  }
+
+  \begin{minted}{csharp}
+foreach (var kvp in dict)
+    Console.WriteLine($"{kvp.Key} = {kvp.Value}");
+  \end{minted}
+\end{frame}
+
+% 8 ── Space complexity
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** What is the space complexity of a dictionary in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the space complexity of a dictionary in C\#?%
+  }
+
+  {\footnotesize
+    Space usage is \(O(n)\) for \(n\) entries, plus overhead for:
+    \begin{itemize}
+      \item Buckets array (resized as needed)
+      \item Entry objects and collision chains
+    \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+var dict = new Dictionary<string, int>(capacity: 1000);
+  \end{minted}
+\end{frame}
+
+% 9 ── Ensuring constant-time
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** How do you ensure dictionary operations stay constant-time?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** How do you ensure dictionary operations stay constant-time?%
+  }
+
+  {\footnotesize
+    \begin{itemize}
+      \item Use immutable, well-distributed keys (e.g., strings, GUIDs).
+      \item Avoid poor \texttt{GetHashCode()} implementations.
+      \item Pre-size the dictionary if entry count is known.
+      \item Never mutate keys after insertion.
+    \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+var dict = new Dictionary<Guid, string>();
+Guid id = Guid.NewGuid();
+dict[id] = "session";
+  \end{minted}
+\end{frame}
+
+% 10 ── Reflection capabilities
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
+  {** What can you do with reflection in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MetaColor!20]{Metaprogramming}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What can you do with reflection in C\#?%
+  }
+
+  {\footnotesize
+    Reflection allows you to:
+    \begin{itemize}
+      \item Inspect types, methods, properties, and fields.
+      \item Invoke methods dynamically.
+      \item Read/write fields and properties.
+      \item Access custom attributes at runtime.
+    \end{itemize}
+    Common uses include serialization, plugin systems, dependency injection, and dynamic API discovery.
+  }
+
+  \begin{minted}{csharp}
+var type = typeof(Person);
+foreach (var method in type.GetMethods())
+    Console.WriteLine(method.Name);
+
+var attrs = type.GetProperty("Name")
+                .GetCustomAttributes(typeof(ObsoleteAttribute), false);
+  \end{minted}
+\end{frame}
+
+% 11 ── Runtime reflection
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
+  {** What is runtime reflection in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MetaColor!20]{Metaprogramming}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is runtime reflection in C\#?%
+  }
+
+  {\footnotesize
+    Runtime reflection is inspecting and interacting with a program’s metadata and types during execution. It uses \texttt{System.Reflection} to examine assemblies, types, members, and attributes dynamically, at the cost of performance and compile-time safety.
+  }
+
+  \begin{minted}{csharp}
+Type t = typeof(MyClass);
+foreach (var prop in t.GetProperties())
+    Console.WriteLine($"{prop.Name}: {prop.PropertyType}");
+  \end{minted}
+\end{frame}
+
+% 12 ── Reflection vs. runtime reflection
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
+  {** What is the difference between reflection and runtime reflection?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MetaColor!20]{Metaprogramming}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the difference between reflection and runtime reflection?%
+  }
+
+  {\footnotesize
+    “Reflection” refers broadly to \texttt{System.Reflection} APIs for inspecting metadata. “Runtime reflection” emphasizes that this inspection occurs during program execution, highlighting dynamic behavior and performance overhead.
+  }
+
+  \begin{minted}{csharp}
+var method = typeof(MyClass).GetMethod("Execute");
+method.Invoke(Activator.CreateInstance(typeof(MyClass)), null);
+  \end{minted}
+\end{frame}
+
+% 13 ── Span<T>
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Performance}]
+  {** What is \texttt{Span<T>}?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[PerfColor!20]{Performance}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is \texttt{Span<T>}?%
+  }
+
+  {\footnotesize
+    \texttt{Span<T>} is a stack-only struct that provides a safe, memory-efficient slice over contiguous memory (arrays, strings, or unmanaged buffers) without allocations. It’s ideal for performance-critical parsing or buffer manipulation.
+  }
+
+  \begin{minted}{csharp}
+int[] numbers = {1,2,3,4,5};
+Span<int> slice = numbers.AsSpan(1,3); // [2,3,4]
+slice[0] = 42;
+Console.WriteLine(numbers[1]); // 42
+  \end{minted}
+\end{frame}
+
+% 14 ── Code weaving
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
+  {** What is code weaving in .NET?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MetaColor!20]{Metaprogramming}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is code weaving in .NET?%
+  }
+
+  {\footnotesize
+    Code weaving is a post-compile technique where tools (e.g., Fody) inject or modify IL in assemblies for cross-cutting concerns (logging, validation, metrics) without altering source code, though it can obscure behavior and complicate debugging.
+  }
+
+  \begin{minted}{csharp}
+// Fody injects INotifyPropertyChanged
+public class Person : INotifyPropertyChanged
+{
+    public string Name { get; set; }
+}
+  \end{minted}
+\end{frame}
+
+% 15 ── Cross-cutting concerns
+\QuestionSlide[\CategoryBadge[ArchColor!20]{Architecture}]
+  {** What are cross-cutting concerns?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[ArchColor!20]{Architecture}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are cross-cutting concerns?%
+  }
+
+  {\footnotesize
+    Cross-cutting concerns—such as logging, validation, error handling, caching, or security—affect multiple layers of an application. They're centralized via middleware, AOP frameworks, or source generators to avoid duplication and maintain separation of concerns.
+  }
+
+  \begin{minted}{csharp}
+// ASP.NET Core logging middleware example
+public class LoggingMiddleware
+{
+    private readonly RequestDelegate _next;
+    public LoggingMiddleware(RequestDelegate next) => _next = next;
+
+    public async Task Invoke(HttpContext ctx)
+    {
+        Console.WriteLine($"Request: {ctx.Request.Path}");
+        await _next(ctx);
+        Console.WriteLine($"Response: {ctx.Response.StatusCode}");
+    }
+}
+  \end{minted}
+\end{frame}
+
+% 16 ── Source generators
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
+  {** What are source generators?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MetaColor!20]{Metaprogramming}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are source generators?%
+  }
+
+  {\footnotesize
+    Source generators run at compile time to analyze user code and emit additional C\# files. They reduce boilerplate and eliminate runtime reflection, enabling high-performance metaprogramming (e.g., JSON serializers, DI scaffolding).
+  }
+
+  \begin{minted}{csharp}
+[Generator]
+public class HelloWorldGenerator : ISourceGenerator
+{
+    public void Initialize(GeneratorInitializationContext ctx) { }
+    public void Execute(GeneratorExecutionContext ctx)
+    {
+        ctx.AddSource("Hello.g.cs", @"
+            public static class Hello
+            {
+                public static void SayHi() =>
+                    Console.WriteLine(\"Hello from generated code!\");
+            }");
+    }
+}
+  \end{minted}
+\end{frame}
+
+% 17 ── params keyword
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is the \texttt{params} keyword?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the \texttt{params} keyword?%
+  }
+
+  {\footnotesize
+    The \texttt{params} keyword allows a method to accept a variable number of arguments as an array.  
+    E.g., \texttt{void Foo(params int[] nums)} can be called as \texttt{Foo(1,2,3)}.
+  }
+
+  \begin{minted}{csharp}
+void Foo(params int[] nums)
+{
+    foreach (var n in nums) Console.WriteLine(n);
+}
+
+Foo(1,2,3); // outputs 1, 2, 3
+  \end{minted}
+\end{frame}
+
+% 18 ── Iterators & yield
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are iterators and the \texttt{yield} keyword?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are iterators and the \texttt{yield} keyword?%
+  }
+
+  {\footnotesize
+    Iterators with \texttt{yield return} allow lazy, streaming generation of sequences without intermediate collections.
+  }
+
+  \begin{minted}{csharp}
+IEnumerable<int> CountTo(int n)
+{
+  for (int i = 1; i <= n; i++)
+    yield return i;
+}
+
+foreach (var x in CountTo(3))
+    Console.WriteLine(x); // 1,2,3
+  \end{minted}
+\end{frame}
+
+% 19 ── Partial classes & methods
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are partial classes and methods?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are partial classes and methods?%
+  }
+
+  {\footnotesize
+    \texttt{partial class} lets you split a class definition across files.  
+    \texttt{partial method} declares a hook without implementation; it’s removed if never implemented.
+  }
+
+  \begin{minted}{csharp}
+// File A
+public partial class MyClass
+{
+    partial void OnInit();
+    public void Init() => OnInit();
+}
+
+// File B
+public partial class MyClass
+{
+    partial void OnInit() => Console.WriteLine("Initialized");
+}
+  \end{minted}
+\end{frame}
+
+% 20 ── Anonymous types
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are anonymous types?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are anonymous types?%
+  }
+
+  {\footnotesize
+    Anonymous types are compiler-generated reference types with readonly properties inferred from initializer syntax, ideal for LINQ projections without declaring a class.
+  }
+
+  \begin{minted}{csharp}
+var person = new { Name = "Alice", Age = 30 };
+Console.WriteLine(person.Name); // "Alice"
+
+var users = people.Select(u => new { u.Id, u.Name });
+  \end{minted}
+\end{frame}
+
+% 21 ── Pattern matching
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is pattern matching?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is pattern matching?%
+  }
+
+  {\footnotesize
+    Pattern matching enhances \texttt{is} and \texttt{switch} with rich syntax for type, constant, property, positional, relational, and logical patterns, simplifying complex conditional logic.
+  }
+
+  \begin{minted}{csharp}
+public static string Classify(object o) =>
+  o switch
+  {
+    null => "No value",
+    int i when i > 0 => "Positive",
+    string s => $"Text({s.Length})",
+    Person { Age: >= 18 } p => $"{p.Name} is adult",
+    (int x,int y) => $"Point({x},{y})",
+    _ => "Unknown"
+  };
+  \end{minted}
+\end{frame}
+
+% 22 ── Default interface implementations
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are default interface implementations?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are default interface implementations?%
+  }
+
+  {\footnotesize
+    Introduced in C\# 8, default implementations let interfaces provide method bodies, enabling API evolution without breaking existing implementers.
+  }
+
+  \begin{minted}{csharp}
+public interface ICustomer
+{
+  string Name { get; }
+  DateTime Joined { get; }
+  decimal GetDiscount() => Joined < DateTime.UtcNow.AddYears(-2)
+    ? 0.10m : 0m;
+}
+
+public class Customer : ICustomer
+{
+  public string Name { get; }
+  public DateTime Joined { get; }
+}
+  \end{minted}
+\end{frame}
+
+% 23 ── Record types
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are record types?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are record types?%
+  }
+
+  {\footnotesize
+    Records are immutable reference types for value-based data models. They support concise syntax, built-in \texttt{Equals}, \texttt{GetHashCode}, \texttt{ToString}, and non-destructive mutation via \texttt{with}.
+  }
+
+  \begin{minted}{csharp}
+public record Person(string Name, int Age);
+var p1 = new Person("Alice",30);
+var p2 = p1 with { Age = 31 };
+Console.WriteLine(p1 == p2); // False
+  \end{minted}
+\end{frame}
+
+% 24 ── Value-based equality
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is value-based equality in record types?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is value-based equality in record types?%
+  }
+
+  {\footnotesize
+    Two record instances are equal if all their properties have equal values, regardless of reference identity, unlike classes which default to reference equality.
+  }
+
+  \begin{minted}{csharp}
+var p1 = new Person("Alice",30);
+var p2 = new Person("Alice",30);
+Console.WriteLine(p1 == p2); // True
+  \end{minted}
+\end{frame}
+
+% 25 ── Concise syntax
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What does concise syntax mean for record types?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What does concise syntax mean for record types?%
+  }
+
+  {\footnotesize
+    Records allow defining data carriers, constructors, and value-based behaviors (e.g., \texttt{ToString}, equality) in a single line, reducing boilerplate.
+  }
+
+  \begin{minted}{csharp}
+// Full class:
+public class Person
+{
+  public string Name { get; }
+  public int Age { get; }
+  public Person(string name,int age)=> (Name,Age)=(name,age);
+}
+
+// Record:
+public record Person(string Name,int Age);
+  \end{minted}
+\end{frame}
+
+% 26 ── With-expressions
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is non-destructive mutation using \texttt{with}?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is non-destructive mutation using \texttt{with}?%
+  }
+
+  {\footnotesize
+    The \texttt{with} expression creates a new record instance with specified property changes, leaving the original unchanged.
+  }
+
+  \begin{minted}{csharp}
+var original = new Person("Alice",30);
+var updated = original with { Age = 31 };
+Console.WriteLine(original.Age); // 30
+Console.WriteLine(updated.Age);  // 31
+  \end{minted}
+\end{frame}
+
+% 27 ── dynamic type
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is the \texttt{dynamic} type?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the \texttt{dynamic} type?%
+  }
+
+  {\footnotesize
+    \texttt{dynamic} bypasses compile-time type checking, resolving member calls at runtime. Useful for COM interop, dynamic languages, or loosely typed data, but error-prone if misused.
+  }
+
+  \begin{minted}{csharp}
+dynamic obj = "hello";
+Console.WriteLine(obj.Length); // 5
+obj = 123;
+// Console.WriteLine(obj.Length); // runtime error
+  \end{minted}
+\end{frame}
+
+% 28 ── Expression trees
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
+  {** What are expression trees?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MetaColor!20]{Metaprogramming}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are expression trees?%
+  }
+
+  {\footnotesize
+    Expression trees are data structures representing code as a tree of \texttt{Expression} objects (e.g., \texttt{Expression<Func<T,bool>>}), used by LINQ providers to translate queries.
+  }
+
+  \begin{minted}{csharp}
+using System.Linq.Expressions;
+Expression<Func<int,bool>> isEven = x => x % 2 == 0;
+Console.WriteLine(isEven.Body); // (x % 2) == 0
+  \end{minted}
+\end{frame}
+
+% 29 ── ref vs out
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is the difference between \texttt{ref} and \texttt{out} keywords?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the difference between \texttt{ref} and \texttt{out}?%
+  }
+
+  {\footnotesize
+    \begin{itemize}
+      \item \texttt{ref}: parameter must be initialized before call.
+      \item \texttt{out}: parameter need not be initialized; must be assigned in method.
+    \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+void M(ref int x)  { /* x must be set */ }
+void N(out int x) { x = 42; }
+
+int a = 1; M(ref a);
+int b;     N(out b);
+  \end{minted}
+\end{frame}
+
+% 30 ── ref, out, in modifiers
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {When would you use the \texttt{ref}, \texttt{out} and \texttt{in} modifiers?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: When would you use \texttt{ref}, \texttt{out}, and \texttt{in}?%
+  }
+
+  {\footnotesize
+    \begin{itemize}
+      \item \texttt{ref}: read/write reference, variable must be initialized.
+      \item \texttt{out}: write-only reference, must be assigned by callee.
+      \item \texttt{in}: readonly reference for passing large structs without copying.
+    \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+// ref: swap values
+void Swap(ref int x, ref int y) { var t = x; x = y; y = t; }
+// out: parse result
+bool TryParse(string s, out int v) { return int.TryParse(s, out v); }
+// in: pass large struct efficiently
+void Process(in BigStruct data) { /* read-only */ }
+  \end{minted}
+\end{frame}
+
+% 31 ── Delegates
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are delegates?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are delegates?%
+  }
+
+  {\footnotesize
+    Delegates are type-safe function pointers encapsulating method references. They enable passing methods as parameters, support multicast invocation, and underpin events.
+  }
+
+  \begin{minted}{csharp}
+public delegate void Notify(string msg);
+var m = new Messenger();
+m.OnNotify = msg => Console.WriteLine(msg);
+m.Send("Hello");
+  \end{minted}
+\end{frame}
+
+% 32 ── Events
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are events?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are events?%
+  }
+
+  {\footnotesize
+    Events are special delegates enabling the publish–subscribe pattern. The \texttt{event} keyword restricts raising to the declaring class, ensuring encapsulation.
+  }
+
+  \begin{minted}{csharp}
+public class Button
+{
+  public event EventHandler Click;
+  protected void OnClick() => Click?.Invoke(this, EventArgs.Empty);
+}
+  \end{minted}
+\end{frame}
+
+% 33 ── Anonymous methods
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is an anonymous method?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is an anonymous method?%
+  }
+
+  {\footnotesize
+    An anonymous method defines an inline delegate with the \texttt{delegate} keyword, useful for quick, short-lived functions and closures.
+  }
+
+  \begin{minted}{csharp}
+delegate void Greet(string name);
+Greet g = delegate(string n) { Console.WriteLine($"Hello, {n}!"); };
+g("Alice");
+  \end{minted}
+\end{frame}
+
+% 34 ── Lambda expressions
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are lambda expressions?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are lambda expressions?%
+  }
+
+  {\footnotesize
+    Lambdas (\texttt{(args) => expr/body}) provide concise syntax for anonymous functions, widely used with LINQ and delegates.
+  }
+
+  \begin{minted}{csharp}
+Func<int,int> sq = x => x * x;
+Console.WriteLine(sq(5)); // 25
+  \end{minted}
+\end{frame}
+
+% 35 ── Type safety
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What does type-safe mean?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What does type-safe mean?%
+  }
+
+  {\footnotesize
+    Type-safe code enforces consistent use of data types at compile time, preventing type errors and reducing runtime exceptions.
+  }
+
+  \begin{minted}{csharp}
+// Not type-safe
+ArrayList list = new ArrayList();
+list.Add(42);
+int x = (int)list[0]; // cast needed
+
+// Type-safe
+List<int> ints = new List<int>();
+ints.Add(42);
+int y = ints[0];      // no cast
+  \end{minted}
+\end{frame}
+
+% 36 ── Generics
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are generics?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are generics?%
+  }
+
+  {\footnotesize
+    Generics allow defining classes and methods with type parameters (e.g., \texttt{List<T>}), enabling type-safe, reusable data structures without performance penalty.
+  }
+
+  \begin{minted}{csharp}
+public class Box<T> { public T Value { get; set; } }
+var intBox = new Box<int> { Value = 42 };
+var strBox = new Box<string> { Value = "hello" };
+  \end{minted}
+\end{frame}
+
+% 37 ── Exception handling
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is exception handling in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is exception handling in C\#?%
+  }
+
+  {\footnotesize
+    Exception handling uses \texttt{try}, \texttt{catch}, \texttt{finally}, and \texttt{throw} to manage runtime errors and ensure resource cleanup.
+  }
+
+  \begin{minted}{csharp}
+try
+{
+  int r = 10 / divisor;
+}
+catch (DivideByZeroException)
+{
+  Console.WriteLine("Cannot divide by zero.");
+}
+finally
+{
+  Console.WriteLine("Cleanup.");
+}
+  \end{minted}
+\end{frame}
+
+% 38 ── IDisposable
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is the \texttt{IDisposable} interface, and why implement it?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the \texttt{IDisposable} interface, and why implement it?%
+  }
+
+  {\footnotesize
+    \texttt{IDisposable} defines \texttt{Dispose()} to release unmanaged resources (file handles, DB connections). Implementing it allows deterministic cleanup and the \texttt{using} pattern.
+  }
+
+  \begin{minted}{csharp}
+public class FileLogger : IDisposable
+{
+  private StreamWriter _w = new("log.txt");
+  public void Log(string m) => _w.WriteLine(m);
+  public void Dispose() => _w.Dispose();
+}
+
+using var logger = new FileLogger();
+logger.Log("Start");
+  \end{minted}
+\end{frame}
+
+% 39 ── using statement
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What is the \texttt{using} statement and \texttt{IDisposable}?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is the \texttt{using} statement and \texttt{IDisposable}?%
+  }
+
+  {\footnotesize
+    The \texttt{using} statement ensures \texttt{Dispose()} is called on \texttt{IDisposable} objects when the block exits, even if an exception occurs.
+  }
+
+  \begin{minted}{csharp}
+using (var fs = File.OpenRead("data.txt"))
+{
+  // fs.Dispose() called automatically
+}
+  \end{minted}
+\end{frame}
+
+% 40 ── Tuples
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are tuples in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are tuples in C\#?%
+  }
+
+  {\footnotesize
+    Tuples group multiple values into one. Unnamed (\texttt{(int,string)}) or named (\texttt{(int Id,string Name)}), with deconstruction support, useful for returning multiple values without custom types.
+  }
+
+  \begin{minted}{csharp}
+var user = (Id:1,Name:"Alice");
+Console.WriteLine(user.Name); // Alice
+var (i,n) = user;
+Console.WriteLine($"{i},{n}");
+  \end{minted}
+\end{frame}
+
+% 41 ── When to use tuples
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** When to use tuples?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** When to use tuples?%
+  }
+
+  {\footnotesize
+    Use tuples for quick, one-off groupings or returning multiple values from methods where defining a class is overkill.
+  }
+
+  \begin{minted}{csharp}
+(int Min,int Max) GetRange(int[] a)=>
+  (a.Min(),a.Max());
+var r = GetRange(new[]{3,8,1});
+Console.WriteLine($"Min:{r.Min},Max:{r.Max}");
+  \end{minted}
+\end{frame}
+
+% 42 ── Tuple types
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** Tuple is reference or value type?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** Tuple is reference or value type?%
+  }
+
+  {\footnotesize
+    \texttt{System.Tuple<…>} is a reference type.  
+    C\# 7+ syntax \texttt{(T1,…)} maps to \texttt{System.ValueTuple<…>}, a value type with deconstruction support.
+  }
+
+  \begin{minted}{csharp}
+var refT = Tuple.Create(1,"A");   // reference
+var valT = (Id:1,Name:"A");       // value type (ValueTuple)
+  \end{minted}
+\end{frame}
+
+% 43 ── Value tuples
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are value tuples?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are value tuples?%
+  }
+
+  {\footnotesize
+    \texttt{ValueTuple<…>} are lightweight, mutable structs with named fields and deconstruction, offering better performance than \texttt{System.Tuple<…>}.
+  }
+
+  \begin{minted}{csharp}
+var vt = (Id:1,Name:"A");
+(int id,string name) = vt;
+  \end{minted}
+\end{frame}
+
+% 44 ── Nullable types
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are nullable types?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are nullable types?%
+  }
+
+  {\footnotesize
+    Value types can be made nullable with \texttt{?} (e.g., \texttt{int?}), providing \texttt{HasValue} and \texttt{Value}.
+  }
+
+  \begin{minted}{csharp}
+int? age = null;
+if (age.HasValue) Console.WriteLine(age.Value);
+  \end{minted}
+\end{frame}
+
+% 45 ── Extension methods
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are extension methods?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are extension methods?%
+  }
+
+  {\footnotesize
+    Static methods in static classes with \texttt{this} on the first parameter, enabling adding methods to existing types without inheritance.
+  }
+
+  \begin{minted}{csharp}
+public static class StrExt
+{
+  public static bool IsCapital(this string s)=>
+    !string.IsNullOrEmpty(s)&&char.IsUpper(s[0]);
+}
+Console.WriteLine("Alice".IsCapital()); // True
+  \end{minted}
+\end{frame}
+
+% 46 ── Attributes
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are attributes?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are attributes?%
+  }
+
+  {\footnotesize
+    Attributes are metadata annotations (\texttt{[AttrName]}), used by reflection, serializers, and frameworks to influence behavior at runtime or compile time.
+  }
+
+  \begin{minted}{csharp}
+[Obsolete("Use NewMethod instead")]
+public void OldMethod() { }
+  \end{minted}
+\end{frame}
+
+% 47 ── Virtual methods
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are virtual methods in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are virtual methods in C\#?%
+  }
+
+  {\footnotesize
+    Virtual methods marked with \texttt{virtual} in a base class can be overridden by derived classes. Dispatch is determined by the runtime type via v-table.
+  }
+
+  \begin{minted}{csharp}
+public class Animal { public virtual void Speak()=>Console.WriteLine("..."); }
+public class Cat:Animal{ public override void Speak()=>Console.WriteLine("Meow"); }
+Animal a=new Cat(); a.Speak(); // Meow
+  \end{minted}
+\end{frame}
+
+% 48 ── Virtual properties
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** What are virtual properties in C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What are virtual properties in C\#?%
+  }
+
+  {\footnotesize
+    Virtual properties allow derived classes to override getters/setters. Mark base with \texttt{virtual} and derived with \texttt{override} for polymorphic behavior.
+  }
+
+  \begin{minted}{csharp}
+public class Person{ public virtual string Name { get; set; }="X"; }
+public class Employee:Person{ public override string Name { get; set; }="Y"; }
+Person p=new Employee(); Console.WriteLine(p.Name); // Y
+  \end{minted}
+\end{frame}
+
+% 49 ── Virtual properties in EF
+\QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
+  {** Where are virtual properties used in C\#? (Example with EF)}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{Language Feature}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** Where are virtual properties used in C\#? (Example with EF)%
+  }
+
+  {\footnotesize
+    Entity Framework uses virtual navigation properties to enable lazy loading. EF generates proxies that override these properties to load related entities on demand.
+  }
+
+  \begin{minted}{csharp}
+public class Order
+{
+  public int Id { get; set; }
+  public virtual Customer Customer { get; set; } // EF proxy overrides for lazy load
+}
+  \end{minted}
+\end{frame}

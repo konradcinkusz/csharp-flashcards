@@ -1,0 +1,538 @@
+% 1 ── What is C#?
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]
+  {* What is C\#?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language \& Platform}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: * What is C\#?%
+  }
+
+  {\footnotesize
+    C\# is a modern, object-oriented programming language developed by Microsoft as part of the .NET platform. It supports strong static typing, garbage collection, LINQ for data queries, async/await for asynchronous programming, and deep integration with the .NET ecosystem.
+  }
+\end{frame}
+
+% 2 ── What is the .NET Framework?
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]
+  {* What is the .NET Framework?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language \& Platform}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: * What is the .NET Framework?%
+  }
+
+  {\footnotesize
+    The .NET Framework is Microsoft’s original managed runtime for Windows applications. It includes the Common Language Runtime (CLR), a comprehensive base class library, and development tools for building desktop and server applications.
+  }
+\end{frame}
+
+% 3 ── What is the CLR?
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]
+  {* What is the Common Language Runtime (CLR)?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language \& Platform}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: * What is the Common Language Runtime (CLR)?%
+  }
+
+  {\footnotesize
+    The CLR is the execution engine for .NET applications. It loads and runs IL code, performing JIT compilation, garbage collection, security checks, exception handling, and interoperability with unmanaged code.
+  }
+\end{frame}
+
+% 4 ── What is the CTS?
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {* What is the Common Type System (CTS)?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: * What is the Common Type System (CTS)?%
+  }
+
+  {\footnotesize
+    The CTS defines all data types and programming constructs supported by the CLR. It ensures that objects written in different .NET languages can interoperate safely by adhering to a common type specification.
+  }
+\end{frame}
+
+% 5 ── What is the CLS?
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {* What is the Common Language Specification (CLS)?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: * What is the Common Language Specification (CLS)?%
+  }
+
+  {\footnotesize
+    The CLS is a subset of the CTS that defines rules and conventions (naming, visibility, type usage) which all .NET languages must follow to guarantee interoperability.
+  }
+\end{frame}
+
+% 6 ── What is an immutable object?
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {* What does it mean that an object is immutable?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: * What does it mean that an object is immutable?%
+  }
+
+  {\footnotesize
+    An \textbf{immutable object} cannot change state after construction. All its fields are set once (typically via constructor) with no setters exposed, making instances inherently thread-safe and predictable.
+  }
+
+  \begin{minted}{csharp}
+public class ImmutableUser
+{
+    public string Name { get; }
+
+    public ImmutableUser(string name)
+    {
+        Name = name;
+    }
+}
+
+// var user = new ImmutableUser("Alice");
+// user.Name = "Bob"; // compile-time error
+  \end{minted}
+\end{frame}
+
+% 7 ── Stack vs Heap
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {** What is stack vs heap allocation?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What is stack vs heap allocation?%
+  }
+
+  {\footnotesize
+    The stack is a fast LIFO region for value types and local method data. The heap is a managed region for reference types and objects whose lifetimes are controlled by the garbage collector.
+  }
+
+  \begin{minted}{csharp}
+int x = 5;               // value on stack
+string s = "hello";      // reference on stack, data on heap
+Person p = new Person(); // reference on stack, object on heap
+  \end{minted}
+\end{frame}
+
+% 8 ── Which types go where?
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {** Which types go on the stack vs the heap?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** Which types go on the stack vs the heap?%
+  }
+
+  {\footnotesize
+    \begin{itemize}
+      \item \textbf{Value types} (e.g., \texttt{int}, \texttt{struct}) live on the stack when declared locally.
+      \item \textbf{Reference types} (e.g., \texttt{class}, \texttt{string}) reside on the heap, with only their reference on the stack or inside another object.
+    \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+struct Point { public int X, Y; }
+
+void Method()
+{
+    Point pt = new Point();     // struct on stack
+    Point[] arr = new Point[3]; // array+structs on heap
+}
+  \end{minted}
+\end{frame}
+
+% 9 ── Why is stack faster?
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {** Why is stack allocation faster than heap?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** Why is stack allocation faster than heap?%
+  }
+
+  {\footnotesize
+    Stack allocation is a simple pointer bump (push/pop). Heap allocation involves complex bookkeeping, fragmentation, and later garbage collection.
+  }
+
+  \begin{minted}{csharp}
+void DoWork()
+{
+    int x = 10;               // stack—very fast
+    var list = new List<int>(); // heap—slower, GC overhead
+}
+  \end{minted}
+\end{frame}
+
+% 10 ── Can structs be on the heap?
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {** Can structs be on the heap?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** Can structs be on the heap?%
+  }
+
+  {\footnotesize
+    Yes. When a struct is a field of a class or captured by a lambda, it’s stored on the heap as part of that object’s memory.
+  }
+
+  \begin{minted}{csharp}
+struct Point { public int X, Y; }
+class Container { public Point P; }
+
+var c = new Container(); // Container and its Point live on the heap
+  \end{minted}
+\end{frame}
+
+% 11 ── Where is a struct allocated?
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {** Where is a struct instance allocated—stack or heap?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** Where is a struct instance allocated—stack or heap?%
+  }
+
+  {\footnotesize
+    Allocation depends on context:
+    \begin{itemize}
+      \item Local variable → usually on the stack.
+      \item Field of a class or captured by closure → on the heap.
+    \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+struct Car { public string Model; public int Year; }
+
+void Example()
+{
+    var car = new Car(); // car on stack
+}
+
+class Garage
+{
+    public Car StoredCar; // StoredCar on heap
+}
+  \end{minted}
+\end{frame}
+
+% 12 ── Can structs store class types?
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {** What type can be inside a struct—can struct store a class type?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What type can be inside a struct—can struct store a class type?%
+  }
+
+  {\footnotesize
+    Structs can contain any field type, including reference types (classes). The struct remains a value type but holds references to heap-allocated objects.
+  }
+
+  \begin{minted}{csharp}
+class Engine { public int HP; }
+
+struct Car
+{
+    public string Model;   // reference
+    public Engine Engine;  // reference
+    public int Year;       // value
+}
+  \end{minted}
+\end{frame}
+
+% 13 ── Value vs Reference types
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {** What are value types and reference types?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What are value types and reference types?%
+  }
+
+  {\footnotesize
+    \begin{itemize}
+      \item \textbf{Value types}: stored directly (stack or inline), copied on assignment (e.g., \texttt{int}, \texttt{struct}).
+      \item \textbf{Reference types}: stored on the heap with references on the stack; assignment copies the reference (e.g., \texttt{class}, \texttt{string}).
+    \end{itemize}
+  }
+\end{frame}
+
+% 14 ── Boxing and Unboxing
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {** What is boxing and unboxing?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What is boxing and unboxing?%
+  }
+
+  {\footnotesize
+    Boxing wraps a value type into an \texttt{object} (heap allocation). Unboxing extracts the value type from the \texttt{object}. Both incur performance overhead.
+  }
+
+  \begin{minted}{csharp}
+int number = 42;
+object boxed = number;     // boxing
+int unboxed = (int)boxed;  // unboxing
+  \end{minted}
+\end{frame}
+
+% 15 ── Classes vs Structs
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
+  {** What are classes and structs?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language Basics}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What are classes and structs?%
+  }
+
+  {\footnotesize
+    \begin{itemize}
+      \item \textbf{Class}: reference type, supports inheritance, allocated on the heap.
+      \item \textbf{Struct}: value type, no inheritance (other than \texttt{ValueType}), allocated inline (stack or within containing object).
+    \end{itemize}
+  }
+\end{frame}
+
+% 16 ── Interfaces
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
+  {** What are interfaces?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language Basics}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What are interfaces?%
+  }
+
+  {\footnotesize
+    Interfaces declare method and property contracts without implementation. Classes or structs implement them to ensure specific behaviors.
+  }
+\end{frame}
+
+% 17 ── Abstract Classes
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
+  {** What are abstract classes?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language Basics}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What are abstract classes?%
+  }
+
+  {\footnotesize
+    Abstract classes can define both abstract (no body) and concrete members. They cannot be instantiated directly and serve as base types for derived classes.
+  }
+\end{frame}
+
+% 18 ── Properties
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
+  {** What are properties?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language Basics}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What are properties?%
+  }
+
+  {\footnotesize
+    Properties encapsulate fields with \texttt{get}/\texttt{set} accessors, enabling validation, lazy loading, and encapsulation while preserving field-like syntax.
+  }
+\end{frame}
+
+% 19 ── Indexers
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
+  {** What are indexers?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language Basics}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What are indexers?%
+  }
+
+  {\footnotesize
+    Indexers allow objects to be accessed like arrays via the \texttt{this[]} syntax, routing get/set through custom logic.
+  }
+
+  \begin{minted}{csharp}
+public class NameBook
+{
+    private Dictionary<int,string> names = new();
+
+    public string this[int index]
+    {
+        get => names.TryGetValue(index, out var n) ? n : "Unknown";
+        set => names[index] = value;
+    }
+}
+
+var book = new NameBook();
+book[1] = "Alice";
+Console.WriteLine(book[1]); // Alice
+  \end{minted}
+\end{frame}
+
+% 20 ── Methods & Overloading
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
+  {** What are methods and method overloading?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language Basics}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What are methods and method overloading?%
+  }
+
+  {\footnotesize
+    Methods encapsulate behavior. Overloading lets you define multiple methods with the same name but different parameter lists or signatures.
+  }
+\end{frame}
+
+% 21 ── Constructors & Destructors
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
+  {** What are constructors and destructors?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Language Basics}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What are constructors and destructors?%
+  }
+
+  {\footnotesize
+    \begin{itemize}
+      \item \textbf{Constructor}: special method to initialize new object instances.
+      \item \textbf{Destructor (finalizer)}: cleanup logic run by the GC before reclaiming the object (\texttt{\textasciitilde ClassName()}).
+    \end{itemize}
+  }
+\end{frame}
+
+% 22 ── Garbage Collection
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
+  {** What is garbage collection?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[MemoryColor!20]{Types \& Memory}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What is garbage collection?%
+  }
+
+  {\footnotesize
+    Garbage collection is the CLR’s automatic memory management. It periodically identifies unreachable objects and reclaims their memory, preventing leaks and reducing the need for manual deallocation.
+  }
+
+  \begin{minted}{csharp}
+class Demo
+{
+    public void CreateObjects()
+    {
+        var buffer = new byte[1024*1024]; // 1MB array
+    }
+}
+// 'buffer' is collected when out of scope and GC runs
+  \end{minted}
+\end{frame}

@@ -1,0 +1,282 @@
+% 1 ── Dependency Injection in .NET
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{*** What is dependency injection in .NET?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Design Patterns}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is dependency injection in .NET?%
+  }
+
+  {\footnotesize
+  Dependency Injection (DI) is a design pattern where a class receives its dependencies from external sources rather than creating them internally. In .NET, this is commonly achieved via constructor injection and supported by the built-in DI container through \texttt{IServiceCollection}. DI promotes loose coupling, better testability, and easier maintenance.
+  }
+
+  \begin{minted}{csharp}
+public interface IMessageService
+{
+    void Send(string message);
+}
+
+public class EmailService : IMessageService
+{
+    public void Send(string message)
+    {
+        Console.WriteLine($"Email: {message}");
+    }
+}
+
+public class Notifier
+{
+    private readonly IMessageService _service;
+
+    public Notifier(IMessageService service)
+    {
+        _service = service;
+    }
+
+    public void Notify(string msg) => _service.Send(msg);
+}
+  \end{minted}
+\end{frame}
+
+% 2 ── Exception handling design patterns
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{** What design pattern should be used for exception handling?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Design Patterns}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What design pattern should be used for exception handling?%
+  }
+
+  {\footnotesize
+  While exception handling in C\# uses language constructs, certain design principles and patterns improve its structure and maintainability:
+  \begin{itemize}
+    \item \textbf{Command Pattern} – Encapsulate actions as objects to centralize error handling logic.
+    \item \textbf{Strategy Pattern} – Provide interchangeable error-handling strategies based on context.
+    \item \textbf{Separation of Concerns} – Keep core logic separate from error handling.
+    \item \textbf{Fail-Fast Principle} – Validate early, throw early to avoid deep errors.
+  \end{itemize}
+  }
+\end{frame}
+
+% 3 ── Exception handling design pattern example
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Design Patterns}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: Exception handling design pattern example%
+  }
+
+  \begin{minted}{csharp}
+public interface IErrorHandler
+{
+    void Handle(Exception ex);
+}
+
+public class ConsoleErrorHandler : IErrorHandler
+{
+    public void Handle(Exception ex)
+    {
+        Console.WriteLine($"Error: {ex.Message}");
+    }
+}
+
+try
+{
+    RunTask();
+}
+catch (Exception ex)
+{
+    IErrorHandler handler = new ConsoleErrorHandler();
+    handler.Handle(ex);
+}
+  \end{minted}
+\end{frame}
+
+% 4 ── CQRS pattern
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{* What is the CQRS pattern?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Design Patterns}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is CQRS?%
+  }
+
+  {\footnotesize
+  Command Query Responsibility Segregation splits write (commands) and read (queries) models to optimise and scale each independently.
+  }
+
+  \begin{minted}{csharp}
+// ICommand, IQuery handlers in separate namespaces
+  \end{minted}
+\end{frame}
+
+% 5 ── Command–Query Separation (CQS)
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{* What is Command–Query Separation (CQS)?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Design Patterns}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is CQS?%
+  }
+
+  {\footnotesize
+  CQS states that a method should either perform an action (command) or return data (query) but never both.
+  }
+
+  \begin{minted}{csharp}
+// Bad: SaveAndReturnStatus()
+// Good: Save(); bool IsSaved();
+  \end{minted}
+\end{frame}
+
+% 6 ── Value Object Pattern
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{*** What is the Value Object Pattern?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Design Patterns}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is the Value Object Pattern?%
+  }
+
+  {\footnotesize
+  The Value Object Pattern is a design pattern used to model objects that do not have a distinct identity. Instead, they are compared based on the values of their properties. Value Objects are typically immutable and used to represent concepts like money, dates, coordinates, or addresses.
+  }
+
+  \begin{minted}{csharp}
+public class Address
+{
+    public string Street { get; }
+    public string City { get; }
+
+    public Address(string street, string city)
+    {
+        Street = street;
+        City = city;
+    }
+}
+  \end{minted}
+\end{frame}
+
+% 7 ── Why immutable Value Objects
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{*** Why should Value Objects be immutable?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Design Patterns}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: Why should Value Objects be immutable?%
+  }
+
+  {\footnotesize
+  Value Objects should be immutable because their identity is based on the combination of their property values. Changing any property would conceptually result in a different object. Immutability ensures consistency, thread-safety, and allows them to be safely reused and compared.
+  }
+
+  \begin{minted}{csharp}
+var address1 = new Address("Main St", "Berlin");
+// address1.City = "Paris"; // Not allowed - properties are read-only
+  \end{minted}
+\end{frame}
+
+% 8 ── Comparing Value Objects
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{*** How do you compare Value Objects in C\#?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Design Patterns}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: How do you compare Value Objects in C\#?%
+  }
+
+  {\footnotesize
+  To compare Value Objects, override the \texttt{Equals} and \texttt{GetHashCode} methods. Also implement equality operators (\texttt{==} and \texttt{!=}) if needed. Comparisons should be based solely on property values.
+  }
+
+  \begin{minted}{csharp}
+public override bool Equals(object obj)
+{
+    if (obj is not Address other) return false;
+    return Street == other.Street && City == other.City;
+}
+
+public override int GetHashCode() =>
+    HashCode.Combine(Street, City);
+  \end{minted}
+\end{frame}
+
+% 9 ── When to use Value Object Pattern
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{*** When should you use the Value Object Pattern?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{Design Patterns}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: When should you use the Value Object Pattern?%
+  }
+
+  {\footnotesize
+  Use the Value Object Pattern when:
+  \begin{itemize}
+    \item Objects are defined only by their values, not identity.
+    \item You want safer equality comparisons.
+    \item The data is conceptually atomic (e.g. money, coordinates).
+    \item You need immutability and consistency across the domain.
+  \end{itemize}
+  Example: coordinates used as part of a game engine.
+  }
+
+  \begin{minted}{csharp}
+public class Coordinates
+{
+    public int X { get; }
+    public int Y { get; }
+
+    public Coordinates(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+}
+  \end{minted}
+\end{frame}

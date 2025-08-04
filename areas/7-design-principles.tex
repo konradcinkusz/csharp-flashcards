@@ -1,0 +1,141 @@
+% 1 ── Core OOP paradigms
+\QuestionSlide[\CategoryBadge[OOPColor!20]{OOP}]{** What are the core object-oriented programming (OOP) paradigms?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{OOP}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What are the core object-oriented programming (OOP) paradigms?%
+  }
+
+  {\footnotesize
+  Object-Oriented Programming (OOP) is a paradigm centered around objects that encapsulate data and behavior.  
+  The four core principles are:
+  \begin{itemize}
+      \item \textbf{Encapsulation} – Hiding internal state and exposing behavior through methods.
+      \item \textbf{Abstraction} – Hiding complex implementation behind a simpler interface.
+      \item \textbf{Inheritance} – Deriving new classes from existing ones to reuse code.
+      \item \textbf{Polymorphism} – Treating objects of different types uniformly via shared interfaces or base classes.
+  \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+public abstract class Animal // Abstraction
+{
+    public string Name { get; set; } // Encapsulation
+    public abstract void Speak();    // Polymorphism via override
+}
+
+public class Dog : Animal
+{
+    public override void Speak() => Console.WriteLine("Bark");
+}
+  \end{minted}
+\end{frame}
+
+% 2 ── Inheritance in C#
+\QuestionSlide[\CategoryBadge[OOPColor!20]{OOP}]{** What is inheritance in C\#?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{OOP}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is inheritance in C\#?%
+  }
+
+  {\footnotesize
+  Inheritance allows a class (derived) to inherit members from another class (base), enabling code reuse and polymorphism.
+  }
+\end{frame}
+
+% 3 ── Polymorphism
+\QuestionSlide[\CategoryBadge[OOPColor!20]{OOP}]{** What is polymorphism?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{OOP}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is polymorphism?%
+  }
+
+  {\footnotesize
+  Polymorphism lets objects be treated as instances of their base type, with overriding and virtual methods enabling dynamic behavior.
+  }
+\end{frame}
+
+% 4 ── Encapsulation
+\QuestionSlide[\CategoryBadge[OOPColor!20]{OOP}]{** What is encapsulation?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{OOP}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is encapsulation?%
+  }
+
+  {\footnotesize
+  Encapsulation hides internal state by using access modifiers (\texttt{public}, \texttt{private}, \texttt{protected}, \texttt{internal}) and exposing behavior via methods/properties.
+  }
+\end{frame}
+
+% 5 ── Loose coupling
+\QuestionSlide[\CategoryBadge[OOPColor!20]{OOP}]{** What is loose coupling?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{OOP}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is loose coupling?%
+  }
+
+  {\footnotesize
+  Loose coupling refers to a design principle where components or classes have little knowledge of the internal details of each other. This improves flexibility, makes code easier to maintain, test, and extend, and allows changes in one component without heavily impacting others.
+
+  In .NET, loose coupling is often achieved using interfaces and dependency injection.
+  }
+
+    \begin{minted}[fontsize=\tiny]{csharp}
+public interface ILogger
+{
+    void Log(string message);
+}
+
+public class ConsoleLogger : ILogger
+{
+    public void Log(string message) =>
+        Console.WriteLine(message);
+}
+
+public class Processor
+{
+    private readonly ILogger _logger;
+
+    public Processor(ILogger logger)
+    {
+        _logger = logger;
+    }
+
+    public void Run() => _logger.Log("Running...");
+}
+  \end{minted}
+\end{frame}

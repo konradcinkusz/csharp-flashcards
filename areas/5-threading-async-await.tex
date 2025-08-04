@@ -1,0 +1,709 @@
+% 1 ── What is a thread?
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is a thread?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is a thread?%
+  }
+
+  {\footnotesize
+  A thread is the basic unit of CPU execution within a process.\\
+  Each thread runs code independently and has its own call stack.\\
+  Multiple threads can run concurrently on different cores.
+  }
+
+  \begin{minted}{csharp}
+var t = new Thread(() => Console.WriteLine("Hello from thread"));
+t.Start();
+t.Join();
+  \end{minted}
+\end{frame}
+
+% 2 ── Synchronous vs asynchronous code
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is the difference between synchronous and asynchronous code?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is the difference between synchronous and asynchronous code?%
+  }
+
+  {\footnotesize
+  Synchronous code blocks the calling thread until work completes.\\
+  Asynchronous code lets the thread continue while the operation finishes later.
+  }
+
+  \begin{minted}{csharp}
+Thread.Sleep(1000);           // synchronous pause
+await Task.Delay(1000);       // asynchronous pause
+  \end{minted}
+\end{frame}
+
+% 3 ── Task basics
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is a \texttt{Task}?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is a \texttt{Task}?%
+  }
+
+  {\footnotesize
+  A \texttt{Task} represents an asynchronous operation that may produce a result.\\
+  It can run on the thread pool and can be awaited or combined with other tasks.
+  }
+
+  \begin{minted}{csharp}
+Task<int> work = Task.Run(() => 42);
+int result = await work;
+  \end{minted}
+\end{frame}
+
+% 4 ── The \texttt{async} keyword
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What does the \texttt{async} keyword do?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What does the \texttt{async} keyword do?%
+  }
+
+  {\footnotesize
+  The \texttt{async} keyword marks a method as asynchronous and enables the use of \texttt{await}.\\
+  It causes the compiler to transform the method into a state machine that returns a \texttt{Task}.
+  }
+
+  \begin{minted}{csharp}
+public async Task<int> GetValueAsync()
+{
+    await Task.Delay(100);
+    return 42;
+}
+  \end{minted}
+\end{frame}
+
+% 5 ── The \texttt{await} keyword
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What does the \texttt{await} keyword do?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What does the \texttt{await} keyword do?%
+  }
+
+  {\footnotesize
+  \texttt{await} asynchronously pauses the method until the awaited task completes.\\
+  It frees the calling thread and resumes the method's continuation later.
+  }
+
+  \begin{minted}{csharp}
+await Task.Delay(1000);
+Console.WriteLine("Done");
+  \end{minted}
+\end{frame}
+
+% 6 ── Forgetting to await
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What happens if you forget to \texttt{await} an async method?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What happens if you forget to \texttt{await} an async method?%
+  }
+
+  {\footnotesize
+  The method starts but continues in the background.\\
+  You won't catch exceptions or know when it finishes.\\
+  In console apps, the process may exit before the task completes.
+  }
+
+  \begin{minted}{csharp}
+public async Task LogAsync() =>
+    await File.AppendAllTextAsync("log.txt", "Event\n");
+
+public void Main()
+{
+    LogAsync(); // not awaited
+    Console.WriteLine("Done"); // may run before write completes
+}
+  \end{minted}
+\end{frame}
+
+% 7 ── Does async always make code faster?
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** Does async always make code faster?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: Does async always make code faster?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+      \item Async improves scalability for I/O-bound tasks but \textbf{doesn't} make CPU work faster.
+      \item Async introduces overhead; it's not a free performance boost.
+  \end{itemize}
+  }
+
+  \begin{minted}{csharp}
+public async Task FetchDataAsync()
+{
+    var client = new HttpClient();
+    string data = await client.GetStringAsync("https://api.example.com");
+    Console.WriteLine(data.Length);
+}
+  \end{minted}
+\end{frame}
+
+% 8 ── Why use async in different app types?
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** Why use async in console, desktop, and web apps?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: Why use async in console, desktop, and web apps?%
+  }
+
+  {\footnotesize
+  \textbf{Console}: avoid blocking on I/O\\
+  \textbf{Desktop}: keep UI responsive\\
+  \textbf{Web}: improve request throughput by freeing server threads during I/O waits
+  }
+
+  \begin{minted}{csharp}
+// Console app
+public static async Task Main()
+{
+    var html = await new HttpClient()
+        .GetStringAsync("https://example.com");
+
+    Console.WriteLine(html[..80]);
+}
+  \end{minted}
+\end{frame}
+
+% 9 ── Async vs multithreading
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What's the difference between async and multithreading?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What's the difference between async and multithreading?%
+  }
+
+  {\footnotesize
+  Async is non-blocking and usually single-threaded, using an event loop.\\
+  Multithreading runs work in parallel on multiple threads.\\
+  Use async for I/O-bound tasks, multithreading for CPU-bound work.
+  }
+
+  \begin{minted}{csharp}
+// Asynchronous (non-blocking)
+public async Task<string> LoadFileAsync() =>
+    await File.ReadAllTextAsync("log.txt");
+
+// Multithreading (CPU-bound)
+public Task<int> HeavyWork() =>
+    Task.Run(() => Enumerable.Range(1, 100000).Sum());
+  \end{minted}
+\end{frame}
+
+% 10 ── Thread-pool basics
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is the .NET Thread Pool?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is the .NET Thread Pool?%
+  }
+
+  {\footnotesize
+  The thread pool is a shared set of worker threads managed by the CLR.\\
+  It reuses threads for short-lived or asynchronous work, avoiding the cost of creating new threads.
+  }
+
+  \begin{minted}{csharp}
+Task.Run(() =>
+    Console.WriteLine($"Pool thread: {Thread.CurrentThread.IsThreadPoolThread}"));
+  \end{minted}
+\end{frame}
+
+% 11 ── Task.Run vs Thread
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What's the difference between \texttt{Task.Run} and \texttt{Thread}?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What's the difference between \texttt{Task.Run} and \texttt{Thread}?%
+  }
+
+  {\footnotesize
+  \texttt{Task.Run} queues work to the thread pool and returns a \texttt{Task}.\\
+  \texttt{new Thread} creates a dedicated OS thread for long-running or special scenarios.\\
+  Prefer \texttt{Task.Run} for short CPU-bound work; use \texttt{Thread} when you need explicit thread control.
+  }
+
+  \begin{minted}{csharp}
+void Work() => Console.WriteLine(Thread.CurrentThread.IsThreadPoolThread);
+
+Task.Run(Work);
+
+var t = new Thread(Work) { IsBackground = true };
+t.Start();
+  \end{minted}
+\end{frame}
+
+% 12 ── When to use Task.Run
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** When should you use \texttt{Task.Run}?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: When should you use \texttt{Task.Run}?%
+  }
+
+  {\footnotesize
+  Use \texttt{Task.Run} to offload CPU-bound work to a background thread.\\
+  Don't wrap naturally asynchronous I/O operations with \texttt{Task.Run}.
+  }
+
+  \begin{minted}{csharp}
+// CPU-bound work offloaded to thread pool
+int result = await Task.Run(() =>
+    Enumerable.Range(1, 1_000_000).Sum());
+  \end{minted}
+\end{frame}
+
+% 13 ── Sync vs async endpoint
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** Which is faster: a synchronous or asynchronous endpoint? Why?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: Which is faster: a synchronous or asynchronous endpoint? Why?%
+  }
+
+  {\footnotesize
+  An asynchronous endpoint scales better under load because it doesn't block threads during I/O.\\
+  A synchronous version may be slightly faster for a single request but handles fewer concurrent users.
+  }
+
+  \begin{minted}{csharp}
+// Synchronous
+public string GetData() => File.ReadAllText("data.txt");
+
+// Asynchronous
+public async Task<string> GetDataAsync() =>
+    await File.ReadAllTextAsync("data.txt");
+  \end{minted}
+\end{frame}
+
+% 14 ── Deadlocks from sync-over-async
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** How can synchronous code calling asynchronous methods cause deadlocks?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: How can synchronous code calling asynchronous methods cause deadlocks?%
+  }
+
+  {\footnotesize
+  Calling an async method with \texttt{.Result} or \texttt{.Wait()} blocks the thread.\\
+  If the continuation tries to run on that same context, a deadlock occurs.
+  }
+
+  \begin{minted}{csharp}
+// Deadlock example
+public async Task<int> LoadAsync()
+{
+    await Task.Delay(1000);
+    return 42;
+}
+
+public void Main()
+{
+    var result = LoadAsync().Result; // Possible deadlock!
+}
+  \end{minted}
+\end{frame}
+
+% 15 ── Exception flow in async methods
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** How do exceptions flow in async methods?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: How do exceptions flow in async methods?%
+  }
+
+  {\footnotesize
+  Exceptions thrown in an async method are captured in its \texttt{Task}.\\
+  They surface when awaited; unawaited tasks may hide errors.\\
+  Use \texttt{try}/\texttt{catch} around \texttt{await}; \texttt{Task.WhenAll} aggregates multiple exceptions.
+  }
+
+  \begin{minted}{csharp}
+public async Task<int> FailAsync()
+{
+    await Task.Delay(100);
+    throw new InvalidOperationException();
+}
+
+public async Task DemoAsync()
+{
+    try
+    {
+        int n = await FailAsync();
+    }
+    catch (InvalidOperationException ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+}
+  \end{minted}
+\end{frame}
+
+% 16 ── Async void pitfalls
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** Why is \texttt{async void} usually a bad idea?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: Why is \texttt{async void} usually a bad idea?%
+  }
+
+  {\footnotesize
+  \texttt{async void} methods can't be awaited and exceptions bypass callers.\\
+  Use them only for event handlers; prefer \texttt{async Task} so callers can await and handle errors.
+  }
+
+  \begin{minted}{csharp}
+public async void OnClick(object sender, EventArgs e)
+{
+    await Task.Delay(1000);
+    throw new Exception("boom"); // crashes process
+}
+
+public async Task OnClickAsync()
+{
+    await Task.Delay(1000);
+}
+  \end{minted}
+\end{frame}
+
+% 17 ── ConfigureAwait(false)
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** When and why should you use \texttt{ConfigureAwait(false)} in async methods?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: When and why should you use \texttt{ConfigureAwait(false)} in async methods?%
+  }
+
+  {\footnotesize
+  Use \texttt{ConfigureAwait(false)} in library code to avoid capturing the synchronization context.\\
+  It reduces overhead and prevents deadlocks in UI or ASP.NET scenarios.
+  }
+
+  \begin{minted}{csharp}
+public async Task<string> GetContentAsync()
+{
+    var client = new HttpClient();
+    return await client.GetStringAsync("https://api.com")
+                       .ConfigureAwait(false);
+}
+  \end{minted}
+\end{frame}
+
+% 18 ── Parallel.ForEach vs Task.WhenAll
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What's the difference between \texttt{Parallel.ForEach()} and \texttt{Task.WhenAll()}?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What's the difference between \texttt{Parallel.ForEach()} and \texttt{Task.WhenAll()}?%
+  }
+
+  {\footnotesize
+  \textbf{Parallel.ForEach}: for CPU-bound work, uses multiple threads in parallel.\\
+  \textbf{Task.WhenAll}: for async I/O, awaits many non-blocking operations concurrently.
+  }
+
+  \begin{minted}{csharp}
+// CPU-bound (parallel)
+Parallel.ForEach(items, item => HeavyCalculation(item));
+
+// I/O-bound (async)
+var tasks = urls.Select(u => client.GetAsync(u));
+await Task.WhenAll(tasks);
+  \end{minted}
+\end{frame}
+
+% 19 ── Cancellation tokens
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** How do you correctly implement cancellation in asynchronous methods?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: How do you correctly implement cancellation in asynchronous methods?%
+  }
+
+  {\footnotesize
+  Accept a \texttt{CancellationToken} and pass it to cancellable operations.\\
+  Check \texttt{token.ThrowIfCancellationRequested()} to abort work cooperatively.
+  }
+
+  \begin{minted}{csharp}
+public async Task DownloadAsync(string url, CancellationToken token)
+{
+    using var client = new HttpClient();
+    var response = await client.GetAsync(url, token);
+    response.EnsureSuccessStatusCode();
+
+    token.ThrowIfCancellationRequested();
+    var content = await response.Content.ReadAsStringAsync(token);
+}
+  \end{minted}
+\end{frame}
+
+% 20 ── Async streams
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What are async streams (\texttt{IAsyncEnumerable<T>})?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What are async streams (\texttt{IAsyncEnumerable<T>})?%
+  }
+
+  {\footnotesize
+  Async streams let you produce or consume data asynchronously using \texttt{await foreach}.\\
+  They combine \texttt{async/await} with \texttt{yield return} to handle data arriving over time.
+  }
+
+  \begin{minted}{csharp}
+public async IAsyncEnumerable<int> GetNumbersAsync()
+{
+    for (int i = 1; i <= 3; i++)
+    {
+        await Task.Delay(500);
+        yield return i;
+    }
+}
+
+public async Task ConsumeAsync()
+{
+    await foreach (var n in GetNumbersAsync())
+        Console.WriteLine(n);
+}
+  \end{minted}
+\end{frame}
+
+% 21 ── IAsyncEnumerable<T> vs Task<IEnumerable<T>>
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What's the difference between returning \texttt{IAsyncEnumerable<T>} and \texttt{Task<IEnumerable<T>>}?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What's the difference between returning \texttt{IAsyncEnumerable<T>} and \texttt{Task<IEnumerable<T>>}?%
+  }
+
+  {\footnotesize
+  \texttt{Task<IEnumerable<T>>} returns the whole collection after completion.\\
+  \texttt{IAsyncEnumerable<T>} streams items one by one as they become available.
+  }
+
+  \begin{minted}{csharp}
+// Fully buffered
+public async Task<List<int>> GetAllAsync() =>
+    await db.Items.Select(i => i.Id).ToListAsync();
+
+// Streaming
+public async IAsyncEnumerable<int> GetStreamAsync()
+{
+    await foreach (var item in db.Items.AsAsyncEnumerable())
+        yield return item.Id;
+}
+  \end{minted}
+\end{frame}
+
+% 22 ── Task vs ValueTask
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What's the difference between \texttt{Task} and \texttt{ValueTask}?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What's the difference between \texttt{Task} and \texttt{ValueTask}?%
+  }
+
+  {\footnotesize
+  \texttt{Task} always allocates an object; \texttt{ValueTask} is a struct that can avoid allocation when a result is already available.\\
+  \texttt{ValueTask} should be awaited only once and used in performance-critical paths.
+  }
+
+  \begin{minted}{csharp}
+public ValueTask<int> GetCachedValueAsync(bool cached)
+{
+    return cached ? new ValueTask<int>(42)
+                  : new ValueTask<int>(LoadAsync());
+}
+  \end{minted}
+\end{frame}
+
+% 23 ── SynchronizationContext
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What is the \texttt{SynchronizationContext} and why does it matter?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[PerfColor!20]{Async \& Threading}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: What is the \texttt{SynchronizationContext} and why does it matter?%
+  }
+
+  {\footnotesize
+  \texttt{SynchronizationContext} represents the environment that handles continuation scheduling (e.g.\ UI thread).\\
+  Capturing it ensures UI updates happen on the correct thread; avoiding it with \texttt{ConfigureAwait(false)} can prevent deadlocks.
+  }
+
+  \begin{minted}{csharp}
+var ctx = SynchronizationContext.Current;
+ctx?.Post(_ => Console.WriteLine("Back on context"), null);
+  \end{minted}
+\end{frame}

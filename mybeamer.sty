@@ -1,0 +1,111 @@
+% mybeamer.sty
+\ProvidesPackage{mybeamer}[2025/07/31 Styles and macros]
+
+%% Question/Answer numbering
+\newcounter{qcounter}
+\setcounter{qcounter}{0}
+
+%% Badge macro (unchanged)
+\NewDocumentCommand{\CategoryBadge}{ o m }{%
+  \tikz[baseline=(b.base)]{
+    \node[
+      fill=\IfValueTF{#1}{#1}{gray!20},
+      rounded corners=1pt,
+      inner sep=1pt,
+      font=\footnotesize\bfseries
+    ] (b) {#2};
+  }%
+}
+
+\newcommand{\TOCButtonTall}[3]{%
+  % #1 = beamer color name
+  % #2 = hypertarget name
+  % #3 = button label (can contain \\)
+  \begin{beamercolorbox}[%
+      wd=0.45\textwidth,  % two across
+      sep=1.2ex,          % inner padding top & bottom
+      center,             % center horizontally
+      rounded=true,shadow=true]{#1}%
+    \vbox to 3.5ex{%      % force a uniform height
+      \vfil%             % push text vertically to center
+      \centering
+      \hyperlink{#2}{\Large\usebeamerfont{#1}#3}
+      \vfil
+    }%
+  \end{beamercolorbox}%
+}
+
+%% ------------------------------------------------------------------------
+%% Question slide:              \QuestionSlide[<badge>]{<question>}
+%% ------------------------------------------------------------------------
+\NewDocumentCommand{\QuestionSlide}{ o m }{%
+  \stepcounter{qcounter}%
+  \subsection{Q\theqcounter: #2}%
+  \begin{frame}%
+    % badge overlay
+    \IfValueT{#1}{%
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[
+          anchor=north east,
+          xshift=-0.4cm,  % inset from right border
+          yshift=-0.4cm   % inset from top border
+        ] at (current page.north east)
+        {#1};
+      \end{tikzpicture}%
+    }%
+    % centered question
+    \centering
+    {\Large \theqcounter.\ #2\par}
+  \end{frame}%
+}
+
+%% ------------------------------------------------------------------------
+%% Answer slide:                \AnswerSlide[<badge>]{<short title>}{<body>}
+%% ------------------------------------------------------------------------
+\NewDocumentCommand{\AnswerSlide}{ o m m }{%
+  % #1 = optional badge
+  % #2 = short title
+  % #3 = body content
+  \begin{frame}%
+    % badge overlay
+    \IfValueT{#1}{%
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[
+          anchor=north east,
+          xshift=-0.5cm,
+          yshift=-0.5cm
+        ] at (current page.north east)
+        {#1};
+      \end{tikzpicture}%
+    }%
+    % frame title and body
+    \frametitle{Answer \theqcounter: #2}%
+    #3%
+  \end{frame}%
+}
+
+%% ------------------------------------------------------------------------
+%% Chunked TOC helper (unchanged)
+%% ------------------------------------------------------------------------
+\newcommand{\ChunkedTOC}[2][30]{%
+  \foreach \start in {1,\numexpr#1+1\relax,...,#2} {
+    \edef\endsec{\number\numexpr\start + #1 - 1\relax}%
+    \begin{frame}{Table of Contents}%
+      \scriptsize
+      \begin{multicols}{2}
+        \tableofcontents[sections={\start-\endsec}, hideallsubsections]
+      \end{multicols}
+    \end{frame}%
+  }
+}
+
+% \tiny
+% \scriptsize
+% \footnotesize
+% \small
+% \normalsize
+% \large
+% \Large
+% \LARGE
+% \huge
+% \Huge

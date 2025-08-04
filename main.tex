@@ -1,0 +1,98 @@
+\PassOptionsToPackage{paperwidth=1080pt,%
+                      paperheight=1920pt,%
+                      margin=0pt}{geometry} %   <-- 1
+\PassOptionsToPackage{landscape}{geometry}
+
+\documentclass{mybeamer}
+
+\usepackage{mybeamer}
+
+\begin{document}
+
+\begin{frame}
+  \centering
+  {\Huge C\# Flashcards 2025 edition}\\[0.5em]
+  {\large by \href{https://github.com/konradcinkusz}{\faGithub\;dev\_insight}}
+\end{frame}
+
+\begin{frame}{About This Deck}
+  \setbeamercolor{block title}{bg=cyan!80!black,fg=white}
+  \setbeamercolor{block body}{bg=cyan!10,fg=black}
+
+  \begin{block}{\faBullseye\quad Purpose}
+    Learn and teach C\# through bite-sized flashcards.
+  \end{block}
+
+  \begin{block}{\faPlay\quad How to Use}
+    Read the question prompt, then advance the slide to reveal the answer.
+  \end{block}
+
+  \begin{block}{\faList\quad Coverage}
+    C\# language, threading, LINQ, EF, design principles \& patterns.
+  \end{block}
+
+   {
+       \setbeamercolor{block title}{bg=green!70!black,fg=white}%
+       \setbeamercolor{block body}{bg=green!10,fg=black}%
+       \begin{block}{\faUsers\quad Contribute}
+         \begin{itemize}
+           \item \textbf{Code:} \href{https://github.com/konradcinkusz/CSharp-FlashCards-2025}{\color{blue!80!black}\faGithub\;\underline{CSharp-FlashCards-2025}}
+           \item \textbf{Collaborate:} Fork the repo, open issues, or submit pull requests!
+         \end{itemize}
+       \end{block}
+   }
+\end{frame}
+
+\begin{frame}[label=toc]{Table of Contents}
+  \centering\setlength\tabcolsep{1em}
+  \begin{tabular}{cc}
+    \TOCButtonTall{sec1}{sec1}{C\# Beginner} &
+    \TOCButtonTall{sec2}{sec2}{C\# Intermediate} \\[1em]
+    \TOCButtonTall{sec3}{sec3}{C\# Advanced} &
+    \TOCButtonTall{sec4}{sec4}{LINQ} \\[1em]
+    \TOCButtonTall{sec5}{sec5}{Threading \& Async/Await} &
+    \TOCButtonTall{sec6}{sec6}{Entity Framework} \\[1em]
+    \TOCButtonTall{sec7}{sec7}{Design Principles} &
+    \TOCButtonTall{sec8}{sec8}{Design Patterns}
+  \end{tabular}
+\end{frame}
+
+\hypertarget{sec1}{}
+\section{C\# Language: Beginner}
+\input{areas/1-csharp-language-beginner}
+
+\hypertarget{sec2}{}
+\section{C\# Language: Intermediate}
+\input{areas/2-csharp-language-middle}
+
+\hypertarget{sec3}{}
+\section{C\# Language: Advanced}
+\input{areas/3-csharp-language-advance}
+
+\hypertarget{sec4}{}
+\section{LINQ}
+\input{areas/4-LINQ}
+
+\hypertarget{sec5}{}
+\section{Threading \& Async/Await}
+\input{areas/5-threading-async-await}
+
+\hypertarget{sec6}{}
+\section{Entity Framework}
+\input{areas/6-entity-framework}
+
+\hypertarget{sec7}{}
+\section{Design Principles}
+\input{areas/7-design-principles}
+
+\hypertarget{sec8}{}
+\section{Design Patterns}
+\input{areas/8-design-patterns}
+
+\begin{frame}
+  \centering
+  {\Huge Thank you!}\\[0.5em]
+  Happy learning and coding.
+\end{frame}
+
+\end{document}
