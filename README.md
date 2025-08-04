@@ -1,6 +1,6 @@
 # CSharp FlashCards 2025
 
-[![PDF download](https://img.shields.io/badge/PDF-download-blue)](https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/main.pdf)
+[![PDF download](https://img.shields.io/badge/PDF-download-blue)](https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf)
 [![CI](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml/badge.svg)](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
