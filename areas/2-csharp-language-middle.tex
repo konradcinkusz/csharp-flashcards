@@ -121,6 +121,8 @@ if (dict.TryGetValue("banana", out int qty))
     Console.WriteLine($"Qty: {qty}");
 else
     Console.WriteLine("Not found");
+//Specify initial capacity
+var dictInitialized = new Dictionary<int, string>(1000);
   \end{minted}
 \end{frame}
 
@@ -167,7 +169,40 @@ dict.Remove("key1");
 
   \begin{minted}{csharp}
 // Example of poor key:
-class BadKey { public override int GetHashCode() => 1; public override bool Equals(object o) => true; }
+class BadKey 
+{
+    public override int GetHashCode() => 1; 
+    public override bool Equals(object o) => true; 
+}
+  \end{minted}
+\end{frame}
+
+% 6 ── Dictionary internals: Bucket List
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {** What is a bucket list in a \texttt{Dictionary<TKey, TValue>}?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is a bucket list in a Dictionary<TKey, TValue>?%
+  }
+
+  {\footnotesize
+    A bucket list refers to how a dictionary groups entries with the same hash code. Internally, each bucket holds a list of key-value pairs that hash to the same index. 
+    If multiple keys map to the same bucket (a collision), the dictionary stores them in a chain (linked list or array). 
+    During lookups or removals, it must scan this list to find the correct key using \texttt{Equals()}, which can degrade performance to \(O(n)\) in the worst case.
+  }
+
+  \begin{minted}{csharp}
+// Example of poor key causing collisions:
+class BadKey 
+{
+    public override int GetHashCode() => 1; 
+    public override bool Equals(object o) => true; 
+}
   \end{minted}
 \end{frame}
 
@@ -207,13 +242,34 @@ foreach (var kvp in dict)
     Answer \theqcounter: ** What is the space complexity of a dictionary in C\#?%
   }
 
-  {\footnotesize
-    Space usage is \(O(n)\) for \(n\) entries, plus overhead for:
+{\footnotesize
+\begin{itemize}
+    \item Overall space: $O(n)$ for $n$ entries
     \begin{itemize}
-      \item Buckets array (resized as needed)
-      \item Entry objects and collision chains
+        \item Each key-value pair consumes memory: references, hash codes, etc.
     \end{itemize}
-  }
+    
+    \item Buckets array
+    \begin{itemize}
+        \item Internally, the dictionary maintains an array of buckets to organize entries by hash.
+        \item The array is resized dynamically as new items are added.
+        \item Overhead exists even for unused or sparsely filled buckets.
+    \end{itemize}
+    
+    \item Entry objects and collision resolution
+    \begin{itemize}
+        \item Each entry may store:
+        \begin{itemize}
+            \item Key
+            \item Value
+            \item Hash code
+            \item Next-pointer (used in collision chains)
+        \end{itemize}
+        \item When hash collisions occur, entries are stored in linked lists or similar chains.
+    \end{itemize}
+\end{itemize}
+}
+
 
   \begin{minted}{csharp}
 var dict = new Dictionary<string, int>(capacity: 1000);
