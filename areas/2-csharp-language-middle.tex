@@ -1,17 +1,17 @@
 % 1 ── Dictionary<TKey, TValue>
-\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+\QuestionSlide[\CategoryBadge[LangColor!20]{C\#} \CategoryBadge[CollColor!20]{Collections} \CategoryBadge[CollColor!20]{Dictionary}] %"What is Dictionary of TKey and TValue in C#?"
   {** What is \texttt{Dictionary<TKey, TValue>} in C\#?}
 \begin{frame}[fragile]
   \frametitle{%
     \begin{tikzpicture}[remember picture,overlay]
       \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
+        \CategoryBadge[LangColor!20]{C\#} \CategoryBadge[CollColor!20]{Collections} \CategoryBadge[CollColor!20]{Dictionary}
       };
     \end{tikzpicture}
     Answer \theqcounter: ** What is \texttt{Dictionary<TKey, TValue>} in C\#?%
   }
 
-  {\footnotesize
+  {\footnotesize %big O of one
     A \texttt{Dictionary<TKey, TValue>} is a generic collection in C\# that stores key–value pairs and provides fast lookup by key. It uses a hash table internally, offering average \(O(1)\) time complexity for \texttt{Add}, \texttt{Remove}, and \texttt{TryGetValue} operations. Keys must be unique and non-null (for reference types), and must implement a stable \texttt{GetHashCode()} and \texttt{Equals()}.
   }
 
@@ -37,7 +37,7 @@ Console.WriteLine(dict["apple"]); // 3
   }
 
   {\footnotesize
-    When inserting or retrieving a value, \texttt{Dictionary} calls the key’s \texttt{GetHashCode()} to locate the bucket and then \texttt{Equals()} to confirm equality. To work reliably, keys should be immutable and must not change their hash code while stored in the dictionary.
+    When inserting or retrieving a value, \texttt{Dictionary} calls the key’s \texttt{GetHashCode()} to locate the bucket and then \texttt{Equals()} to confirm equality. To work correctly, keys should be immutable and must not change their hash code while stored in the dictionary.
   }
 
   \begin{minted}{csharp}
@@ -187,7 +187,7 @@ class BadKey
         \CategoryBadge[CollColor!20]{Collections}
       };
     \end{tikzpicture}
-    Answer \theqcounter: ** What is a bucket list in a Dictionary<TKey, TValue>?%
+    Answer \theqcounter: ** What is a bucket list in a \texttt{Dictionary<TKey, TValue>}?%
   }
 
   {\footnotesize
@@ -335,7 +335,7 @@ foreach (var method in type.GetMethods())
     Console.WriteLine(method.Name);
 
 var attrs = type.GetProperty("Name")
-                .GetCustomAttributes(typeof(ObsoleteAttribute), false);
+.GetCustomAttributes(typeof(ObsoleteAttribute), false);
   \end{minted}
 \end{frame}
 

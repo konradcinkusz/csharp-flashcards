@@ -1,5 +1,5 @@
 % 1 ── Dependency Injection in .NET
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{*** What is dependency injection in .NET?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{* What is dependency injection in .NET?}
 
 \begin{frame}[fragile]
   \frametitle{%
@@ -16,7 +16,7 @@
   Dependency Injection (DI) is a design pattern where a class receives its dependencies from external sources rather than creating them internally. In .NET, this is commonly achieved via constructor injection and supported by the built-in DI container through \texttt{IServiceCollection}. DI promotes loose coupling, better testability, and easier maintenance.
   }
 
-  \begin{minted}{csharp}
+  \begin{minted}[fontsize=\tiny]{csharp}
 public interface IMessageService
 {
     void Send(string message);
@@ -45,7 +45,7 @@ public class Notifier
 \end{frame}
 
 % 2 ── Exception handling design patterns
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{** What design pattern should be used for exception handling?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Design Patterns}]{*** What design pattern should be used for exception handling?}
 
 \begin{frame}[fragile]
   \frametitle{%
@@ -81,7 +81,7 @@ public class Notifier
     Answer \theqcounter: Exception handling design pattern example%
   }
 
-  \begin{minted}{csharp}
+  \begin{minted}[fontsize=\tiny]{csharp}
 public interface IErrorHandler
 {
     void Handle(Exception ex);
@@ -172,7 +172,7 @@ catch (Exception ex)
   The Value Object Pattern is a design pattern used to model objects that do not have a distinct identity. Instead, they are compared based on the values of their properties. Value Objects are typically immutable and used to represent concepts like money, dates, coordinates, or addresses.
   }
 
-  \begin{minted}{csharp}
+  \begin{minted}[fontsize=\tiny]{csharp}
 public class Address
 {
     public string Street { get; }
@@ -182,6 +182,19 @@ public class Address
     {
         Street = street;
         City = city;
+    }
+    
+     public override bool Equals(object obj)
+    {
+        if (obj is not Address other)
+            return false;
+
+        return Street == other.Street && City == other.City;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Street, City);
     }
 }
   \end{minted}
