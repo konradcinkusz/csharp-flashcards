@@ -1,0 +1,469 @@
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is OAuth 2.0 in the context of .NET/C\#?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is OAuth 2.0 in the context of .NET/C\#?%
+  }
+
+  {\footnotesize
+  OAuth 2.0 is a delegated authorization protocol: the client obtains a temporary access token (e.g., JWT) from the authorization server and uses it to call protected APIs, without ever handling the user’s password.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// Example JWT Bearer setup in .NET Core:
+services.AddAuthentication("Bearer")
+  .AddJwtBearer("Bearer", options => {
+    options.Authority = "https://idp.example.com";
+    options.Audience = "api1";
+  });
+  \end{minted}
+\end{frame}
+
+% Main roles in OAuth 2.0
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{**What are the main roles in OAuth 2.0?**}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Main Roles in OAuth 2.0%
+  }
+
+  {\small
+  \begin{itemize}
+    \item \textbf{Resource Owner} – The \emph{user} (or system) who owns and grants access to their protected data.
+    \item \textbf{Client} – The \emph{application} requesting access to the resource on behalf of the user.
+    \item \textbf{Authorization Server} – Authenticates the resource owner, obtains their consent, and \textbf{issues access tokens}.
+    \item \textbf{Resource Server} – Hosts the protected resources, \textbf{validates tokens}, and serves data to authorized clients.
+  \end{itemize}
+
+  \vspace{0.4cm}
+  \begin{center}
+  
+\resizebox{0.92\linewidth}{!}{%
+    \begin{tikzpicture}[node distance=2.2cm, >=latex, every node/.style={font=\scriptsize}]
+      \node (owner) [draw, rounded corners, fill=AuthColor!15, minimum width=2.5cm, minimum height=0.8cm] {Resource Owner};
+      \node (client) [draw, rounded corners, fill=blue!15, minimum width=2.5cm, minimum height=0.8cm, right=of owner] {Client};
+      \node (auth)   [draw, rounded corners, fill=green!15, minimum width=3cm, minimum height=0.8cm, below=of owner, xshift=1.1cm] {Authorization Server};
+      \node (rs)     [draw, rounded corners, fill=orange!15, minimum width=2.8cm, minimum height=0.8cm, right=of auth] {Resource Server};
+
+      \draw[->] (owner) -- node[above]{Grants access} (client);
+      \draw[->] (client) -- node[right]{Auth request} (auth);
+      \draw[->] (auth) -- node[left]{Token} (client);
+      \draw[->] (client) -- node[below]{API request w/ token} (rs);
+      \draw[->] (rs) -- node[below]{Protected data} (client);
+    \end{tikzpicture}
+}
+\end{center}
+  }
+\end{frame}
+
+
+% PKCE
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is PKCE and why is it used?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is PKCE and why is it used?%
+  }
+
+  {\footnotesize
+  PKCE (Proof Key for Code Exchange) secures the Authorization Code Flow for public clients (e.g., SPAs, mobile apps) by having the client send a `code verifier` and `code challenge`, preventing code interception attacks.
+  }
+\end{frame}
+
+% Authorization Code Flow
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{What is the Authorization Code Flow?}
+
+\begin{frame}
+  \frametitle{Authorization Code Flow (PKCE)}
+
+  {\footnotesize
+  \textbf{Steps:}
+  \begin{enumerate}
+    \item Client redirects the browser to \texttt{/authorize}.
+    \item User authenticates \& consents → IdP issues an \emph{authorization code}.
+    \item Client exchanges the code (with PKCE) at \texttt{/token} → \emph{access token}.
+    \item Client calls API with \texttt{Authorization: Bearer <token>}.
+  \end{enumerate}
+  }
+
+  \vspace{0.6cm}
+
+  \begin{center}
+  \resizebox{0.95\linewidth}{!}{%
+  \begin{tikzpicture}[>=Latex, font=\scriptsize]
+    % Lifeline heads
+    \node (user)   at (0,0)   {User Browser};
+    \node (client) at (4,0)   {Client App};
+    \node (idp)    at (8,0)   {Identity Provider};
+    \node (api)    at (12,0)  {API};
+
+    % Lifelines
+    \draw[dashed] (user) -- ++(0,-6.2);
+    \draw[dashed] (client) -- ++(0,-6.2);
+    \draw[dashed] (idp) -- ++(0,-6.2);
+    \draw[dashed] (api) -- ++(0,-6.2);
+
+    % y-levels for steps
+    \coordinate (y1) at (0,-0.9);
+    \coordinate (y2) at (0,-1.8);
+    \coordinate (y3) at (0,-2.7);
+    \coordinate (y4) at (0,-3.6);
+    \coordinate (y5) at (0,-4.5);
+    \coordinate (y6) at (0,-5.4);
+
+    % 1) Client -> Browser: redirect to /authorize
+    \draw[->] (client |- y1) -- (user |- y1)
+      node[midway, above]{302 redirect to \texttt{/authorize}};
+
+    % 2) Browser -> IdP: /authorize (with PKCE challenge/state)
+    \draw[->] (user |- y2) -- (idp |- y2)
+      node[midway, above]{GET \texttt{/authorize} (+ code\_challenge, state)};
+
+    % 3) IdP -> Browser: login/consent UI
+    \draw[->] (idp |- y3) -- (user |- y3)
+      node[midway, above]{Login \& Consent};
+
+    % 4) Browser -> Client: redirect back with code
+    \draw[->] (user |- y4) -- (client |- y4)
+      node[midway, above]{302 to \texttt{/callback?code=\dots}};
+
+    % 5) Client -> IdP: exchange code for tokens (PKCE)
+    \draw[->] (client |- y5) -- (idp |- y5)
+      node[midway, above]{POST \texttt{/token} (code\_verifier)};
+
+    % 6) IdP -> Client: access token (± refresh/id token)
+    \draw[->] (idp |- y6) -- (client |- y6)
+      node[midway, above]{Access token};
+
+        % 7) Client -> API
+    \coordinate (y7) at (0,-6.0);
+    \coordinate (y8) at (0,-6.9);
+
+    \draw[->] (client |- y7) -- (api |- y7)
+      node[midway, above]{\texttt{Authorization: Bearer <token>}};
+
+    % 8) API -> Client
+    \draw[->] (api |- y8) -- (client |- y8)
+      node[midway, above]{API response};
+
+  \end{tikzpicture}%
+  }
+  \end{center}
+\end{frame}
+
+% Client Credentials Flow
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is the Client Credentials Flow?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Client Credentials Flow?%
+  }
+
+  {\footnotesize
+  A machine-to-machine flow where the client uses its own Client ID and Secret to obtain an access token, without user involvement. Ideal for server-to-server integrations.
+  }
+\end{frame}
+
+% Scopes
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What are scopes in OAuth 2.0?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are scopes in OAuth 2.0?%
+  }
+
+  {\footnotesize
+  Scopes are named permissions (e.g., `read`, `write`) that the client requests. The issued token contains approved scopes, which the Resource Server enforces.
+  }
+\end{frame}
+
+% JWT Bearer configuration in ASP.NET Core
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** How do you configure JWT Bearer Authentication in ASP\.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: How do you configure JWT Bearer Authentication in ASP\.NET Core?%
+  }
+
+  {\footnotesize
+  Use the `JwtBearer` middleware in `Startup`/`Program.cs`, specifying `Authority` and `Audience`:
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+  .AddJwtBearer(options => {
+    options.Authority = "https://idp.example.com";
+    options.Audience = "api1";
+    options.RequireHttpsMetadata = true;
+  });
+  \end{minted}
+\end{frame}
+
+% OpenID Connect – what is it?
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is OpenID Connect?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is OpenID Connect?%
+  }
+
+  {\footnotesize
+  OpenID Connect is an authentication layer built on OAuth 2.0. It adds an ID Token (JWT) containing user identity claims, plus discovery and UserInfo endpoints.
+  }
+\end{frame}
+
+% ID Token
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is an ID Token?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is an ID Token?%
+  }
+
+  {\footnotesize
+  An ID Token is a JWT issued by the OpenID Provider during the Authorization Code Flow, containing user identity claims such as `sub`, `email`, and `name`.
+  }
+\end{frame}
+
+% OIDC configuration in ASP.NET Core
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** How do you implement OpenID Connect in ASP\.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: How do you implement OpenID Connect in ASP\.NET Core?%
+  }
+
+  {\footnotesize
+  Configure the OIDC scheme in `Program.cs`:
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+services.AddAuthentication(options => {
+  options.DefaultScheme = "Cookies";
+  options.DefaultChallengeScheme = "oidc";
+})
+.AddCookie("Cookies")
+.AddOpenIdConnect("oidc", options => {
+  options.Authority = "https://idp.example.com";
+  options.ClientId = "mvc_client";
+  options.ClientSecret = "secret";
+  options.ResponseType = "code";
+  options.Scope.Add("openid");
+  options.Scope.Add("profile");
+  options.SaveTokens = true;
+});
+  \end{minted}
+\end{frame}
+
+% OAuth 2.0 vs OpenID Connect
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is the difference between OAuth 2.0 and OpenID Connect?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the difference between OAuth 2.0 and OpenID Connect?%
+  }
+
+  {\footnotesize
+  OAuth 2.0 is a protocol for delegating access (authorization).\\
+  OpenID Connect extends OAuth 2.0 by adding authentication, issuing an ID Token that verifies the user’s identity.
+  }
+\end{frame}
+
+% 1 ── ASP.NET Core Identity
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is ASP\.NET Core Identity?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is ASP\.NET Core Identity?%
+  }
+
+  {\footnotesize
+  ASP\.NET Core Identity is a membership system that adds login, logout, user management, roles, claims, and storing user data (via EF Core by default) to your application.
+  }
+
+  \begin{minted}{csharp}
+// In Program.cs
+services.AddDefaultIdentity<IdentityUser>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+  \end{minted}
+\end{frame}
+
+% 2 ── Cookie Authentication
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is Cookie Authentication in ASP\.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Cookie Authentication in ASP\.NET Core?%
+  }
+
+  {\footnotesize
+  Cookie Authentication issues an encrypted cookie after login, which is sent on each request to identify the user session. It’s suitable for web apps that maintain user sessions.
+  }
+
+  \begin{minted}{csharp}
+services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options => {
+      options.LoginPath = "/Account/Login";
+      options.ExpireTimeSpan = TimeSpan.FromHours(1);
+    });
+  \end{minted}
+\end{frame}
+
+% 3 ── Claims-based Authorization
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is Claims-based Authorization?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Claims-based Authorization?%
+  }
+
+  {\footnotesize
+  Claims-based Authorization grants or denies access based on claims in the user’s identity (e.g., roles, permissions). Policies evaluate claims via requirements and handlers.
+  }
+
+  \begin{minted}{csharp}
+// Define policy
+services.AddAuthorization(options => {
+  options.AddPolicy("CanEdit", policy =>
+    policy.RequireClaim("Permission", "Edit"));
+});
+
+// Enforce in controller
+[Authorize(Policy = "CanEdit")]
+public IActionResult Edit() => View();
+  \end{minted}
+\end{frame}
+
+% 4 ── Roles vs Policies
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is the difference between Roles and Policies?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the difference between Roles and Policies?%
+  }
+
+  {\footnotesize
+  Roles assign users to named groups (e.g., “Admin”). Policies are more flexible rules combining multiple claims, roles, or custom requirements.
+  }
+
+  \begin{minted}{csharp}
+// Role-based
+[Authorize(Roles = "Admin")]
+
+// Policy-based
+[Authorize(Policy = "CanEdit")]
+  \end{minted}
+\end{frame}
+
+% 5 ── Refresh Tokens in .NET
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{** What is a Refresh Token and how is it used?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is a Refresh Token and how is it used?%
+  }
+
+  {\footnotesize
+  A Refresh Token is a long-lived token used to obtain new access tokens when they expire. It’s stored securely and sent to the token endpoint in exchange for fresh tokens.
+  }
+
+  \begin{minted}{csharp}
+// Exchange refresh token
+var tokenResponse = await httpClient.RequestRefreshTokenAsync(new RefreshTokenRequest {
+  Address = "https://idp.example.com/connect/token",
+  ClientId = "client",
+  ClientSecret = "secret",
+  RefreshToken = storedRefreshToken
+});
+  \end{minted}
+\end{frame}
