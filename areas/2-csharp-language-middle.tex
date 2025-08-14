@@ -1384,3 +1384,78 @@ public class Order
 }
   \end{minted}
 \end{frame}
+% 50 ── LinkedList<T>
+\QuestionSlide[\CategoryBadge[LangColor!20]{C\#} \CategoryBadge[CollColor!20]{Collections} \CategoryBadge[CollColor!20]{LinkedList}]
+  {** What is \texttt{LinkedList<T>} in C\# and when would you use it?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[LangColor!20]{C\#} \CategoryBadge[CollColor!20]{Collections} \CategoryBadge[CollColor!20]{LinkedList}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: ** What is \texttt{LinkedList<T>} in C\# and when would you use it?%
+  }
+
+  {\footnotesize
+    \texttt{LinkedList<T>} is a doubly linked list providing fast insertions and removals once a node is known.
+    Use it for sequences that require frequent additions or deletions at the ends or in the middle but rarely need indexed access.
+  }
+
+  \begin{minted}{csharp}
+public class TrainComposition
+{
+    LinkedList<int> cars = new();
+
+    public void AttachLeft(int carId)  => cars.AddFirst(carId);
+    public void AttachRight(int carId) => cars.AddLast(carId);
+
+    public int DetachLeft()
+    {
+        int id = cars.First.Value;
+        cars.RemoveFirst();
+        return id;
+    }
+
+    public int DetachRight()
+    {
+        int id = cars.Last.Value;
+        cars.RemoveLast();
+        return id;
+    }
+}
+
+var tc = new TrainComposition();
+tc.AttachLeft(7);  // [7]
+tc.AttachLeft(13); // [13,7]
+tc.AttachRight(9); // [13,7,9]
+Console.WriteLine(tc.DetachRight() == 9);
+Console.WriteLine(tc.DetachLeft() == 13);
+Console.WriteLine(tc.DetachLeft() == 7);
+  \end{minted}
+\end{frame}
+
+% 51 ── Core collection types
+\QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
+  {* What are the primary collection types in .NET and their typical use cases?}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[CollColor!20]{Collections}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: * What are the primary collection types in .NET and their typical use cases?%
+  }
+
+  {\footnotesize
+    \begin{itemize}
+      \item \texttt{List<T>} – dynamic array with fast index access.
+      \item \texttt{LinkedList<T>} – efficient insert/remove anywhere, slow indexing.
+      \item \texttt{Dictionary<TKey,TValue>} – key/value lookup.
+      \item \texttt{HashSet<T>} – uniqueness without ordering.
+      \item \texttt{Queue<T>} – FIFO processing.
+      \item \texttt{Stack<T>} – LIFO processing.
+    \end{itemize}
+  }
+\end{frame}
