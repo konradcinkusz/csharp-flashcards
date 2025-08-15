@@ -18,7 +18,8 @@
   }
 
   \begin{minted}[fontsize=\scriptsize]{csharp}
-var bulkhead = Policy.BulkheadAsync<HttpResponseMessage>(
+var bulkhead = 
+Policy.BulkheadAsync<HttpResponseMessage>(
     maxParallelization: 50,
     maxQueuingActions: 100);
 await bulkhead.ExecuteAsync(() => httpClient.GetAsync(url));
