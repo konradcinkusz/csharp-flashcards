@@ -91,20 +91,100 @@ services.AddAuthentication("Bearer")
 % Authorization Code Flow
 \QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{What is the Authorization Code Flow?}
 
-\begin{frame}
-  \frametitle{Authorization Code Flow (PKCE)}
-
-  {\footnotesize
-  \textbf{Steps:}
-  \begin{enumerate}
-    \item Client redirects the browser to \texttt{/authorize}.
-    \item User authenticates \& consents → IdP issues an \emph{authorization code}.
-    \item Client exchanges the code (with PKCE) at \texttt{/token} → \emph{access token}.
-    \item Client calls API with \texttt{Authorization: Bearer <token>}.
-  \end{enumerate}
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Authorization Code Flow?%
   }
 
-  \vspace{0.6cm}
+  {\footnotesize
+  A four-step redirect-based protocol where the client trades an authorization code for tokens without ever seeing the user's password.
+  }
+\end{frame}
+
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{Authorization Code Flow — Step 1}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Step 1%
+  }
+
+  {\footnotesize
+  The client redirects the user's browser to the IdP's \texttt{/authorize} endpoint with \texttt{client\_id}, \texttt{redirect\_uri}, and a PKCE \texttt{code\_challenge}.
+  }
+\end{frame}
+
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{Authorization Code Flow — Step 2}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Step 2%
+  }
+
+  {\footnotesize
+  The Identity Provider authenticates the user, obtains consent, and redirects back to the client with an authorization \texttt{code}.
+  }
+\end{frame}
+
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{Authorization Code Flow — Step 3}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Step 3%
+  }
+
+  {\footnotesize
+  The client posts the \texttt{code} and PKCE \texttt{code\_verifier} to the \texttt{/token} endpoint to obtain an access token (and optionally refresh or ID tokens).
+  }
+\end{frame}
+
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{Authorization Code Flow — Step 4}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[OOPColor!20]{C\#}
+        \CategoryBadge[AuthColor!20]{Security}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Step 4%
+  }
+
+  {\footnotesize
+  The client calls the API using \texttt{Authorization: Bearer <access\_token>} and may use refresh tokens when the access token expires.
+  }
+\end{frame}
+
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Security}]{Authorization Code Flow Diagram}
+
+\begin{frame}
+  \frametitle{Authorization Code Flow Diagram}
+
+  \vspace{0.2cm}
 
   \begin{center}
   \resizebox{0.95\linewidth}{!}{%
@@ -149,11 +229,11 @@ services.AddAuthentication("Bearer")
     \draw[->] (client |- y5) -- (idp |- y5)
       node[midway, above]{POST \texttt{/token} (code\_verifier)};
 
-    % 6) IdP -> Client: access token (± refresh/id token)
+    % 6) IdP -> Client: access token
     \draw[->] (idp |- y6) -- (client |- y6)
       node[midway, above]{Access token};
 
-        % 7) Client -> API
+      % 7) Client -> API
     \coordinate (y7) at (0,-6.0);
     \coordinate (y8) at (0,-6.9);
 
