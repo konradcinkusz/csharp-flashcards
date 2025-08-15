@@ -4,7 +4,7 @@
 [![CI](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml/badge.svg)](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A Beamer slide deck of **Q-and-A flash-cards** that cover C# language basics, LINQ, async/await, Entity Framework, design principles and patterns.  
+A Beamer slide deck of **Q-and-A flash-cards** that cover C# language basics, LINQ, async/await, Entity Framework, design principles and patterns, plus advanced cloud and leadership topics.
 Use it for live classes, self-study, interview prep, or conference lightning talks.
 
 ---
@@ -43,7 +43,8 @@ Prefer a browser? Import the repo into Overleaf and press *Re-compile* – Overl
 │   ├── design-principles.tex
 │   ├── design-patterns.tex
 │   ├── entity-framework.tex
-│   └── linq.tex
+│   ├── linq.tex
+│   └── advanced-cloud-leadership.tex
 ├── main.tex
 ├── mybeamer.cls / mybeamer.sty
 └── .github/workflows/ci.yml

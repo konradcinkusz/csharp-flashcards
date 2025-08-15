@@ -1,0 +1,22 @@
+% 1 --- Handling poison messages in Azure Service Bus
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{*** How do you handle poison messages in Azure Service Bus queues?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: *** How do you handle poison messages in Azure Service Bus queues?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{Detect} when a message exceeds \texttt{maxDeliveryCount}; Service Bus moves it to the dead-letter queue.
+    \item \textbf{Process} the DLQ with a separate worker that logs and decides whether to fix or discard the payload.
+    \item \textbf{Mitigate} with exponential back-off retries and idempotent handlers to avoid repeats.
+    \item \textbf{Prevent} by validating input early and monitoring \texttt{DeadLetterMessageCount}.
+  \end{itemize}
+  }
+\end{frame}
