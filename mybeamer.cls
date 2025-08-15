@@ -53,6 +53,7 @@
 \definecolor{sec8bg}{HTML}{795548}  % Design Patterns – ArchColor
 \definecolor{sec9bg}{HTML}{795548}  % Design Patterns – ArchColor
 \definecolor{sec10bg}{HTML}{009688} % Microservices – MicroColor
+\definecolor{sec11bg}{HTML}{9B59B6} % Advanced Cloud & Leadership – AuthColor
 
 \setbeamercolor{sec1}{fg=white,bg=sec1bg}
 \setbeamercolor{sec2}{fg=white,bg=sec2bg}
@@ -64,6 +65,7 @@
 \setbeamercolor{sec8}{fg=white,bg=sec8bg}
 \setbeamercolor{sec9}{fg=white,bg=sec9bg}
 \setbeamercolor{sec10}{fg=white,bg=sec10bg}
+\setbeamercolor{sec11}{fg=white,bg=sec11bg}
 
 \lstset{
   basicstyle=\tiny\ttfamily,
