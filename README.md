@@ -36,14 +36,16 @@ Prefer a browser? Import the repo into Overleaf and press *Re-compile* – Overl
 ```
 .
 ├── areas/
-│   ├── csharp-language-beginner.tex
-│   ├── csharp-language-middle.tex
-│   ├── csharp-language-advanced.tex
-│   ├── threading-async-await.tex
-│   ├── design-principles.tex
-│   ├── design-patterns.tex
-│   ├── entity-framework.tex
-│   └── linq.tex
+│   ├── 1-csharp-language-beginner.tex
+│   ├── 2-csharp-language-middle.tex
+│   ├── 3-csharp-language-advance.tex
+│   ├── 4-LINQ.tex
+│   ├── 5-threading-async-await.tex
+│   ├── 6-entity-framework.tex
+│   ├── 7-design-principles.tex
+│   ├── 8-design-patterns.tex
+│   ├── 9-OAuth.tex
+│   └── 10-microservices.tex
 ├── main.tex
 ├── mybeamer.cls / mybeamer.sty
 └── .github/workflows/ci.yml
