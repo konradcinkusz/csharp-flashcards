@@ -40,6 +40,7 @@
 \definecolor{LinqColor}{HTML}{8BC34A}
 \definecolor{CollColor}{HTML}{D81B60}
 \definecolor{AuthColor}{RGB}{155,89,182}
+\definecolor{MicroColor}{HTML}{009688}
 
 \definecolor{CodeBg}{HTML}{F8F8F8} 
 \definecolor{sec1bg}{HTML}{6BAED6}  % C# Beginner – MemoryColor
@@ -51,7 +52,7 @@
 \definecolor{sec7bg}{HTML}{FD8D3C}  % Design Principles – OOPColor
 \definecolor{sec8bg}{HTML}{795548}  % Design Patterns – ArchColor
 \definecolor{sec9bg}{HTML}{795548}  % Design Patterns – ArchColor
-\definecolor{sec10bg}{HTML}{9B59B6} % Advanced Cloud & Leadership – AuthColor
+\definecolor{sec10bg}{HTML}{009688} % Microservices – MicroColor
 
 \setbeamercolor{sec1}{fg=white,bg=sec1bg}
 \setbeamercolor{sec2}{fg=white,bg=sec2bg}

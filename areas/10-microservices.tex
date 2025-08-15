@@ -1,0 +1,132 @@
+% Microservices section
+
+% 1 – Bulkhead Pattern
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{** What is the Bulkhead Pattern?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[MicroColor!20]{Microservices}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Bulkhead Pattern?%
+  }
+
+  {\footnotesize
+  The Bulkhead Pattern isolates critical resources (threads, connections) into independent pools so that a failure in one area does not bring down the entire system.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+var bulkhead = Policy.BulkheadAsync<HttpResponseMessage>(
+    maxParallelization: 50,
+    maxQueuingActions: 100);
+await bulkhead.ExecuteAsync(() => httpClient.GetAsync(url));
+  \end{minted}
+\end{frame}
+
+% 2 – Sidecar Pattern
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{* What is the Sidecar Pattern?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[MicroColor!20]{Microservices}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Sidecar Pattern?%
+  }
+
+  {\footnotesize
+  The Sidecar Pattern deploys a helper service alongside the main service within the same host or pod. The sidecar handles cross-cutting concerns like logging or proxying without modifying the primary service.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{yaml}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+spec:
+  containers:
+  - name: web
+    image: myapi:1.0
+  - name: logger
+    image: fluentd:latest
+  \end{minted}
+\end{frame}
+
+% 3 – Service Mesh
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{** What is a Service Mesh?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[MicroColor!20]{Microservices}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is a Service Mesh?%
+  }
+
+  {\footnotesize
+  A Service Mesh is an infrastructure layer that manages service-to-service communication via sidecar proxies, providing features like traffic routing, retries, and observability without changing application code. Popular meshes include Istio and Linkerd.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{bash}
+# Enable Istio sidecar injection
+kubectl label namespace default istio-injection=enabled
+  \end{minted}
+\end{frame}
+
+% 4 – Strangler Fig Pattern
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{* What is the Strangler Fig Pattern?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[MicroColor!20]{Microservices}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Strangler Fig Pattern?%
+  }
+
+  {\footnotesize
+  The Strangler Fig Pattern incrementally replaces pieces of a monolith with microservices. A facade routes requests between legacy and new components until the monolith can be retired.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// ASP.NET Core facade routing
+app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/legacy"),
+    legacy => legacy.RunProxy("http://monolith"));
+app.Map("/orders", m => m.RunProxy("http://orders-service"));
+  \end{minted}
+\end{frame}
+
+% 5 – Event Sourcing
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{** What is Event Sourcing?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[MicroColor!20]{Microservices}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Event Sourcing?%
+  }
+
+  {\footnotesize
+  Event Sourcing persists state as a sequence of immutable events. The current state is rebuilt by replaying events, enabling full audit history and temporal queries.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+public record FundsDeposited(Guid AccountId, decimal Amount);
+
+public class Account {
+    private decimal _balance;
+    public void Apply(FundsDeposited e) => _balance += e.Amount;
+}
+  \end{minted}
+\end{frame}
