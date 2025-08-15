@@ -1384,13 +1384,14 @@ public class Order
 }
   \end{minted}
 \end{frame}
+
 % 50 ── LinkedList<T>
 \QuestionSlide[\CategoryBadge[LangColor!20]{C\#} \CategoryBadge[CollColor!20]{Collections} \CategoryBadge[CollColor!20]{LinkedList}]
   {** What is \texttt{LinkedList<T>} in C\# and when would you use it?}
 \begin{frame}[fragile]
   \frametitle{%
     \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+      \node[anchor=north east,xshift=-0.4cm,yshift=-3.45cm] at (current page.north east) {
         \CategoryBadge[LangColor!20]{C\#} \CategoryBadge[CollColor!20]{Collections} \CategoryBadge[CollColor!20]{LinkedList}
       };
     \end{tikzpicture}
@@ -1402,7 +1403,7 @@ public class Order
     Use it for sequences that require frequent additions or deletions at the ends or in the middle but rarely need indexed access.
   }
 
-  \begin{minted}{csharp}
+  \begin{minted}[fontsize=\tiny]{csharp}
 public class TrainComposition
 {
     LinkedList<int> cars = new();
