@@ -20,3 +20,250 @@
   \end{itemize}
   }
 \end{frame}
+
+% 2 --- Split vs. single queries in EF Core 8
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{** When should you prefer split queries over single queries in EF Core 8?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** When should you prefer split queries over single queries in EF Core 8?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{Single query} joins all includes in one SQL statement; efficient but can explode row counts.
+    \item \textbf{Split query} runs separate SQL per include via \texttt{AsSplitQuery}; avoids duplication at the cost of extra round trips.
+    \item Choose split queries for large graphs or collection includes that would return many duplicate rows.
+    \item Configure globally with \texttt{UseQuerySplittingBehavior} or per query using \texttt{AsSingleQuery}/\texttt{AsSplitQuery}.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+var blogs = context.Blogs
+    .Include(b => b.Posts)
+    .AsSplitQuery()
+    .ToList();
+  \end{minted}
+\end{frame}
+
+% 3 --- AKS rolling updates on probe failures
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{** What happens during AKS rolling updates when health probes fail?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What happens during AKS rolling updates when health probes fail?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item Kubernetes creates a new pod and waits for readiness before routing traffic.
+    \item Failed readiness or liveness probes keep the pod \textbf{NotReady}, pausing the rollout.
+    \item If failures exceed \texttt{progressDeadlineSeconds}, the deployment is marked failed and can auto-roll back.
+    \item Monitor with \texttt{kubectl rollout status} and undo with \texttt{kubectl rollout undo}.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{bash}
+kubectl rollout status deployment/myapp
+  \end{minted}
+\end{frame}
+
+% 4 --- ROW_NUMBER() optimizations
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{** How can you optimize queries that use ROW\_NUMBER() in SQL Server?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** How can you optimize queries that use ROW\_NUMBER() in SQL Server?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item Index the \texttt{PARTITION BY} and \texttt{ORDER BY} columns to avoid expensive sorts.
+    \item Filter in a CTE or subquery so the engine streams rows instead of materializing the whole set.
+    \item Use \texttt{TOP (1) WITH TIES} when only the first row per group is required.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{sql}
+WITH ranked AS (
+  SELECT *, ROW_NUMBER() OVER (
+      PARTITION BY CustomerId ORDER BY Created DESC) AS rn
+  FROM Orders WITH (INDEX(IX_Orders_CustomerId_Created))
+)
+SELECT * FROM ranked WHERE rn = 1;
+  \end{minted}
+\end{frame}
+
+% 5 --- dotnet-trace & PerfView for LOH
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{** How do you investigate Large Object Heap issues with dotnet-trace and PerfView?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** How do you investigate Large Object Heap issues with dotnet-trace and PerfView?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item Collect GC events with \texttt{dotnet-trace collect --process-id <pid> --profile gc}.
+    \item Open the resulting \texttt{.nettrace} file in PerfView to inspect \textbf{GC Heap Alloc Stacks}.
+    \item Focus on objects \(\geq 85\,KB\) to find excessive LOH allocations and leaks.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{bash}
+dotnet-trace collect --process-id 1234 --profile gc
+perfview trace.nettrace
+  \end{minted}
+\end{frame}
+
+% 6 --- Server GC mode
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{** When should you enable Server GC mode and how is it configured?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** When should you enable Server GC mode and how is it configured?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item Server GC creates a separate heap per core and multiple GC threads for high-throughput scenarios.
+    \item Enable it in background services or web servers; avoid on small or GUI apps due to higher memory use.
+    \item Configure via \texttt{<ServerGarbageCollection>true</ServerGarbageCollection>} or environment variable.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{xml}
+<PropertyGroup>
+  <ServerGarbageCollection>true</ServerGarbageCollection>
+</PropertyGroup>
+  \end{minted}
+\end{frame}
+
+% 7 --- OpenTelemetry + Tempo tracing
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{** How do you send OpenTelemetry traces to Grafana Tempo?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** How do you send OpenTelemetry traces to Grafana Tempo?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item Tempo accepts OTLP; point the exporter to the Tempo endpoint.
+    \item Use \texttt{AddOpenTelemetry} with \texttt{AddOtlpExporter} or set \texttt{OTEL\_EXPORTER\_OTLP\_ENDPOINT}.
+    \item Ensure trace context propagation so spans from different services join in Tempo.
+    \item Visualize traces by adding Tempo as a data source in Grafana.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+builder.Services.AddOpenTelemetry()
+    .WithTracing(b => b
+        .AddAspNetCoreInstrumentation()
+        .AddOtlpExporter(o => o.Endpoint = new("http://tempo:4317")));
+  \end{minted}
+\end{frame}
+
+% 8 --- Security headers for Angular micro-frontends
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{** Which HTTP security headers help protect Angular micro-frontends?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** Which HTTP security headers help protect Angular micro-frontends?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{Content-Security-Policy} limits scripts and styles to trusted origins and isolates micro-frontends.
+    \item \textbf{X-Frame-Options} or \texttt{frame-ancestors} prevents clickjacking.
+    \item \textbf{Strict-Transport-Security} enforces HTTPS for all requests.
+    \item \textbf{X-Content-Type-Options: nosniff} and \textbf{Referrer-Policy: same-origin} reduce attack surface.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{nginx}
+add_header Content-Security-Policy "default-src 'self' https://cdn.example";
+add_header X-Content-Type-Options "nosniff";
+  \end{minted}
+\end{frame}
+
+% 9 --- Handling risky hotfix requests
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{** How do you handle urgent hotfix requests that carry significant risk?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** How do you handle urgent hotfix requests that carry significant risk?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item Clarify business impact and verify the issue to avoid unnecessary changes.
+    \item Scope the fix in a dedicated branch and guard it with a feature flag or configuration switch.
+    \item Run targeted tests and seek peer review before deploying.
+    \item Communicate a rollback plan and deployment window to stakeholders.
+  \end{itemize}
+  }
+\end{frame}
+
+% 10 --- Reducing lead time
+\QuestionSlide[\CategoryBadge[AuthColor!20]{Cloud}]{** What practices help reduce lead time from commit to production?}
+\begin{frame}[fragile]
+  \frametitle{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
+        \CategoryBadge[AuthColor!20]{Cloud}
+      };
+    \end{tikzpicture}
+
+    Answer \theqcounter: ** What practices help reduce lead time from commit to production?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item Automate build, test, and deployment stages with a fast CI/CD pipeline.
+    \item Use trunk-based development and small pull requests to minimize integration delays.
+    \item Invest in reliable automated tests and static analysis to eliminate manual gates.
+    \item Deploy behind feature flags and use progressive delivery to decouple release from deploy.
+  \end{itemize}
+  }
+\end{frame}
