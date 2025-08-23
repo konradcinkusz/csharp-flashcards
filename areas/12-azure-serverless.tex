@@ -1,0 +1,133 @@
+% 1 – What is Azure SQL Database?
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Azure SQL}]{** What is Azure SQL Database?}
+
+\begin{frame}[fragile]
+\frametitle{%
+\begin{tikzpicture}[remember picture, overlay]
+\node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+\CategoryBadge[MicroColor!20]{Azure SQL}
+};
+\end{tikzpicture}
+Answer \theqcounter: What is Azure SQL Database?%
+}
+
+{\footnotesize
+Azure SQL Database is Microsoft’s cloud-hosted, fully managed relational DBaaS built on the SQL Server engine. Microsoft handles patching, backups, high availability, and scaling, while you consume it via the TDS protocol using familiar tools (ADO.NET, EF Core, SSMS). Deployment models include Single DB, Elastic Pool, Serverless compute, and Hyperscale; security features like TDE, firewall rules, Azure AD auth, and private endpoints are built in.
+}
+
+\begin{minted}[fontsize=\tiny]{sql}
+-- Connect like SQL Server; same TDS protocol.
+-- Example: create a contained database user for AAD group (illustrative)
+CREATE USER [MyApp-Readers] FROM EXTERNAL PROVIDER;
+ALTER ROLE db_datareader ADD MEMBER [MyApp-Readers];
+\end{minted}
+\end{frame}
+
+% 2 – How does Azure SQL Database work?
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Azure SQL}]{* How does Azure SQL Database work under the hood?}
+
+\begin{frame}[fragile]
+\frametitle{%
+\begin{tikzpicture}[remember picture, overlay]
+\node[anchor=north east, xshift=-0.4cm, yshift=-0.8cm, text=black] at (current page.north east) {
+\CategoryBadge[MicroColor!20]{Azure SQL}
+};
+\end{tikzpicture}
+Answer \theqcounter: How does Azure SQL Database work under the hood?%
+}
+
+{\footnotesize
+Each database runs on a multi-tenant service fabric using the SQL Server engine. Compute and storage are abstracted: compute nodes host the engine and replicate data for built-in HA; storage is on redundant Azure storage. You connect to a logical server (a namespace for firewall, auth, and endpoints) and the service routes you to the current primary replica. In Serverless, compute auto-scales and can auto-pause; the first query after idle triggers resume.
+}
+
+\begin{minted}[fontsize=\scriptsize]{bat}
+REM Connecting with SqlCmd (illustrative)
+
+sqlcmd -S yourserver.database.windows.net ^
+       -d yourdb -G
+REM -G = Azure AD authentication
+\end{minted}
+
+\end{frame}
+
+% 3 – Azure SQL Database vs. SQL Server (MSSQL)
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Azure SQL}]{** What are the key differences between Azure SQL Database and SQL Server (MSSQL)?}
+
+\begin{frame}[fragile]
+\frametitle{%
+\begin{tikzpicture}[remember picture, overlay]
+\node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+\CategoryBadge[MicroColor!20]{Azure SQL}
+};
+\end{tikzpicture}
+Answer \theqcounter: Key differences Azure SQL vs. MSSQL%
+}
+
+{\scriptsize
+\setlength{\tabcolsep}{3pt}%
+\renewcommand{\arraystretch}{1.15}%
+\begin{tabular}{|p{.48\linewidth}|p{.48\linewidth}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Azure SQL Database} \quad vs \quad \textbf{SQL Server (MSSQL)}}\\
+\hline
+
+\multicolumn{2}{|l|}{\textbf{Deployment model}}\\ \hline
+PaaS (fully managed in Azure) & Self-managed on-prem/VM/container \\ \hline
+
+\multicolumn{2}{|l|}{\textbf{Management}}\\ \hline
+Microsoft handles patching, backups, HA & Team/admin owns install, patching, backups, HA \\ \hline
+
+\multicolumn{2}{|l|}{\textbf{Scalability}}\\ \hline
+Elastic compute/storage; DTU/vCore; Serverless; Hyperscale & Scale hardware or configure Always On/cluster \\ \hline
+
+\multicolumn{2}{|l|}{\textbf{Availability}}\\ \hline
+Built-in replicas and automatic failover & You configure clusters/AGs for HA/DR \\ \hline
+
+\multicolumn{2}{|l|}{\textbf{Features}}\\ \hline
+Most engine features; lacks some instance-level items (SQL Agent, cross-DB 3-part names, some CLR/PolyBase) & Full SQL Server feature set incl. instance-level features \\ \hline
+
+\multicolumn{2}{|l|}{\textbf{Licensing \& cost}}\\ \hline
+License included in consumption pricing & Separate SQL Server licensing (per-core/Server+CAL) \\ \hline
+
+\multicolumn{2}{|l|}{\textbf{Security}}\\ \hline
+TDE by default, Azure AD auth, private endpoints & Manual setup for encryption, auth, network isolation \\ \hline
+\end{tabular}
+
+\vspace{0.6em}
+\textbf{Pick Azure SQL:} elasticity, low ops, built-in HA/DR.\quad
+\textbf{Pick SQL Server:} full instance control, unsupported features, tight on-prem needs.
+} % end scriptsize group
+
+\end{frame}
+
+
+% 4 – EF Core in Azure “Serverless” (Functions + Azure SQL Serverless)
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Azure SQL}]{* Can I use EF Core in Azure serverless scenarios (Azure Functions + Azure SQL Serverless)?}
+
+\begin{frame}[fragile]
+\frametitle{%
+\begin{tikzpicture}[remember picture, overlay]
+\node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+\CategoryBadge[MicroColor!20]{Azure SQL}
+};
+\end{tikzpicture}
+Answer \theqcounter: EF Core with Azure Functions \& Azure SQL Serverless%
+}
+
+{\footnotesize
+Yes. Register EF Core via DI and create a fresh \texttt{DbContext} per invocation (prefer \texttt{IDbContextFactory<T>}). Use Azure AD Managed Identity, enable connection resiliency, and tune pooling to avoid exhausting connections when Functions scale out. Expect a cold query on auto-paused databases; mitigate with minimum vCores or disable auto-pause if latency sensitive.
+}
+
+\begin{minted}[fontsize=\tiny]{csharp}
+// Program.cs (isolated worker)
+builder.Services.AddDbContextFactory<AppDbContext>(opt =>
+opt.UseSqlServer(
+Environment.GetEnvironmentVariable("Sql__ConnectionString"),
+sql => sql.EnableRetryOnFailure(5).CommandTimeout(30)));
+
+// Example connection string (Managed Identity + pool tuning)
+var conn = "Server=tcp:yourserver.database.windows.net,1433;" +
+"Database=yourdb;Authentication=Active Directory Managed Identity;" +
+"Encrypt=True;TrustServerCertificate=False;Max Pool Size=50;";
+\end{minted}
+\end{frame}
