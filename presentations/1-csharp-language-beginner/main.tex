@@ -1,0 +1,228 @@
+\makeatletter
+\def\input@path{{../theme/}{./}}
+\makeatother
+\documentclass[aspectratio=169]{beamer}
+
+% ======================== Theme & Links ===========================
+\newcommand{\SidebarWidth}{3.4cm}
+\newcommand{\SidebarFont}{\scriptsize}
+\usetheme{deepdiveinto}
+\newcommand{\RepoURL}{https://github.com/konradcinkusz/csharp-flashcards}
+\newcommand{\BookURL}{https://github.com/konradcinkusz/csharp-flashcards/tree/main/areas}
+
+\title[C# Beginner Foundations]{C\# Beginner Foundations}
+\subtitle{Core Concepts from the Flashcards Series}
+\author[\href{https://github.com/konradcinkusz}{konradcinkusz \;|\; github.com/konradcinkusz}]{Konrad Cinkusz (\texttt{dev\_insight})}
+\institute{C\# Flashcards Learning Path}
+\date{\today}
+
+% ======================== Packages ================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc,shapes.misc}
+\usepackage{minted}
+
+\hypersetup{colorlinks=true, urlcolor=white}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}m{1.9cm}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\point}[1]{\textbf{Point \##1}}
+\newcommand{\step}[1]{\textbf{Implementation Step \##1}}
+
+\titlegraphic{%
+  {\footnotesize
+    \faGithub\ \href{\RepoURL}{\textcolor{mbSecondary}{Slides source (GitHub)}}\quad\textbullet\quad
+    \href{\BookURL}{\textcolor{mbSecondary}{Flashcards Area Reference}}%
+  }%
+}
+
+% ==================== Safe helpers for each frame =================
+\newcommand{\ProgressStep}[1]{\progressstep{#1}}
+\newcommand{\ThisFrameTitle}[1]{\frametitle{#1}}
+
+% ======================== Document =================================
+\begin{document}
+
+% ---------------- Title ----------------
+\begin{frame}
+  \ProgressStep{-1}\ThisFrameTitle{}
+  \titlepage
+\end{frame}
+
+% ---------------- Agenda ----------------
+\begin{frame}
+  \ProgressStep{-1}\ThisFrameTitle{What We'll Cover}
+  \begin{itemize}
+    \item The role of C\# and the .NET platform
+    \item Type system and memory fundamentals
+    \item Core object-oriented building blocks
+    \item Key takeaways for new C\# developers
+  \end{itemize}
+\end{frame}
+
+% ---------------- Platform ----------------
+\section{Platform Foundations}
+\begin{frame}
+  \ProgressStep{0}\ThisFrameTitle{Where C\# Fits in .NET}
+  \begin{itemize}
+    \item C\# is a modern, object-oriented language designed for the .NET ecosystem with strong static typing and rich standard libraries.
+    \item The .NET platform provides the Common Language Runtime (CLR), extensive base class libraries, and tooling for desktop, web, and cloud workloads.
+    \item The runtime enables multi-language interoperability so C\#, F\#, and VB.NET can share assemblies, libraries, and tooling.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \ProgressStep{1}\ThisFrameTitle{CLR, CTS, and CLS}
+  \begin{itemize}
+    \item \textbf{Common Language Runtime (CLR)} executes Intermediate Language (IL), performs JIT compilation, manages memory, and enforces security.
+    \item \textbf{Common Type System (CTS)} defines the set of data types and object behaviors so all .NET languages agree on layout and semantics.
+    \item \textbf{Common Language Specification (CLS)} is a subset of CTS rules that library authors follow to stay accessible across languages.
+  \end{itemize}
+  \vspace{0.6em}
+  \begin{block}{Why it matters}
+    Understanding the runtime contract explains why certain language features (like overloading or unsigned types) must observe interoperability rules.
+  \end{block}
+\end{frame}
+
+% ---------------- Types & Memory ----------------
+\section{Types \& Memory}
+\begin{frame}
+  \ProgressStep{2}\ThisFrameTitle{Value vs. Reference Types}
+  \begin{tabularx}{\linewidth}{@{}lY@{}}
+    \toprule
+    \textbf{Value Types} & Stored inline (stack or inside containing object); assignments copy the data. Examples: \code{int}, \code{double}, custom \code{struct}. \\
+    \midrule
+    \textbf{Reference Types} & Stored on the managed heap; variables hold references, and assignments copy the reference. Examples: \code{class}, \code{string}, \code{List<T>}. \\
+    \bottomrule
+  \end{tabularx}
+  \vspace{0.6em}
+  \begin{itemize}
+    \item Structs remain value types even when they hold reference-type fields.
+    \item Value types can be promoted to reference types through boxing when APIs expect \code{object}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \ProgressStep{3}\ThisFrameTitle{Stack and Heap Allocation}
+  \begin{itemize}
+    \item Stack allocation is a simple pointer move (push/pop), making local value types extremely fast.
+    \item Heap allocation tracks metadata, handles fragmentation, and later requires garbage collection—ideal for long-lived or variable-sized objects.
+    \item Structs can live on the heap when embedded in classes, stored in arrays, or captured by closures; allocation depends on context rather than type name.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \ProgressStep{4}\ThisFrameTitle{Boxing and Unboxing}
+  Boxing wraps value types in an \code{object} so they can flow through reference-type APIs. Unboxing recovers the original value.
+  \vspace{0.6em}
+  \begin{minted}{csharp}
+int number = 42;
+object boxed = number;     // boxing (heap allocation)
+int unboxed = (int)boxed;  // unboxing (copy back to stack)
+  \end{minted}
+  \begin{itemize}
+    \item Prefer generics and span-based APIs to avoid boxing in performance-sensitive paths.
+    \item Each box/unbox incurs allocation and a type check; avoid in tight loops.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \ProgressStep{5}\ThisFrameTitle{Managed Memory and the GC}
+  \begin{itemize}
+    \item Garbage collection is the CLR’s automatic memory management system.
+    \item It periodically finds objects that are no longer reachable and reclaims their memory, preventing leaks.
+    \item Managed memory means developers rarely call free manually—the CLR reclaims space when objects fall out of scope.
+  \end{itemize}
+  \vspace{0.6em}
+  \begin{minted}{csharp}
+class Demo
+{
+    public void CreateObjects()
+    {
+        var buffer = new byte[1024 * 1024]; // 1 MB array
+    }
+}
+// 'buffer' is collected when out of scope and the GC runs
+  \end{minted}
+\end{frame}
+
+% ---------------- Language Basics ----------------
+\section{Object-Oriented Building Blocks}
+\begin{frame}
+  \ProgressStep{6}\ThisFrameTitle{Classes and Structs}
+  \begin{itemize}
+    \item Classes are reference types allocated on the heap and support inheritance and polymorphism.
+    \item Structs are value types that copy by value, cannot inherit from other structs, and are stored inline or on the stack.
+    \item Both participate in the CTS but follow different memory and inheritance rules.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \ProgressStep{7}\ThisFrameTitle{Interfaces and Abstract Classes}
+  \begin{itemize}
+    \item Interfaces declare method and property contracts without providing an implementation.
+    \item Classes or structs implement interfaces to guarantee that specific members exist.
+    \item Abstract classes can combine abstract and concrete members, cannot be instantiated, and serve as base types for derived classes.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \ProgressStep{8}\ThisFrameTitle{Properties, Indexers, and Methods}
+  \begin{itemize}
+    \item Properties wrap fields with \code{get}/\code{set} accessors, enabling validation and encapsulation.
+    \item Indexers expose objects via array-like syntax for natural access to collections or maps.
+    \item Method overloading provides multiple signatures for related operations, improving readability without sacrificing type safety.
+  \end{itemize}
+  \vspace{0.6em}
+  \begin{minted}{csharp}
+public class NameBook
+{
+    private readonly Dictionary<int, string> names = new();
+
+    public string this[int index]
+    {
+        get => names.TryGetValue(index, out var n) ? n : "Unknown";
+        set => names[index] = value;
+    }
+}
+  \end{minted}
+\end{frame}
+
+\begin{frame}
+  \ProgressStep{9}\ThisFrameTitle{Object Lifetime}
+  \begin{itemize}
+    \item Constructors are special methods that initialize new instances and can be overloaded for varied setup needs.
+    \item Destructors (finalizers) execute just before the GC reclaims an object, enabling cleanup of unmanaged resources.
+    \item Because the GC decides when to run finalizers, cleanup timing is nondeterministic compared with constructors.
+  \end{itemize}
+\end{frame}
+
+% ---------------- Summary ----------------
+\section{Summary}
+\begin{frame}
+  \ProgressStep{-1}\ThisFrameTitle{Key Takeaways}
+  \begin{itemize}
+    \item Master the CLR + CTS + CLS contract to understand how C\# code executes alongside other .NET languages.
+    \item Choose value vs. reference types intentionally—allocation, copying, and GC behavior drive performance.
+    \item Lean on properties, interfaces, and constructors to model rich domain objects while keeping memory management predictable.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \ProgressStep{-1}\ThisFrameTitle{}
+  \begin{center}
+    \LARGE Ready to Dive Deeper?\\[2mm]
+    \large Explore the remaining flashcard areas for intermediate and advanced topics.
+  \end{center}
+\end{frame}
+
+\end{document}

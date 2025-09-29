@@ -1,0 +1,271 @@
+% beamerthemedeepdiveinto.sty 
+% -----------------------------------------------------------------------------
+% Minimal modern beamer theme + RIGHT SIDEBAR STEP STACK
+% -----------------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemedeepdiveinto}[2025/09/09 v1.6 Sidebar centered + fade]
+
+\mode<presentation>
+
+% ------------------------------ Deps -----------------------------------------
+\RequirePackage{fontawesome5}
+\RequirePackage{tabularx}
+\RequirePackage{etoolbox}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+\RequirePackage{newunicodechar}
+
+% Unicode helpers
+\newunicodechar{≈}{$\approx$}
+\newunicodechar{→}{$\to$}
+\newunicodechar{λ}{$\lambda$}
+\newunicodechar{φ}{$\varphi$}
+\newunicodechar{μ}{$\mu$}
+\newunicodechar{ν}{$\nu$}
+\newunicodechar{∂}{$\partial$}
+
+% GR shorthand
+\newcommand{\coords}{(t,r,\varphi)}
+\newcommand{\mom}{(p_t,p_r,p_\varphi)}
+\newcommand{\pt}{p_t}
+\newcommand{\pr}{p_r}
+\newcommand{\pphi}{p_\varphi}
+
+% --------------------------- Color palette -----------------------------------
+\definecolor{mbPrimary}{HTML}{0F766E}
+\definecolor{mbAccent}{HTML}{8B5CF6}
+\definecolor{mbSecondary}{HTML}{2563EB}
+\definecolor{mbBg}{HTML}{FFFFFF}
+\definecolor{mbFg}{HTML}{111827}
+\definecolor{mbMuted}{HTML}{6B7280}
+\definecolor{mbPanel}{HTML}{F8FAFC}
+
+\setbeamercolor{normal text}{fg=mbFg,bg=mbBg}
+\setbeamercolor{structure}{fg=mbPrimary}
+\setbeamercolor{alerted text}{fg=mbAccent}
+
+% Titles / blocks / footline
+\setbeamercolor{title}{fg=mbPrimary}
+\setbeamercolor{subtitle}{fg=mbMuted}
+\setbeamercolor{author}{fg=mbMuted}
+\setbeamercolor{date}{fg=mbMuted}
+\setbeamercolor{institute}{fg=mbMuted}
+\setbeamercolor{block title}{fg=white,bg=mbPrimary}
+\setbeamercolor{block body}{fg=mbFg,bg=mbPrimary!5}
+\setbeamercolor{block title example}{fg=white,bg=mbSecondary}
+\setbeamercolor{block body example}{fg=mbFg,bg=mbSecondary!5}
+\setbeamercolor{block title alerted}{fg=white,bg=mbAccent}
+\setbeamercolor{block body alerted}{fg=mbFg,bg=mbAccent!6}
+\setbeamercolor{footline}{fg=white,bg=mbPrimary}
+\setbeamercolor{headline}{fg=mbPrimary,bg=mbBg}
+
+\usefonttheme{professionalfonts}
+\setbeamerfont{title}{series=\bfseries,size=\LARGE}
+\setbeamerfont{subtitle}{series=\mdseries,size=\large}
+\setbeamerfont{frametitle}{series=\bfseries,size=\Large}
+\setbeamerfont{block title}{series=\bfseries}
+\setbeamerfont{footline}{size=\scriptsize}
+
+\setbeamertemplate{items}[triangle]
+\setbeamertemplate{itemize items}[triangle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{navigation symbols}{}
+
+% ----------------------------- Title page ------------------------------------
+\defbeamertemplate*{title page}{mybeamer}{
+  \vspace*{1.5em}
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+  \vspace{0.4em}
+  {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
+  \vspace{1.2em}
+  {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}
+  {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}
+  {\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}
+
+  \vspace{0.8em}
+  {\inserttitlegraphic}
+
+  \vspace{1.0em}
+  \begin{tikzpicture}
+    \fill[mbPrimary] (0,0) rectangle (\paperwidth,0.18cm);
+    \fill[mbAccent] (0,0.18) rectangle (.35\paperwidth,0.36cm);
+  \end{tikzpicture}
+}
+\setbeamertemplate{title page}[mybeamer]
+
+% ----------------------------- Frame title -----------------------------------
+\defbeamertemplate*{frametitle}{mybeamer}{
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=3.2ex,dp=1.2ex,leftskip=1.2em,rightskip=1.2em]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}
+  \begin{tikzpicture}
+    \fill[mbPrimary] (0,0) rectangle (\paperwidth,0.06cm);
+  \end{tikzpicture}
+  \vspace{0.6ex}
+}
+\setbeamercolor{frametitle}{fg=mbFg,bg=mbBg}
+\setbeamertemplate{frametitle}[mybeamer]
+
+% ----------------------------- Footline --------------------------------------
+\defbeamertemplate*{footline}{mybeamer}{
+  \leavevmode
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.8ex,dp=1.2ex,leftskip=1em,rightskip=1em]{footline}
+    \usebeamerfont{footline}%
+    \begingroup\hypersetup{linkcolor=white,urlcolor=white}\faGithub\ \insertshortauthor\endgroup
+    \hfill
+    \begingroup\hypersetup{linkcolor=white}\insertshorttitle\endgroup
+    \hfill
+    \insertframenumber/\inserttotalframenumber
+  \end{beamercolorbox}%
+}
+
+% ----------------------------- Implementation progress bar --------------------
+% Draw a horizontal sequence of steps and highlight the current one.
+\newcommand{\implprogress}[1]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,xshift=.3cm,yshift=-.5cm] at (current page.north west){%
+      \begin{tikzpicture}[x=1.3cm,y=.6cm]
+        \foreach \i/\txt in {
+          0/{Bootstrap},
+          1/{State},
+          2/{RK4},
+          3/{IMetric},
+          4/{Schwarz.},
+          5/{Raytracer},
+          6/{PPM},
+          7/{Progress},
+          8/{Main}
+        }{
+          \ifnum\i=#1
+            \node[anchor=west,fill=mbAccent!40,draw=mbAccent,rounded corners=2pt,
+                  minimum width=1.2cm,minimum height=.55cm]
+                 at (\i,0) {\scriptsize\bfseries\txt};
+          \else
+            \node[anchor=west,draw=mbMuted,rounded corners=2pt,
+                  minimum width=1.2cm,minimum height=.55cm]
+                 at (\i,0) {\scriptsize\txt};
+          \fi
+        }
+      \end{tikzpicture}
+    };
+  \end{tikzpicture}%
+}
+
+% ----------------------------- Headline (optional) ---------------------------
+% Commented out by default to keep things clean.
+% \setbeamertemplate{headline}{
+%   \begin{beamercolorbox}[wd=\paperwidth,ht=1.6ex,dp=0ex]{headline}\end{beamercolorbox}
+% }
+
+% ----------------------------- Section styling --------------------------------
+% Map section numbers to icons; fall back to the numeric step when no icon is
+% defined.  These icons will be prepended to entries in the sidebar table of
+% contents.
+\newcommand{\mb@sectionicon}[1]{%
+  \ifcase#1\relax
+  \or\faSeedling       % 1 Bootstrap
+  \or\faCube           % 2 State
+  \or\faProjectDiagram % 3 RK4
+  \or\faRuler          % 4 IMetric
+  \or\faBullseye       % 5 Schwarzschild Metric
+  \or\faCrosshairs     % 6 Raytracer
+  \or\faFileImage      % 7 PPM Writer
+  \or\faTasks          % 8 Progress
+  \or\faPlay           % 9 Program
+  \or\faCheck          %10 Invariant Check
+  \or\faFlagCheckered  %11 Summary
+  \else #1\fi}
+
+\setbeamertemplate{section in toc}{%
+  \leavevmode
+  \leftskip=0pt
+  {\usebeamercolor[fg]{section in toc}\mb@sectionicon{\inserttocsectionnumber}}\hspace{0.6em}%
+  \inserttocsection\par}
+
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode
+  \leftskip=1.4em
+  {\usebeamercolor[fg]{subsection in toc}\inserttocsectionnumber.\inserttocsubsectionnumber}\hspace{0.6em}%
+  \inserttocsubsection\par}
+
+\setbeamercolor{section in toc}{fg=mbPrimary}
+\setbeamercolor{section in toc shaded}{fg=mbMuted}
+\setbeamercolor{subsection in toc}{fg=mbMuted}
+\setbeamerfont{section in toc}{size=\scriptsize}
+\setbeamerfont{subsection in toc}{size=\scriptsize}
+
+% ----------------------------- Standout frame option --------------------------
+% Your slides used \begin{frame}[standout] ...\end{frame}.
+% We emulate a simple "standout" look: solid background, white text, big title.
+\makeatletter
+\define@key{beamerframe}{standout}[true]{%
+  \setbeamercolor{background canvas}{bg=mbPrimary}%
+  \setbeamercolor{normal text}{fg=white,bg=mbPrimary}%
+  \setbeamercolor{frametitle}{fg=white,bg=mbPrimary}%
+  \setbeamerfont{frametitle}{series=\bfseries,size=\huge}%
+}
+\makeatother
+
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{caption}[numbered]
+\setbeamercolor{quote}{fg=mbMuted}
+\setbeamerfont{quote}{shape=\itshape}
+
+% ===================== RIGHT SIDEBAR TABLE OF CONTENTS ==
+\newlength{\mbSidebarW}
+\newcommand{\setSidebarWidth}[1]{%
+  \setlength{\mbSidebarW}{#1}%
+  \setbeamersize{text margin right=\dimexpr\mbSidebarW+7mm\relax}%
+}
+\setSidebarWidth{3.4cm}
+% Sidebar width and font can be customized by presenters before loading the
+% theme. Provide defaults here and allow overrides via \renewcommand.
+\providecommand{\SidebarWidth}{3.4cm}
+\providecommand{\SidebarFont}{\scriptsize}
+\setbeamersize{text margin right=\dimexpr\SidebarWidth+7mm\relax} 
+
+\makeatletter
+
+% Placeholder for backward compatibility; previously used to highlight a tile.
+\newcommand{\progressstep}[1]{}
+
+\newlength{\SidebarYShift}
+\setlength{\SidebarYShift}{0pt} % small positive = down; negative = up
+
+% Render a panel on the right with a dynamic table of contents highlighting the
+% current section. This replaces the previous fixed tile stack implementation.
+\newcommand{\mb@rendersidebar}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[mbPanel] ($(current page.north east)+(-\SidebarWidth,0)$)
+                   rectangle (current page.south east);
+    \draw[mbMuted!40, line width=.4pt]
+      ($(current page.north east)+(-\SidebarWidth,0)$) --
+      ($(current page.south east)+(-\SidebarWidth,0)$);
+    \node[
+          anchor=west,              % center-left anchor
+          inner sep=4pt,
+          text width=\dimexpr\mbSidebarW-8pt\relax
+        ] at (
+          $ (current page.north east)!0.5!(current page.south east) % midpoint right edge
+            +(-\mbSidebarW+4pt,\SidebarYShift) $
+        ) {%
+          \raggedright\scriptsize
+          {\usebeamerfont{section in toc}\usebeamercolor[fg]{section in toc}\textbf{Contents}\par}
+          \vspace{0.5em}
+          \ifnum\value{section}=0
+            \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/shaded]
+          \else
+            \tableofcontents[currentsection,currentsubsection,
+              sectionstyle=show/shaded,subsectionstyle=show/show/shaded]
+          \fi
+        };
+  \end{tikzpicture}%
+}
+
+\addtobeamertemplate{background canvas}{}{\mb@rendersidebar}
+
+\makeatother
+\mode<all>
