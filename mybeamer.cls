@@ -41,8 +41,9 @@
 \definecolor{CollColor}{HTML}{D81B60}
 \definecolor{AuthColor}{RGB}{155,89,182}
 \definecolor{MicroColor}{HTML}{009688}
+\definecolor{AIColor}{HTML}{2196F3}
 
-\definecolor{CodeBg}{HTML}{F8F8F8} 
+\definecolor{CodeBg}{HTML}{F8F8F8}
 \definecolor{sec1bg}{HTML}{6BAED6}  % C# Beginner – MemoryColor
 \definecolor{sec2bg}{HTML}{D81B60}  % C# Intermediate – CollColor
 \definecolor{sec3bg}{HTML}{9C27B0}  % C# Advanced – MetaColor
@@ -55,6 +56,7 @@
 \definecolor{sec10bg}{HTML}{009688} % Microservices – MicroColor
 \definecolor{sec11bg}{HTML}{9B59B6} % Advanced Cloud & Leadership – AuthColor
 \definecolor{sec12bg}{HTML}{9B59B6} % Advanced Cloud & Leadership – AuthColor
+\definecolor{sec13bg}{HTML}{2196F3} % C# AI & .NET – AIColor
 
 \setbeamercolor{sec1}{fg=white,bg=sec1bg}
 \setbeamercolor{sec2}{fg=white,bg=sec2bg}
@@ -68,6 +70,7 @@
 \setbeamercolor{sec10}{fg=white,bg=sec10bg}
 \setbeamercolor{sec11}{fg=white,bg=sec11bg}
 \setbeamercolor{sec12}{fg=white,bg=sec12bg}
+\setbeamercolor{sec13}{fg=white,bg=sec13bg}
 
 \lstset{
   basicstyle=\tiny\ttfamily,
