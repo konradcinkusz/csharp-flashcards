@@ -1,0 +1,363 @@
+% C# AI & .NET AI section
+% Covers Microsoft.Extensions.AI, Semantic Kernel, RAG, Vector Stores, Agents
+
+% 1 – Microsoft.Extensions.AI
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is Microsoft.Extensions.AI?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Microsoft.Extensions.AI?%
+  }
+
+  {\footnotesize
+  \textbf{Microsoft.Extensions.AI} is a set of provider-agnostic .NET abstractions for integrating AI services.
+  It exposes \texttt{IChatClient} and \texttt{IEmbeddingGenerator} through familiar DI, logging, and
+  middleware patterns, so you can swap providers (OpenAI, Azure OpenAI, Ollama) without changing call sites.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// Register with DI
+builder.Services.AddChatClient(
+    new OpenAIClient(openAiKey)
+        .AsChatClient("gpt-4o"));
+
+// Consume anywhere via IChatClient
+public class MyService(IChatClient chat)
+{
+    public async Task<string> AskAsync(string q) =>
+        (await chat.CompleteAsync(q)).Message.Text!;
+}
+  \end{minted}
+\end{frame}
+
+% 2 – IChatClient
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is IChatClient?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is IChatClient?%
+  }
+
+  {\footnotesize
+  \texttt{IChatClient} is the core Microsoft.Extensions.AI interface for sending chat messages to any LLM.
+  It provides \texttt{CompleteAsync} (single response) and \texttt{CompleteStreamingAsync} (token-by-token
+  streaming), plus middleware hooks for caching, telemetry, and automatic function invocation.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+IChatClient client =
+    new AzureOpenAIClient(endpoint, credential)
+        .AsChatClient("gpt-4o");
+
+// Single-turn completion
+ChatCompletion resp = await client.CompleteAsync("Explain LINQ.");
+Console.WriteLine(resp.Message.Text);
+
+// Streaming
+await foreach (var chunk in client.CompleteStreamingAsync("Tell a joke"))
+    Console.Write(chunk.Text);
+  \end{minted}
+\end{frame}
+
+% 3 – IEmbeddingGenerator
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is IEmbeddingGenerator?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is IEmbeddingGenerator?%
+  }
+
+  {\footnotesize
+  \texttt{IEmbeddingGenerator<TInput, TEmbedding>} converts text (or other inputs) into numeric vectors.
+  These embeddings enable \textbf{semantic search} and \textbf{RAG} by comparing meaning rather than
+  exact keywords. Any provider (OpenAI, Azure, local) can be swapped behind the same interface.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+IEmbeddingGenerator<string, Embedding<float>> gen =
+    new OpenAIClient(apiKey)
+        .AsEmbeddingGenerator("text-embedding-3-small");
+
+// Generate a vector for one string
+var result = await gen.GenerateAsync(["What is RAG?"]);
+ReadOnlyMemory<float> vec = result[0].Vector;
+
+Console.WriteLine($"Dimensions: {vec.Length}"); // 1536
+  \end{minted}
+\end{frame}
+
+% 4 – Semantic Kernel
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is Semantic Kernel?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Semantic Kernel?%
+  }
+
+  {\footnotesize
+  \textbf{Semantic Kernel (SK)} is Microsoft's open-source AI orchestration SDK for .NET (also Python/Java).
+  It builds on Microsoft.Extensions.AI to add: \textbf{plugins} (tools the LLM can call),
+  \textbf{agents} (autonomous workflows), \textbf{vector store memory} (RAG), and
+  \textbf{multi-agent orchestration}.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+Kernel kernel = Kernel.CreateBuilder()
+    .AddAzureOpenAIChatCompletion(
+        deploymentName: "gpt-4o",
+        endpoint: azureEndpoint,
+        apiKey: azureKey)
+    .Build();
+
+string result = await kernel.InvokePromptAsync(
+    "Write a haiku about {{$topic}}",
+    new KernelArguments { ["topic"] = "C#" });
+
+Console.WriteLine(result);
+  \end{minted}
+\end{frame}
+
+% 5 – Semantic Kernel Plugins
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What are Semantic Kernel Plugins?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are Semantic Kernel Plugins?%
+  }
+
+  {\footnotesize
+  SK \textbf{Plugins} wrap your .NET methods so an LLM can discover and invoke them as \textbf{tools}
+  (function calling). Decorate methods with \texttt{[KernelFunction]} and \texttt{[Description]},
+  then add the plugin to the Kernel. The LLM decides which functions to call based on user intent.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+public class WeatherPlugin
+{
+    [KernelFunction, Description("Get temperature for a city")]
+    public Task<string> GetTemperatureAsync(
+        [Description("City name")] string city) =>
+        Task.FromResult($"{city}: 22 deg C");
+}
+
+kernel.Plugins.AddFromType<WeatherPlugin>();
+
+var settings = new OpenAIPromptExecutionSettings
+    { ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions };
+var result = await kernel.InvokePromptAsync(
+    "Weather in Warsaw?", new KernelArguments(settings));
+  \end{minted}
+\end{frame}
+
+% 6 – Semantic Kernel Agents
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{*** What are Semantic Kernel Agents?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are Semantic Kernel Agents?%
+  }
+
+  {\footnotesize
+  SK \textbf{Agents} are autonomous AI entities that reason and act over multiple turns without manual
+  orchestration. \texttt{ChatCompletionAgent} wraps a Kernel and a system prompt; \texttt{AgentGroupChat}
+  coordinates multiple specialized agents with selection and termination strategies.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+ChatCompletionAgent reviewer = new()
+{
+    Name = "CodeReviewer",
+    Instructions = "Review C# code for bugs and style.",
+    Kernel = kernel
+};
+
+AgentGroupChat chat = new(reviewer)
+{
+    ExecutionSettings = new()
+    {
+        TerminationStrategy = new ApprovalTerminationStrategy()
+    }
+};
+
+await foreach (var msg in chat.InvokeAsync())
+    Console.WriteLine($"[{msg.AuthorName}] {msg.Content}");
+  \end{minted}
+\end{frame}
+
+% 7 – RAG
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is RAG (Retrieval-Augmented Generation)?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is RAG?%
+  }
+
+  {\footnotesize
+  \textbf{RAG} grounds LLM responses in your own data: chunk documents $\to$ generate embeddings $\to$
+  store in a vector DB $\to$ at query time, retrieve top-K relevant chunks $\to$ inject into the prompt.
+  This reduces hallucinations and gives the model domain-specific knowledge without fine-tuning.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// 1. Ingest: embed and store chunks
+var vecs = await embeddingGen.GenerateAsync(chunks);
+await collection.UpsertBatchAsync(vecs);
+
+// 2. Retrieve: find top matches for query
+var queryVec = (await embeddingGen.GenerateAsync([query]))[0].Vector;
+var hits = await collection.SearchAsync(queryVec, top: 3);
+
+// 3. Generate: augment the prompt with context
+string context = string.Join("\n", hits.Select(h => h.Record.Text));
+var answer = await chat.CompleteAsync(
+    $"Use these facts:\n{context}\n\nQuestion: {query}");
+  \end{minted}
+\end{frame}
+
+% 8 – IVectorStore
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{*** What is IVectorStore in .NET AI?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is IVectorStore in .NET AI?%
+  }
+
+  {\footnotesize
+  \texttt{IVectorStore} (from \texttt{Microsoft.Extensions.VectorData}) is a provider-agnostic abstraction
+  over vector databases (Azure AI Search, Qdrant, Redis, InMemory). You annotate a record class with
+  \texttt{[VectorStoreRecordKey]}, \texttt{[VectorStoreRecordData]}, and \texttt{[VectorStoreRecordVector]}
+  to declare the schema.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+public class DocRecord
+{
+    [VectorStoreRecordKey]
+    public string Id { get; set; } = default!;
+
+    [VectorStoreRecordData]
+    public string Text { get; set; } = default!;
+
+    [VectorStoreRecordVector(Dimensions: 1536)]
+    public ReadOnlyMemory<float> Embedding { get; set; }
+}
+
+var store = new InMemoryVectorStore();
+var coll = store.GetCollection<string, DocRecord>("docs");
+await coll.CreateCollectionIfNotExistsAsync();
+await coll.UpsertAsync(new DocRecord { Id = "1", Text = "Hi", Embedding = vec });
+  \end{minted}
+\end{frame}
+
+% 9 – Kernel object
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is the Semantic Kernel Kernel object?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Semantic Kernel Kernel object?%
+  }
+
+  {\footnotesize
+  \texttt{Kernel} is SK's central DI container. It holds AI services (chat, embedding), plugins, filters,
+  and middleware. Built via \texttt{Kernel.CreateBuilder()}, it propagates dependency injection and
+  telemetry throughout the entire SK pipeline.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+IKernelBuilder builder = Kernel.CreateBuilder();
+
+builder.AddAzureOpenAIChatCompletion("gpt-4o", endpoint, key);
+builder.Plugins.AddFromType<TimePlugin>();
+builder.Services.AddSingleton<IMyService, MyService>();
+
+Kernel kernel = builder.Build();
+
+// Invoke a named plugin function directly
+KernelFunctionResult time = await kernel.InvokeAsync(
+    pluginName: "TimePlugin",
+    functionName: "GetCurrentUtcTime");
+
+Console.WriteLine(time.GetValue<string>());
+  \end{minted}
+\end{frame}
+
+% 10 – AI middleware pipeline
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{*** What is AI middleware in Microsoft.Extensions.AI?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AIColor!20]{AI \& .NET}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is AI middleware in Microsoft.Extensions.AI?%
+  }
+
+  {\footnotesize
+  \texttt{IChatClient} supports a \textbf{DelegatingChatClient} pipeline (like ASP.NET Core middleware).
+  Built-in middleware: \texttt{UseDistributedCache} (semantic caching), \texttt{UseOpenTelemetry}
+  (distributed tracing), and \texttt{UseFunctionInvocation} (auto tool-call loop).
+  Custom middleware can wrap any step.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+IChatClient client = new OpenAIClient(key)
+    .AsChatClient("gpt-4o")
+    .AsBuilder()
+    .UseDistributedCache(distributedCache)   // semantic response cache
+    .UseOpenTelemetry(loggerFactory)         // traces & metrics
+    .UseFunctionInvocation()                 // auto tool-call loop
+    .Build();
+
+// The pipeline is transparent to callers
+ChatCompletion reply = await client.CompleteAsync(
+    "What time is it in Tokyo?");
+Console.WriteLine(reply.Message.Text);
+  \end{minted}
+\end{frame}
