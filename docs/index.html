@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C# FlashCards 2025 — Interview prep deck for C# developers</title>
+<meta name="description" content="300+ Q&amp;A flashcards covering C# language basics, LINQ, async/await, Entity Framework, design patterns, OAuth, microservices, Azure serverless, and AI — compiled to a one-click PDF via GitHub Actions.">
+<style>
+/* ── tokens ─────────────────────────────────────────────────────────────── */
+:root {
+  --bg:       #0d0a1a;
+  --surf:     #13102a;
+  --surf2:    #1a163a;
+  --border:   #2a2050;
+  --text:     #e8e4f3;
+  --dim:      #9490b5;
+  --accent:   #a855f7;
+  --accent2:  #9333ea;
+  --blue:     #60a5fa;
+  --green:    #4ade80;
+  --amber:    #fbbf24;
+  --red:      #f87171;
+  --mono: 'Cascadia Code','JetBrains Mono',Consolas,'Courier New',monospace;
+  --sans: -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: light) { :root {
+  --bg:#f5f3ff; --surf:#ffffff; --surf2:#f3f0ff; --border:#ddd6fe;
+  --text:#1e1b4b; --dim:#6b7280;
+  --accent:#7c3aed; --accent2:#6d28d9; --blue:#2563eb; --green:#16a34a;
+  --amber:#d97706; --red:#dc2626;
+}}
+:root[data-theme="dark"] {
+  --bg:#0d0a1a; --surf:#13102a; --surf2:#1a163a; --border:#2a2050;
+  --text:#e8e4f3; --dim:#9490b5;
+  --accent:#a855f7; --accent2:#9333ea; --blue:#60a5fa; --green:#4ade80;
+  --amber:#fbbf24; --red:#f87171;
+}
+:root[data-theme="light"] {
+  --bg:#f5f3ff; --surf:#ffffff; --surf2:#f3f0ff; --border:#ddd6fe;
+  --text:#1e1b4b; --dim:#6b7280;
+  --accent:#7c3aed; --accent2:#6d28d9; --blue:#2563eb; --green:#16a34a;
+  --amber:#d97706; --red:#dc2626;
+}
+
+/* ── reset ──────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+img,svg{display:block}
+code{font-family:var(--mono)}
+
+/* ── nav ────────────────────────────────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;gap:16px;
+  padding:0 24px;height:56px;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;color:var(--text);text-decoration:none!important}
+.nav-logo svg{width:28px;height:28px;flex-shrink:0}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:4px;margin-left:auto}
+.nav-links a{
+  padding:6px 12px;border-radius:6px;font-size:13px;color:var(--dim);
+  transition:color .15s,background .15s;
+}
+.nav-links a:hover{color:var(--text);background:var(--surf2);text-decoration:none}
+.nav-cta{
+  background:var(--accent);color:#fff!important;font-weight:600;
+  padding:6px 14px;border-radius:6px;font-size:13px;
+  transition:opacity .15s;
+}
+.nav-cta:hover{opacity:.88;text-decoration:none!important}
+
+/* ── hero ───────────────────────────────────────────────────────────────── */
+.hero{
+  position:relative;
+  padding:88px 24px 72px;
+  text-align:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% -10%, color-mix(in srgb,var(--accent) 12%,transparent) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-logo{
+  width:88px;height:88px;
+  margin:0 auto 24px;
+  filter:drop-shadow(0 0 28px color-mix(in srgb,var(--accent) 40%,transparent));
+}
+.hero h1{
+  font-size:clamp(2.2rem,6vw,3.4rem);
+  font-weight:800;
+  letter-spacing:-1.5px;
+  line-height:1.1;
+  margin-bottom:18px;
+}
+.hero h1 span{color:var(--accent)}
+.hero-sub{
+  font-size:clamp(1rem,2.5vw,1.2rem);
+  color:var(--dim);
+  max-width:580px;
+  margin:0 auto 32px;
+  line-height:1.6;
+}
+.hero-sub strong{color:var(--text)}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:11px 22px;border-radius:8px;font-size:14px;font-weight:600;
+  transition:opacity .15s,transform .1s;cursor:pointer;border:none;
+}
+.btn:hover{opacity:.88;transform:translateY(-1px);text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-secondary{
+  background:var(--surf);color:var(--text);
+  border:1px solid var(--border);
+}
+.badges{
+  display:flex;gap:6px;justify-content:center;flex-wrap:wrap;
+  opacity:.75;
+}
+.badges img{height:20px}
+
+/* ── section layout ─────────────────────────────────────────────────────── */
+.section{padding:64px 24px}
+.section-inner{max-width:1080px;margin:0 auto}
+.section-label{
+  font-family:var(--mono);font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--accent);
+  margin-bottom:10px;
+}
+.section h2{
+  font-size:clamp(1.5rem,3.5vw,2rem);
+  font-weight:700;letter-spacing:-0.5px;
+  margin-bottom:16px;
+  text-wrap:balance;
+}
+.section p{color:var(--dim);max-width:620px;line-height:1.7}
+hr.divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* ── what ───────────────────────────────────────────────────────────────── */
+.what-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;
+  align-items:center;
+}
+@media(max-width:680px){.what-grid{grid-template-columns:1fr}}
+.what-text p{color:var(--dim);line-height:1.75;margin-bottom:14px}
+.what-text p:last-child{margin-bottom:0}
+.what-text strong{color:var(--text)}
+
+/* flip card demo */
+.flip-demo{display:flex;flex-direction:column;gap:10px}
+.card{
+  background:var(--surf);border:1px solid var(--border);border-radius:10px;
+  padding:16px 20px;position:relative;
+}
+.card.question{border-left:3px solid var(--accent)}
+.card.answer{border-left:3px solid var(--green)}
+.card-tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;
+  margin-bottom:6px;
+}
+.card.question .card-tag{color:var(--accent)}
+.card.answer .card-tag{color:var(--green)}
+.card-body{font-size:13.5px;color:var(--text);line-height:1.6}
+.card-badge{
+  position:absolute;top:12px;right:14px;
+  font-family:var(--mono);font-size:10px;
+  background:color-mix(in srgb,var(--accent) 15%,transparent);
+  color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);
+  padding:2px 8px;border-radius:20px;
+}
+.card.answer .card-badge{
+  background:color-mix(in srgb,var(--green) 15%,transparent);
+  color:var(--green);border-color:color-mix(in srgb,var(--green) 35%,transparent);
+}
+
+/* ── features ───────────────────────────────────────────────────────────── */
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:16px;margin-top:32px;
+}
+.feat{
+  background:var(--surf);border:1px solid var(--border);border-radius:10px;
+  padding:20px;transition:border-color .2s,transform .2s;
+}
+.feat:hover{border-color:color-mix(in srgb,var(--accent) 50%,var(--border));transform:translateY(-2px)}
+.feat-icon{font-size:22px;margin-bottom:12px}
+.feat h3{font-size:14px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.feat p{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* ── topics ─────────────────────────────────────────────────────────────── */
+.topics-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:12px;margin-top:32px;
+}
+.topic{
+  background:var(--surf);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;display:flex;align-items:flex-start;gap:12px;
+  transition:border-color .2s,transform .15s;
+}
+.topic:hover{border-color:color-mix(in srgb,var(--accent) 50%,var(--border));transform:translateY(-1px)}
+.topic-num{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  color:var(--accent);min-width:22px;padding-top:1px;
+}
+.topic-name{font-size:13px;font-weight:500;color:var(--text);line-height:1.35}
+.topic-count{font-size:11px;color:var(--dim);margin-top:3px;font-family:var(--mono)}
+
+/* ── quickstart ─────────────────────────────────────────────────────────── */
+.qs-tabs{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid var(--border)}
+.qs-tab{
+  padding:9px 18px;font-size:13px;font-weight:500;color:var(--dim);
+  border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-2px;
+  transition:color .15s;background:none;border-top:none;border-left:none;border-right:none;
+  font-family:var(--sans);
+}
+.qs-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.qs-tab:hover:not(.active){color:var(--text)}
+.qs-panel{display:none}
+.qs-panel.active{display:block}
+.code-block{
+  background:var(--surf);border:1px solid var(--border);border-top:none;
+  border-radius:0 0 10px 10px;
+  padding:20px;font-family:var(--mono);font-size:12.5px;line-height:1.8;
+  overflow-x:auto;color:var(--text);
+}
+.qs-panel.first .code-block{border-top:1px solid var(--border);border-radius:0 10px 10px 10px}
+.code-block .c{color:var(--dim)}
+.code-block .cmd{color:var(--accent)}
+.code-block .str{color:var(--green)}
+.code-block .url{color:var(--amber)}
+.qs-note{font-size:13px;color:var(--dim);margin-top:12px;line-height:1.6}
+.qs-note strong{color:var(--text)}
+
+/* ── footer ─────────────────────────────────────────────────────────────── */
+footer{
+  padding:40px 24px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+}
+.footer-brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+.footer-brand svg{width:22px;height:22px}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:var(--dim)}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:12px;color:var(--dim);width:100%}
+
+@media(max-width:500px){
+  nav{padding:0 16px}
+  .nav-links a:not(.nav-cta){display:none}
+  .section{padding:48px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── nav ──────────────────────────────────────────────────────────────── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1a1030"/><stop offset="100%" stop-color="#2a1a50"/>
+        </linearGradient>
+      </defs>
+      <rect x="5" y="10" width="75" height="82" rx="8" ry="8" fill="url(#bg)" stroke="#a855f7" stroke-width="3"/>
+      <rect x="14" y="18" width="75" height="82" rx="8" ry="8" fill="#13102a" stroke="#7c3aed" stroke-width="2" opacity="0.7"/>
+      <rect x="5" y="10" width="75" height="18" rx="8" ry="0" fill="#a855f7" opacity="0.2"/>
+      <rect x="5" y="10" width="75" height="8" rx="4" fill="#a855f7" opacity="0.25"/>
+      <text x="43" y="72" text-anchor="middle" font-family="Consolas,monospace" font-size="30" font-weight="900" fill="#a855f7">C#</text>
+    </svg>
+    C# <span>FlashCards</span>
+  </a>
+  <div class="nav-links">
+    <a href="#topics">Topics</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/releases">Releases</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards" class="btn-secondary btn" style="padding:5px 12px;font-size:13px">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf" class="btn btn-primary nav-cta" style="padding:5px 14px;font-size:13px">↓ Download PDF</a>
+  </div>
+</nav>
+
+<!-- ── hero ─────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <svg class="hero-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#1a1030"/><stop offset="100%" stop-color="#2a1a50"/>
+      </linearGradient>
+    </defs>
+    <rect x="5" y="10" width="75" height="82" rx="8" ry="8" fill="url(#bg2)" stroke="#a855f7" stroke-width="3"/>
+    <rect x="14" y="18" width="75" height="82" rx="8" ry="8" fill="#13102a" stroke="#7c3aed" stroke-width="2" opacity="0.7"/>
+    <rect x="5" y="10" width="75" height="18" rx="8" ry="0" fill="#a855f7" opacity="0.2"/>
+    <rect x="5" y="10" width="75" height="8" rx="4" fill="#a855f7" opacity="0.25"/>
+    <text x="43" y="72" text-anchor="middle" font-family="Consolas,monospace" font-size="30" font-weight="900" fill="#a855f7">C#</text>
+  </svg>
+
+  <h1>C# <span>FlashCards</span> 2025</h1>
+  <p class="hero-sub">
+    A <strong>300+ card Q&amp;A deck</strong> for C# developers.
+    Covers language basics through async/await, Entity Framework, design patterns,
+    OAuth, microservices, Azure serverless, and AI — compiled to a
+    <strong>one-click PDF</strong> via GitHub Actions.
+  </p>
+  <div class="hero-actions">
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf" class="btn btn-primary">↓ Download PDF</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards" class="btn btn-secondary">View on GitHub</a>
+    <a href="#quickstart" class="btn btn-secondary">Quick Start</a>
+  </div>
+  <div class="badges">
+    <img src="https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml/badge.svg" alt="CI">
+    <img src="https://img.shields.io/badge/PDF-download-7c3aed" alt="PDF download">
+    <img src="https://img.shields.io/badge/License-MIT-e0a458.svg" alt="MIT">
+    <img src="https://img.shields.io/badge/LaTeX-XeLaTeX-008080?logo=latex&amp;logoColor=white" alt="LaTeX">
+    <img src="https://img.shields.io/badge/Topics-13-a855f7" alt="13 topics">
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── what is it ───────────────────────────────────────────────────────── -->
+<section class="section" id="what">
+  <div class="section-inner">
+    <div class="what-grid">
+      <div class="what-text">
+        <p class="section-label">What it is</p>
+        <h2>Study smarter.<br>One card at a time.</h2>
+        <p>Each topic is a pair of Beamer slides: a <strong>question slide</strong> and an <strong>answer slide</strong>. Print them double-sided, use the PDF on your phone, or drive a live class — every card stands alone.</p>
+        <p style="margin-top:14px">Section colour-coding makes it instant to jump to the area you want. Drop a new <code>areas/*.tex</code> file to add your own questions — no boilerplate required.</p>
+        <p style="margin-top:14px">The PDF is built automatically on every tagged release via <strong>GitHub Actions + XeLaTeX</strong>. No local LaTeX install needed to get the PDF — just download from Releases.</p>
+      </div>
+      <div>
+        <div class="flip-demo">
+          <div class="card question">
+            <div class="card-tag">Question</div>
+            <span class="card-badge">async/await</span>
+            <div class="card-body">What is the difference between <code>Task.WhenAll</code> and <code>Task.WhenAny</code>?</div>
+          </div>
+          <div class="card answer">
+            <div class="card-tag">Answer</div>
+            <span class="card-badge answer">async/await</span>
+            <div class="card-body"><code>WhenAll</code> completes when <em>all</em> supplied tasks finish (or any faults). <code>WhenAny</code> completes as soon as the <em>first</em> task finishes — useful for timeouts and racing parallel operations.</div>
+          </div>
+          <div class="card question">
+            <div class="card-tag">Question</div>
+            <span class="card-badge">LINQ</span>
+            <div class="card-body">When does a LINQ query actually execute — at definition or enumeration?</div>
+          </div>
+          <div class="card answer">
+            <div class="card-tag">Answer</div>
+            <span class="card-badge answer">LINQ</span>
+            <div class="card-body">Deferred execution: a LINQ query is defined as an expression tree and runs only when enumerated (e.g. <code>foreach</code>, <code>.ToList()</code>). Terminal operators like <code>Count()</code> or <code>First()</code> trigger immediate execution.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── features ─────────────────────────────────────────────────────────── -->
+<section class="section" id="features">
+  <div class="section-inner">
+    <p class="section-label">Features</p>
+    <h2>Built for real interview prep</h2>
+    <div class="features-grid">
+      <div class="feat">
+        <div class="feat-icon">🃏</div>
+        <h3>Flip-card layout</h3>
+        <p>Every question slide is immediately followed by its answer slide — perfect for self-quizzing or presenting in a class.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🎨</div>
+        <h3>Colour-coded sections</h3>
+        <p>Each of the 13 topic areas has its own accent colour for instant visual orientation when skimming the deck.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">⚡</div>
+        <h3>One-click PDF</h3>
+        <p>Push a <code>v*</code> tag and GitHub Actions compiles XeLaTeX and publishes <code>CSharp_FlashCards.pdf</code> to GitHub Releases automatically.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🧩</div>
+        <h3>Easily extensible</h3>
+        <p>Add a new <code>areas/NN-topic.tex</code> file and one <code>\input{}</code> line in <code>main.tex</code> — no style changes needed.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">☁️</div>
+        <h3>Overleaf compatible</h3>
+        <p>Import the repo via Overleaf's Git sync and press <em>Re-compile</em>. No local LaTeX installation required.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📐</div>
+        <h3>Portrait 1080×1920</h3>
+        <p>Optimised for mobile screens and vertical displays — each card fills a phone screen without zooming.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔬</div>
+        <h3>13 topic areas</h3>
+        <p>From C# beginner syntax to AI integration with Semantic Kernel — the deck grows with your career.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📄</div>
+        <h3>MIT licensed</h3>
+        <p>Use it for live classes, interview prep sessions, conference lightning talks, or fork it for your own technology deck.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── topics ────────────────────────────────────────────────────────────── -->
+<section class="section" id="topics">
+  <div class="section-inner">
+    <p class="section-label">Topics</p>
+    <h2>13 areas, beginner to expert</h2>
+    <p>Each area is an independent file — study them in order or jump straight to the section you need.</p>
+    <div class="topics-grid">
+      <div class="topic">
+        <div class="topic-num">01</div>
+        <div>
+          <div class="topic-name">C# Language — Beginner</div>
+          <div class="topic-count">types · classes · interfaces · generics</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">02</div>
+        <div>
+          <div class="topic-name">C# Language — Middle</div>
+          <div class="topic-count">delegates · events · iterators · pattern matching</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">03</div>
+        <div>
+          <div class="topic-name">C# Language — Advanced</div>
+          <div class="topic-count">spans · unsafe · source generators · Roslyn</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">04</div>
+        <div>
+          <div class="topic-name">LINQ</div>
+          <div class="topic-count">deferred execution · expression trees · custom operators</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">05</div>
+        <div>
+          <div class="topic-name">Threading &amp; Async/Await</div>
+          <div class="topic-count">Task · ValueTask · Channels · SynchronizationContext</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">06</div>
+        <div>
+          <div class="topic-name">Entity Framework</div>
+          <div class="topic-count">migrations · change tracking · raw SQL · performance</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">07</div>
+        <div>
+          <div class="topic-name">Design Principles</div>
+          <div class="topic-count">SOLID · DRY · YAGNI · clean architecture</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">08</div>
+        <div>
+          <div class="topic-name">Design Patterns</div>
+          <div class="topic-count">GoF · CQRS · Repository · Mediator</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">09</div>
+        <div>
+          <div class="topic-name">OAuth &amp; Security</div>
+          <div class="topic-count">OAuth 2.0 · OIDC · JWT · PKCE flows</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">10</div>
+        <div>
+          <div class="topic-name">Microservices</div>
+          <div class="topic-count">resilience · service mesh · event-driven · saga</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">11</div>
+        <div>
+          <div class="topic-name">Advanced Cloud &amp; Leadership</div>
+          <div class="topic-count">CAP theorem · SRE · platform engineering · team topologies</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">12</div>
+        <div>
+          <div class="topic-name">Azure Serverless</div>
+          <div class="topic-count">Functions · Durable · Event Grid · Logic Apps</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">13</div>
+        <div>
+          <div class="topic-name">C# &amp; AI</div>
+          <div class="topic-count">Semantic Kernel · ML.NET · Azure OpenAI · RAG</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── quick start ───────────────────────────────────────────────────────── -->
+<section class="section" id="quickstart">
+  <div class="section-inner">
+    <p class="section-label">Quick start</p>
+    <h2>Three ways to use the deck</h2>
+    <p>No setup needed if you just want the PDF — grab it straight from GitHub Releases.</p>
+
+    <div style="margin-top:28px">
+      <div class="qs-tabs">
+        <button class="qs-tab active" onclick="switchTab(this,'download')">Download PDF</button>
+        <button class="qs-tab" onclick="switchTab(this,'local')">Build locally</button>
+        <button class="qs-tab" onclick="switchTab(this,'overleaf')">Overleaf</button>
+      </div>
+
+      <div id="tab-download" class="qs-panel active first">
+        <div class="code-block"><span class="c"># Grab the latest compiled PDF — no LaTeX needed</span>
+<span class="cmd">curl</span> -L -o CSharp_FlashCards.pdf \
+  <span class="url">https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf</span>
+
+<span class="c"># Or visit the Releases page in your browser:</span>
+<span class="url">https://github.com/konradcinkusz/csharp-flashcards/releases/latest</span></div>
+        <p class="qs-note">A new PDF is published automatically whenever a <code>v*</code> tag is pushed. Bookmark the latest-release URL to always get the most recent version.</p>
+      </div>
+
+      <div id="tab-local" class="qs-panel">
+        <div class="code-block"><span class="c"># Requires: XeLaTeX + latexmk (TeX Live or MiKTeX)</span>
+<span class="cmd">git clone</span> https://github.com/konradcinkusz/csharp-flashcards.git
+<span class="cmd">cd</span> csharp-flashcards
+<span class="cmd">latexmk</span> -xelatex -shell-escape main.tex
+
+<span class="c"># Output: main.pdf in the repo root</span>
+
+<span class="c"># To add your own cards:</span>
+<span class="c"># 1. Create areas/14-my-topic.tex  (copy an existing file as template)</span>
+<span class="c"># 2. Add \input{areas/14-my-topic} to main.tex</span>
+<span class="c"># 3. Run latexmk again</span></div>
+        <p class="qs-note">Run <strong><code>latexmk -xelatex -shell-escape main.tex</code></strong> — it re-runs as many times as needed and handles all auxiliary files. Requires XeLaTeX for the custom font configuration.</p>
+      </div>
+
+      <div id="tab-overleaf" class="qs-panel">
+        <div class="code-block"><span class="c"># In Overleaf:</span>
+<span class="c"># 1. New Project → Import from GitHub</span>
+<span class="c"># 2. Authorise Overleaf to access your GitHub account</span>
+<span class="c"># 3. Select konradcinkusz/csharp-flashcards</span>
+<span class="c"># 4. Set compiler to XeLaTeX in Menu → Compiler</span>
+<span class="c"># 5. Press Re-compile — done!</span>
+
+<span class="c"># To sync changes back to GitHub:</span>
+<span class="c"># Overleaf Menu → GitHub → Push to GitHub</span></div>
+        <p class="qs-note">Overleaf's built-in Git sync keeps both copies up to date. The project compiles with <strong>XeLaTeX</strong> — make sure to select it in the Overleaf compiler menu.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;padding:20px;background:var(--surf);border:1px solid var(--border);border-radius:10px">
+      <p style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--text)">Trigger a release build</p>
+      <div style="font-family:var(--mono);font-size:12.5px;line-height:1.8;color:var(--dim)">
+        <span style="color:var(--accent)">git</span> tag v1.1.0<br>
+        <span style="color:var(--accent)">git</span> push origin v1.1.0
+        <span style="color:var(--dim)">  # GitHub Actions builds the PDF and publishes the release</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── footer ───────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-brand">
+    <svg width="22" height="22" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="5" y="10" width="75" height="82" rx="8" ry="8" fill="#1a1030" stroke="#a855f7" stroke-width="4"/>
+      <text x="43" y="72" text-anchor="middle" font-family="Consolas,monospace" font-size="30" font-weight="900" fill="#a855f7">C#</text>
+    </svg>
+    C# FlashCards 2025
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/konradcinkusz/csharp-flashcards">GitHub</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/releases">Releases</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/blob/main/README.md">README</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/blob/main/MASTER_PROMPT.md">Master Prompt</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/blob/main/LICENSE">License</a>
+  </div>
+  <p class="footer-copy">MIT License &middot; Built with XeLaTeX &amp; GitHub Actions &middot; <a href="https://github.com/konradcinkusz/AgentHelm">AgentHelm</a></p>
+</footer>
+
+<script>
+function switchTab(btn, id) {
+  document.querySelectorAll('.qs-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.qs-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+</script>
+</body>
+</html>
