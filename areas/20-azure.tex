@@ -1,0 +1,231 @@
+% Azure section (App Service, SDK/CLI, AI Foundry)
+
+% 1 – Azure App Service
+\QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{* What is Azure App Service?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AzureColor!20]{Azure}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Azure App Service?%
+  }
+
+  {\footnotesize
+  \textbf{Azure App Service} is a fully managed PaaS for hosting web apps, REST APIs, and WebJobs. Supports .NET, Node.js, Python, Java, and containers. Key features: \textbf{deployment slots} for staged rollouts, \textbf{autoscaling}, \textbf{managed TLS}, VNet integration, and built-in monitoring via Application Insights.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{bash}
+# Deploy from GitHub Actions / Azure CLI
+az webapp create \
+    --resource-group myRG \
+    --plan myPlan \
+    --name myapi-prod \
+    --runtime "DOTNET:9"
+
+az webapp deployment source config-zip \
+    --resource-group myRG --name myapi-prod \
+    --src publish.zip
+  \end{minted}
+\end{frame}
+
+% 2 – Managed Identity
+\QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Azure Managed Identity?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AzureColor!20]{Azure}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Managed Identity?%
+  }
+
+  {\footnotesize
+  \textbf{Managed Identity} gives an Azure resource (App Service, AKS Pod, VM) an AAD identity without storing credentials. The Azure platform issues and rotates tokens automatically. Use \texttt{DefaultAzureCredential} in the Azure SDK — it tries Managed Identity in production and developer credentials locally, requiring zero config changes between environments.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// Same code works locally (developer login) and in Azure (Managed Identity)
+var credential = new DefaultAzureCredential();
+
+var secretClient = new SecretClient(
+    new Uri("https://myvault.vault.azure.net/"),
+    credential);
+
+KeyVaultSecret secret = await secretClient.GetSecretAsync("DbPassword");
+  \end{minted}
+\end{frame}
+
+% 3 – Azure Key Vault
+\QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{* What is Azure Key Vault?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AzureColor!20]{Azure}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Azure Key Vault?%
+  }
+
+  {\footnotesize
+  \textbf{Azure Key Vault} is a managed HSM-backed service for storing \textbf{secrets} (connection strings, API keys), \textbf{certificates}, and \textbf{cryptographic keys}. Access is controlled via AAD roles (RBAC) or access policies. Integrate with ASP.NET Core \texttt{IConfiguration} to surface secrets as configuration values without code changes.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+builder.Configuration.AddAzureKeyVault(
+    new Uri("https://myapp-kv.vault.azure.net/"),
+    new DefaultAzureCredential());
+
+// Secret "ConnectionStrings--DefaultConnection" is now available as:
+var connStr = builder.Configuration.GetConnectionString("DefaultConnection");
+  \end{minted}
+\end{frame}
+
+% 4 – Azure AI Foundry
+\QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Azure AI Foundry?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AzureColor!20]{Azure}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Azure AI Foundry?%
+  }
+
+  {\footnotesize
+  \textbf{Azure AI Foundry} (formerly Azure AI Studio) is Microsoft's unified platform for building, evaluating, and deploying AI applications. It provides: a \textbf{model catalogue} (OpenAI GPT-4o, Phi, Llama), \textbf{Prompt Flow} for LLM pipeline authoring, \textbf{evaluation} dashboards for quality/safety, and \textbf{deployment} to managed endpoints behind Azure OpenAI APIs.
+  }
+\end{frame}
+
+% 5 – Azure AI Foundry Prompt Flow
+\QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Azure AI Foundry Prompt Flow?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AzureColor!20]{Azure}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Prompt Flow?%
+  }
+
+  {\footnotesize
+  \textbf{Prompt Flow} is a low-code / code-first tool for building LLM pipelines as directed acyclic graphs (DAGs) of \textbf{nodes}: LLM calls, Python code, conditional branches, and vector index lookups. Flows can be tested, evaluated against ground-truth datasets, and deployed as streaming HTTP endpoints. SDK available for .NET and Python.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{python}
+# Prompt Flow SDK – run a deployed flow from .NET via HTTP
+# or call directly in Python
+from promptflow import PFClient
+client = PFClient()
+result = client.run(
+    flow="./my_rag_flow",
+    data="./eval_data.jsonl",
+    column_mapping={"question": "${data.question}"}
+)
+  \end{minted}
+\end{frame}
+
+% 6 – Azure Service Bus
+\QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Azure Service Bus and when do you use it?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AzureColor!20]{Azure}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Azure Service Bus?%
+  }
+
+  {\footnotesize
+  \textbf{Azure Service Bus} is a fully managed enterprise message broker. Use \textbf{Queues} for point-to-point async communication; \textbf{Topics + Subscriptions} for pub/sub fan-out. Key features: message sessions, dead-letter queue, scheduled delivery, and exactly-once delivery with duplicate detection. Ideal for decoupling microservices and smoothing traffic spikes.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+await using var client = new ServiceBusClient(connectionString);
+ServiceBusSender sender = client.CreateSender("orders");
+await sender.SendMessageAsync(new ServiceBusMessage(
+    BinaryData.FromObjectAsJson(new { OrderId = 42 })));
+
+// Consumer
+ServiceBusProcessor proc = client.CreateProcessor("orders");
+proc.ProcessMessageAsync += async args =>
+    { await HandleOrder(args.Message); await args.CompleteMessageAsync(args.Message); };
+await proc.StartProcessingAsync();
+  \end{minted}
+\end{frame}
+
+% 7 – Azure CLI essential commands
+\QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{* What are essential Azure CLI patterns for .NET developers?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AzureColor!20]{Azure}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Essential Azure CLI patterns?%
+  }
+
+  {\footnotesize
+  The Azure CLI (\texttt{az}) automates provisioning and deployment from scripts and pipelines. Authenticate via \texttt{az login} or a Service Principal in CI. Use \texttt{--output table/json/tsv} for scripting.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{bash}
+az login                                         # interactive
+az account set --subscription "My Subscription"
+
+# Provision an App Service
+az group create -n myRG -l westeurope
+az appservice plan create -n myPlan -g myRG --sku B2
+az webapp create -n myapi -g myRG -p myPlan --runtime "DOTNET:9"
+
+# Set app settings / connection strings
+az webapp config appsettings set -n myapi -g myRG \
+    --settings ASPNETCORE_ENVIRONMENT=Production
+
+# Tail live logs
+az webapp log tail -n myapi -g myRG
+  \end{minted}
+\end{frame}
+
+% 8 – Azure Monitor & Application Insights
+\QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Application Insights and how do you add it to an ASP.NET Core app?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AzureColor!20]{Azure}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Application Insights?%
+  }
+
+  {\footnotesize
+  \textbf{Application Insights} (part of Azure Monitor) collects traces, metrics, exceptions, dependencies, and live metrics from your app. \texttt{AddApplicationInsightsTelemetry()} wires it into ASP.NET Core with zero code changes. It integrates with OpenTelemetry exporters so the same instrumentation works locally and in Azure.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// Program.cs
+builder.Services.AddApplicationInsightsTelemetry(
+    builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
+
+// Alternatively, using OpenTelemetry exporter:
+builder.Services.AddOpenTelemetry()
+    .WithTracing(t => t.AddAspNetCoreInstrumentation()
+                       .AddAzureMonitorTraceExporter());
+  \end{minted}
+\end{frame}

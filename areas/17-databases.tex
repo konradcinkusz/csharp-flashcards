@@ -1,0 +1,233 @@
+% Databases & Query Optimisation section
+
+% 1 – SQL Server vs Oracle vs PostgreSQL
+\QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{* What are the key differences between SQL Server, Oracle, and PostgreSQL?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[DbColor!20]{Databases}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: SQL Server vs Oracle vs PostgreSQL?%
+  }
+
+  {\footnotesize
+  \begin{tabular}{p{2.8cm}p{2.8cm}p{2.8cm}}
+    \textbf{SQL Server} & \textbf{Oracle DB} & \textbf{PostgreSQL} \\
+    T-SQL dialect & PL/SQL dialect & PL/pgSQL (SQL standard) \\
+    Windows-first, Linux since 2017 & Cross-platform & Cross-platform, open-source \\
+    Deep Azure/AD integration & Enterprise RAC clustering & JSONB, extensions, foreign data wrappers \\
+    Azure SQL, RDS & Exadata, OCI & Neon, Supabase, Aurora \\
+  \end{tabular}
+  }
+\end{frame}
+
+% 2 – Indexes
+\QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What are database indexes and their key types?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[DbColor!20]{Databases}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are indexes and their types?%
+  }
+
+  {\footnotesize
+  An \textbf{index} is a data structure that speeds up row lookups at the cost of write overhead and storage. Key types:
+  \begin{itemize}
+    \item \textbf{Clustered} (SQL Server) – defines physical row order; one per table.
+    \item \textbf{Non-clustered} – separate B-tree with row pointers; multiple allowed.
+    \item \textbf{Covering index} – includes all queried columns to avoid key lookup.
+    \item \textbf{Filtered index} – built over a WHERE predicate, smaller and faster.
+    \item \textbf{Columnstore} – columnar storage for analytics / data warehouse queries.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{sql}
+-- Covering index: no key-lookup needed for this query
+CREATE INDEX IX_Orders_CustomerId_Status
+    ON Orders (CustomerId)
+    INCLUDE (Status, TotalAmount);
+  \end{minted}
+\end{frame}
+
+% 3 – Execution Plan
+\QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What is an execution plan and how do you use it?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[DbColor!20]{Databases}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is an execution plan?%
+  }
+
+  {\footnotesize
+  An \textbf{execution plan} is the query optimizer's step-by-step strategy for retrieving data. In SQL Server: \texttt{SET STATISTICS IO ON} or the graphical plan in SSMS. Look for: \textbf{Table Scan} (no index — bad), \textbf{Key Lookup} (missing include columns), \textbf{Sort} (no supporting index), and thick arrows (high row estimates). Use \texttt{EXPLAIN ANALYZE} in PostgreSQL.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{sql}
+-- SQL Server: show actual execution plan
+SET STATISTICS IO, TIME ON;
+
+SELECT o.Id, o.Total
+FROM   Orders o
+WHERE  o.CustomerId = 42
+  AND  o.Status = 'Pending';
+
+-- Check: Index Seek (good) vs Table Scan (add index)
+  \end{minted}
+\end{frame}
+
+% 4 – CTEs
+\QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What is a CTE (Common Table Expression)?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[DbColor!20]{Databases}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is a CTE?%
+  }
+
+  {\footnotesize
+  A \textbf{CTE} (\texttt{WITH} clause) is a named temporary result set scoped to a single query. CTEs improve readability, allow self-referencing for \textbf{recursive queries} (hierarchies, graphs), and can be referenced multiple times in the same query. They are not materialised by default in SQL Server.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{sql}
+-- Recursive CTE: employee hierarchy
+WITH OrgTree AS (
+    SELECT Id, Name, ManagerId, 0 AS Level
+    FROM   Employees
+    WHERE  ManagerId IS NULL         -- root
+
+    UNION ALL
+
+    SELECT e.Id, e.Name, e.ManagerId, t.Level + 1
+    FROM   Employees e
+    JOIN   OrgTree t ON e.ManagerId = t.Id
+)
+SELECT * FROM OrgTree ORDER BY Level;
+  \end{minted}
+\end{frame}
+
+% 5 – Window Functions
+\QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What are window functions in SQL?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[DbColor!20]{Databases}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are window functions?%
+  }
+
+  {\footnotesize
+  \textbf{Window functions} apply aggregate-like calculations over a \textbf{sliding window} of rows relative to the current row, without collapsing the result set. Key functions:
+  \begin{itemize}
+    \item \textbf{ROW\_NUMBER()} – unique sequential number per partition.
+    \item \textbf{RANK() / DENSE\_RANK()} – rank with/without gaps on ties.
+    \item \textbf{LAG() / LEAD()} – access previous/next row values.
+    \item \textbf{SUM() OVER()} – running/cumulative totals.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{sql}
+SELECT CustomerId, OrderDate, Total,
+       SUM(Total) OVER (PARTITION BY CustomerId
+                        ORDER BY OrderDate
+                        ROWS UNBOUNDED PRECEDING) AS RunningTotal,
+       LAG(Total) OVER (PARTITION BY CustomerId
+                        ORDER BY OrderDate) AS PrevOrderTotal
+FROM Orders;
+  \end{minted}
+\end{frame}
+
+% 6 – N+1 Problem
+\QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What is the N+1 query problem?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[DbColor!20]{Databases}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the N+1 problem?%
+  }
+
+  {\footnotesize
+  The \textbf{N+1 problem} occurs when loading a list of N entities triggers N additional queries to load each entity's related data — totalling N+1 round trips to the database. Fix in EF Core: use \texttt{.Include()} (eager loading) or a single \texttt{JOIN}. Detect with MiniProfiler or EF Core logging.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// BAD: 1 query for orders + N queries for each customer
+var orders = await db.Orders.ToListAsync();
+foreach (var o in orders)
+    Console.WriteLine(o.Customer.Name); // lazy load per row
+
+// GOOD: 1 query with JOIN
+var orders = await db.Orders
+    .Include(o => o.Customer)
+    .ToListAsync();
+  \end{minted}
+\end{frame}
+
+% 7 – Data Modelling Normal Forms
+\QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What are the first three normal forms in data modelling?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[DbColor!20]{Databases}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are the first three normal forms?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{1NF} – atomic values; no repeating groups or arrays in columns.
+    \item \textbf{2NF} – 1NF + every non-key column depends on the \emph{whole} primary key (eliminates partial dependency; mainly relevant for composite keys).
+    \item \textbf{3NF} – 2NF + no transitive dependencies (non-key columns depend only on the PK, not on other non-key columns).
+  \end{itemize}
+  \textbf{BCNF}, 4NF, 5NF address edge cases. In practice, 3NF is the standard target; read-heavy systems often deliberately \emph{denormalise} for performance.
+  }
+\end{frame}
+
+% 8 – Query Optimisation Tips
+\QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{*** What are the most impactful SQL query optimisation techniques?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[DbColor!20]{Databases}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Key query optimisation techniques?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{Index} the most selective columns; use covering indexes to avoid key lookups.
+    \item \textbf{Avoid functions on indexed columns} in WHERE — they prevent index seek: \texttt{YEAR(OrderDate) = 2025} $\to$ \texttt{OrderDate >= '2025-01-01'}.
+    \item \textbf{Use SET-based} operations instead of row-by-row cursors.
+    \item \textbf{Paginate} with \texttt{OFFSET/FETCH} or keyset pagination for large result sets.
+    \item \textbf{Update statistics} and rebuild fragmented indexes regularly.
+    \item \textbf{Read execution plans} to spot scans, sorts, and spills.
+  \end{itemize}
+  }
+\end{frame}

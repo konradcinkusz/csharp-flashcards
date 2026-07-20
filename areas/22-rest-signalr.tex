@@ -1,0 +1,221 @@
+% RESTful APIs & SignalR section
+
+% 1 – REST Constraints
+\QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{* What are the six REST architectural constraints?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[RestColor!20]{REST \& SignalR}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: The six REST constraints?%
+  }
+
+  {\footnotesize
+  \begin{enumerate}
+    \item \textbf{Client-Server} – UI and data store are separated.
+    \item \textbf{Stateless} – each request carries all context; no server-side session.
+    \item \textbf{Cacheable} – responses declare cacheability via headers.
+    \item \textbf{Uniform Interface} – resource-based URIs, standard HTTP verbs, self-descriptive messages.
+    \item \textbf{Layered System} – intermediaries (proxies, gateways) are transparent.
+    \item \textbf{Code on Demand} (optional) – server can send executable code to client.
+  \end{enumerate}
+  }
+\end{frame}
+
+% 2 – HTTP Verbs & Status Codes
+\QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{* What HTTP verbs and status codes are standard in REST APIs?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[RestColor!20]{REST \& SignalR}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: HTTP verbs and status codes?%
+  }
+
+  {\footnotesize
+  \begin{tabular}{lll}
+    \textbf{Verb} & \textbf{Action} & \textbf{Success Code} \\
+    GET    & Read          & 200 OK \\
+    POST   & Create        & 201 Created + Location header \\
+    PUT    & Full replace  & 200 OK / 204 No Content \\
+    PATCH  & Partial update & 200 / 204 \\
+    DELETE & Remove        & 204 No Content \\
+  \end{tabular}
+  \vspace{0.5em}
+  Key error codes: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 409 Conflict, 422 Unprocessable Entity, 429 Too Many Requests.
+  }
+\end{frame}
+
+% 3 – API Versioning
+\QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{** What are the main strategies for REST API versioning?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[RestColor!20]{REST \& SignalR}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: REST API versioning strategies?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{URI path}: \texttt{/api/v1/products} — most visible, easy to cache.
+    \item \textbf{Query string}: \texttt{/api/products?api-version=1.0} — no URL changes.
+    \item \textbf{Header}: \texttt{X-Api-Version: 1.0} — clean URLs, less discoverable.
+    \item \textbf{Media type (Accept)}: \texttt{application/vnd.myapi.v1+json} — purist REST, complex clients.
+  \end{itemize}
+  Use \textbf{Asp.Versioning.Mvc} NuGet in ASP.NET Core for any strategy.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+builder.Services.AddApiVersioning(opt =>
+{
+    opt.DefaultApiVersion = new ApiVersion(1, 0);
+    opt.AssumeDefaultVersionWhenUnspecified = true;
+    opt.ReportApiVersions = true;
+});
+  \end{minted}
+\end{frame}
+
+% 4 – OpenAPI / Swagger
+\QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{* What is OpenAPI / Swagger in ASP.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[RestColor!20]{REST \& SignalR}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is OpenAPI/Swagger?%
+  }
+
+  {\footnotesize
+  \textbf{OpenAPI} is a machine-readable JSON/YAML specification for REST APIs. \textbf{Swagger UI} renders it as interactive docs. In ASP.NET Core, \texttt{Microsoft.AspNetCore.OpenApi} (built-in .NET 9) or \textbf{Swashbuckle} generates the spec from controller metadata and XML comments. Clients can auto-generate SDKs with \texttt{NSwag} or \texttt{kiota}.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// .NET 9 built-in
+builder.Services.AddOpenApi();
+app.MapOpenApi();  // serves /openapi/v1.json
+
+// With Swashbuckle (older)
+builder.Services.AddSwaggerGen(c =>
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApi", Version = "v1" }));
+app.UseSwagger();
+app.UseSwaggerUI();
+  \end{minted}
+\end{frame}
+
+% 5 – Problem Details
+\QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{** What is Problem Details (RFC 7807) in ASP.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[RestColor!20]{REST \& SignalR}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Problem Details?%
+  }
+
+  {\footnotesize
+  \textbf{Problem Details} (RFC 7807) is a standard JSON format for HTTP error responses: \texttt{type}, \texttt{title}, \texttt{status}, \texttt{detail}, and \texttt{instance}. ASP.NET Core \texttt{[ApiController]} returns Problem Details automatically for 4xx errors. \texttt{IProblemDetailsService} lets you customise and extend the format.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{json}
+{
+  "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "traceId": "00-abc123-01",
+  "errors": {
+    "CustomerName": ["The CustomerName field is required."]
+  }
+}
+  \end{minted}
+\end{frame}
+
+% 6 – What is SignalR?
+\QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{* What is SignalR?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[RestColor!20]{REST \& SignalR}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is SignalR?%
+  }
+
+  {\footnotesize
+  \textbf{SignalR} is ASP.NET Core's real-time communication library. It abstracts transport selection: \textbf{WebSockets} (preferred), \textbf{Server-Sent Events}, and \textbf{Long Polling} fallbacks. The server \textbf{pushes} messages to clients rather than clients polling. Used in live dashboards, chat, notifications, multiplayer games, and Blazor Server.
+  }
+\end{frame}
+
+% 7 – SignalR Hubs
+\QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{** What are SignalR Hubs?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[RestColor!20]{REST \& SignalR}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are SignalR Hubs?%
+  }
+
+  {\footnotesize
+  A \textbf{Hub} is a server-side class that acts as the central communication endpoint. Clients call Hub methods; the Hub calls client methods via \texttt{Clients.All}, \texttt{Clients.Caller}, or \texttt{Clients.Group(name)}. Hubs are transient — no state between calls; use DI for persistent services.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+public class ChatHub : Hub
+{
+    public async Task SendMessage(string user, string message)
+        => await Clients.All.SendAsync("ReceiveMessage", user, message);
+
+    public async Task JoinGroup(string group)
+        => await Groups.AddToGroupAsync(Context.ConnectionId, group);
+}
+
+// Registration
+app.MapHub<ChatHub>("/chat");
+  \end{minted}
+\end{frame}
+
+% 8 – WebSockets vs SSE vs Long Polling
+\QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{** When would you choose WebSockets vs SSE vs Long Polling?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[RestColor!20]{REST \& SignalR}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: WebSockets vs SSE vs Long Polling?%
+  }
+
+  {\footnotesize
+  \begin{tabular}{p{2.3cm}p{2.3cm}p{2.3cm}}
+    \textbf{WebSockets} & \textbf{SSE} & \textbf{Long Polling} \\
+    Full-duplex & Server $\to$ client only & Client polls with hanging request \\
+    Low overhead & HTTP/2 multiplexed & Highest overhead \\
+    Chat, games, Blazor & Live feeds, notifications & Fallback / firewalls \\
+  \end{tabular}
+  \vspace{0.5em}
+  SignalR negotiates from WebSockets $\to$ SSE $\to$ Long Polling automatically per client capability.
+  }
+\end{frame}

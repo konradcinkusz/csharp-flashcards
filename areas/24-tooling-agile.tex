@@ -1,0 +1,192 @@
+% Developer Tooling & Agile section
+
+% 1 – Git Core Concepts
+\QuestionSlide[\CategoryBadge[ToolingColor!20]{Tooling \& Agile}]{* What are the core Git concepts every developer must know?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[ToolingColor!20]{Tooling \& Agile}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Core Git concepts?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{Repository} – the \texttt{.git} directory storing history as a DAG of commits.
+    \item \textbf{Working tree / Index (staging area)} – prepare commits selectively.
+    \item \textbf{Branch} – lightweight movable pointer to a commit.
+    \item \textbf{Merge vs Rebase} – merge preserves history; rebase rewrites it to a linear sequence.
+    \item \textbf{Cherry-pick} – apply a specific commit to another branch.
+    \item \textbf{Stash} – save work-in-progress without committing.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{bash}
+git switch -c feature/auth    # new branch
+git add src/Auth.cs           # stage specific file
+git commit -m "feat: add JWT auth"
+git rebase main               # linear history, clean PRs
+git stash && git switch main  # stash WIP, switch context
+  \end{minted}
+\end{frame}
+
+% 2 – Git Branching Strategies
+\QuestionSlide[\CategoryBadge[ToolingColor!20]{Tooling \& Agile}]{** What are GitFlow and Trunk-Based Development?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[ToolingColor!20]{Tooling \& Agile}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: GitFlow vs Trunk-Based Development?%
+  }
+
+  {\footnotesize
+  \begin{tabular}{ll}
+    \textbf{GitFlow} & \textbf{Trunk-Based Development} \\
+    Long-lived \texttt{develop} + \texttt{main} & Single \texttt{main} (trunk) \\
+    \texttt{feature/}, \texttt{release/}, \texttt{hotfix/} & Short-lived feature branches ($<$1 day) \\
+    Slower release cadence & Continuous delivery, multiple deploys/day \\
+    Complex merge overhead & Feature flags hide in-progress work \\
+    Suited for scheduled releases & Suited for CI/CD and microservices \\
+  \end{tabular}
+  }
+\end{frame}
+
+% 3 – Azure DevOps Boards
+\QuestionSlide[\CategoryBadge[ToolingColor!20]{Tooling \& Agile}]{* What is Azure DevOps Boards?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[ToolingColor!20]{Tooling \& Agile}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Azure DevOps Boards?%
+  }
+
+  {\footnotesize
+  \textbf{Azure DevOps Boards} is Microsoft's Agile planning tool within Azure DevOps. Key work item types: \textbf{Epic} $\to$ \textbf{Feature} $\to$ \textbf{User Story} $\to$ \textbf{Task} / \textbf{Bug}. It offers Kanban boards, Sprint backlogs, burndown charts, and \textbf{Delivery Plans} for cross-team scheduling. Integrates with GitHub PRs and Azure Pipelines for end-to-end traceability.
+  }
+\end{frame}
+
+% 4 – Jira
+\QuestionSlide[\CategoryBadge[ToolingColor!20]{Tooling \& Agile}]{* What is Jira and when would you choose it over Azure DevOps Boards?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[ToolingColor!20]{Tooling \& Agile}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Jira vs Azure DevOps Boards?%
+  }
+
+  {\footnotesize
+  \textbf{Jira} (Atlassian) is the most widely adopted issue tracker and Agile board tool. Strengths: highly customisable workflows, 3000+ integrations (Confluence, Bitbucket, GitHub), JQL (query language), and Jira Product Discovery for roadmaps. Choose Jira if you use the broader Atlassian stack or need complex cross-project workflows. Choose Azure DevOps Boards for deep Microsoft/Azure pipeline integration.
+  }
+\end{frame}
+
+% 5 – Agile / Scrum
+\QuestionSlide[\CategoryBadge[ToolingColor!20]{Tooling \& Agile}]{* What is Scrum and its key ceremonies?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[ToolingColor!20]{Tooling \& Agile}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Scrum?%
+  }
+
+  {\footnotesize
+  \textbf{Scrum} is an Agile framework where work is delivered in fixed \textbf{Sprints} (1–4 weeks). Roles: \textbf{Product Owner} (owns backlog), \textbf{Scrum Master} (removes blockers), \textbf{Development Team}. Key ceremonies:
+  \begin{itemize}
+    \item \textbf{Sprint Planning} – select and break down stories.
+    \item \textbf{Daily Standup} – 15-min sync on blockers.
+    \item \textbf{Sprint Review} – demo to stakeholders.
+    \item \textbf{Retrospective} – process improvement.
+  \end{itemize}
+  }
+\end{frame}
+
+% 6 – Power BI
+\QuestionSlide[\CategoryBadge[ToolingColor!20]{Tooling \& Agile}]{* What is Power BI?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[ToolingColor!20]{Tooling \& Agile}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Power BI?%
+  }
+
+  {\footnotesize
+  \textbf{Power BI} is Microsoft's business intelligence platform for building interactive dashboards and reports. It ingests data from SQL Server, Azure Synapse, Dataverse, Excel, REST APIs, and many connectors. \textbf{Power BI Desktop} (Windows) authors reports; \textbf{Power BI Service} (cloud) shares and schedules refreshes. \textbf{DAX} is the formula language for calculated measures and KPIs.
+  }
+\end{frame}
+
+% 7 – Definition of Done
+\QuestionSlide[\CategoryBadge[ToolingColor!20]{Tooling \& Agile}]{** What is the Definition of Done (DoD) in Scrum?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[ToolingColor!20]{Tooling \& Agile}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Definition of Done?%
+  }
+
+  {\footnotesize
+  The \textbf{Definition of Done (DoD)} is the team's shared checklist that a Story must pass before it is considered complete. A typical DoD for a .NET team:
+  \begin{itemize}
+    \item Code reviewed and approved.
+    \item Unit and integration tests written and green.
+    \item CI pipeline passes (build, test, static analysis).
+    \item Feature deployed to staging and smoke-tested.
+    \item Acceptance criteria verified by Product Owner.
+    \item Documentation updated (API spec, ADR).
+  \end{itemize}
+  A weak DoD leads to hidden technical debt and unstable releases.
+  }
+\end{frame}
+
+% 8 – LaTeX
+\QuestionSlide[\CategoryBadge[ToolingColor!20]{Tooling \& Agile}]{* What is LaTeX and when should a developer use it?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[ToolingColor!20]{Tooling \& Agile}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is LaTeX?%
+  }
+
+  {\footnotesize
+  \textbf{LaTeX} is a document typesetting system where content and layout are expressed as markup (\texttt{.tex} files). It produces professional-quality PDFs with precise control over typography, mathematical formulas, code listings, and references. Ideal for: academic papers, technical reports, CV/slides (\texttt{beamer}), and this very flashcard deck. Store \texttt{.tex} files in Git for version-controlled documents.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{bash}
+# Compile to PDF
+latexmk -xelatex -shell-escape main.tex
+
+# Typical project structure
+# main.tex     – entry point, \input{} sections
+# sections/    – chapter/section .tex files
+# figures/     – vector graphics (PDF, TikZ)
+  \end{minted}
+\end{frame}

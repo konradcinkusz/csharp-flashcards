@@ -1,0 +1,216 @@
+% .NET Aspire section
+
+% 1 – What is .NET Aspire?
+\QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{* What is .NET Aspire?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspireColor!20]{.NET Aspire}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is .NET Aspire?%
+  }
+
+  {\footnotesize
+  \textbf{.NET Aspire} is an opinionated, cloud-native stack introduced in .NET 8. It provides \textbf{orchestration} (run all services locally with one command), \textbf{service discovery} (services find each other by name), \textbf{pre-built integrations} (Redis, SQL, RabbitMQ), and a \textbf{developer dashboard} with traces and logs.
+  }
+\end{frame}
+
+% 2 – App Host
+\QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** What is the .NET Aspire App Host?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspireColor!20]{.NET Aspire}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Aspire App Host?%
+  }
+
+  {\footnotesize
+  The \textbf{App Host} is a C\# project that acts as the \textbf{composition root} for your distributed app. It declares which services and infrastructure to start, wires up references between them, and launches all processes (including Docker containers) with a single \texttt{dotnet run}.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+var builder = DistributedApplication.CreateBuilder(args);
+
+var db = builder.AddPostgres("postgres")
+               .AddDatabase("catalogdb");
+
+var api = builder.AddProject<Projects.CatalogApi>("catalog-api")
+                 .WithReference(db)
+                 .WaitFor(db);
+
+builder.AddProject<Projects.WebFrontend>("frontend")
+       .WithReference(api);
+
+await builder.Build().RunAsync();
+  \end{minted}
+\end{frame}
+
+% 3 – Service Discovery
+\QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** What is Service Discovery in .NET Aspire?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspireColor!20]{.NET Aspire}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Service Discovery in .NET Aspire?%
+  }
+
+  {\footnotesize
+  Aspire injects connection strings and URLs into each service as environment variables at runtime. \texttt{WithReference()} wires a producer to a consumer. \texttt{AddServiceDiscovery()} on the \texttt{HttpClient} resolves logical names like \texttt{https://catalog-api} to the actual address, enabling zero-config communication across environments.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// In the consumer's Program.cs
+builder.Services.AddHttpClient<CatalogClient>(
+    client => client.BaseAddress = new Uri("https+http://catalog-api"))
+    .AddServiceDiscovery();
+
+// URL "https+http://catalog-api" resolves to the actual host/port
+// injected by Aspire — no hard-coded addresses anywhere.
+  \end{minted}
+\end{frame}
+
+% 4 – Dashboard
+\QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{* What does the .NET Aspire Dashboard show?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspireColor!20]{.NET Aspire}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What does the Aspire Dashboard show?%
+  }
+
+  {\footnotesize
+  The built-in \textbf{Aspire Dashboard} (launched automatically during local development) provides:
+  \begin{itemize}
+    \item \textbf{Resources} – all running projects and containers with health state.
+    \item \textbf{Distributed Traces} – OpenTelemetry traces spanning multiple services.
+    \item \textbf{Structured Logs} – aggregated logs from all services.
+    \item \textbf{Metrics} – resource consumption and custom app metrics.
+  \end{itemize}
+  In production, forward the same telemetry to Azure Monitor, Grafana, or Jaeger.
+  }
+\end{frame}
+
+% 5 – Aspire Integrations
+\QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** What are .NET Aspire Integrations?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspireColor!20]{.NET Aspire}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are .NET Aspire Integrations?%
+  }
+
+  {\footnotesize
+  \textbf{Integrations} are NuGet packages that wire up infrastructure components (Redis, PostgreSQL, Azure Service Bus, RabbitMQ, etc.) into the Aspire pipeline. \textbf{Hosting integrations} add resources to the App Host; \textbf{client integrations} configure the connection inside consuming services via DI — both with OpenTelemetry and health checks pre-wired.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+// App Host – hosting integration
+var cache = builder.AddRedis("cache");
+
+// Consumer project – client integration
+builder.AddRedisClient("cache");  // registers IConnectionMultiplexer
+// or
+builder.AddRedisDistributedCache("cache"); // registers IDistributedCache
+  \end{minted}
+\end{frame}
+
+% 6 – WaitFor & health readiness
+\QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** What does WaitFor do in .NET Aspire?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspireColor!20]{.NET Aspire}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What does WaitFor do in .NET Aspire?%
+  }
+
+  {\footnotesize
+  \texttt{.WaitFor(resource)} makes the App Host delay starting a dependent service until the resource reports \textbf{healthy}. This replaces fragile sleep-based startup scripts in \texttt{docker-compose}. For containers, health is determined by Docker health checks; for databases, by a successful connection probe.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+var postgres = builder.AddPostgres("pg").AddDatabase("mydb");
+
+// API won't start until "pg" container is healthy
+builder.AddProject<Projects.MyApi>("my-api")
+       .WithReference(postgres)
+       .WaitFor(postgres);
+  \end{minted}
+\end{frame}
+
+% 7 – Aspire Manifest & Deployment
+\QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{*** What is the Aspire Manifest and how is it used for deployment?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspireColor!20]{.NET Aspire}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Aspire Manifest?%
+  }
+
+  {\footnotesize
+  Running the App Host with \texttt{--publisher manifest} outputs a \textbf{JSON manifest} describing all resources and their relationships. Tools like \textbf{azd} (Azure Developer CLI) and \textbf{Aspir8} (Kubernetes) read this manifest to generate deployment-ready \texttt{bicep}, \texttt{Helm} charts, or Docker Compose files — keeping deployment config derived from code.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{bash}
+# Generate manifest
+dotnet run --project AppHost \
+    --publisher manifest \
+    --output-path aspire-manifest.json
+
+# Deploy to Azure Container Apps via azd
+azd up  # reads manifest and provisions infrastructure
+  \end{minted}
+\end{frame}
+
+% 8 – Aspire vs docker-compose
+\QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** How does .NET Aspire differ from docker-compose?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspireColor!20]{.NET Aspire}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Aspire vs docker-compose?%
+  }
+
+  {\footnotesize
+  \begin{tabular}{ll}
+    \textbf{docker-compose} & \textbf{.NET Aspire} \\
+    YAML config & C\# code (type-safe) \\
+    Manual service URLs & Automatic service discovery \\
+    No observability & Dashboard with traces/logs built in \\
+    Separate health checks & Health checks auto-wired \\
+    No IDE integration & F5 debug across all services \\
+  \end{tabular}
+  \vspace{0.5em}
+  Aspire can \emph{also} launch Docker containers via \texttt{AddContainer()}, but adds the orchestration layer on top.
+  }
+\end{frame}

@@ -1,0 +1,271 @@
+% ASP.NET Core section
+
+% 1 – What is ASP.NET Core?
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{* What is ASP.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspNetColor!20]{ASP.NET Core}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is ASP.NET Core?%
+  }
+
+  {\footnotesize
+  \textbf{ASP.NET Core} is Microsoft's open-source, cross-platform web framework built on .NET. It unifies MVC, Web API, and Razor Pages into one pipeline running on Kestrel, with built-in DI, a modular middleware system, and Minimal API support introduced in .NET 6.
+  }
+\end{frame}
+
+% 2 – Middleware Pipeline
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What is the ASP.NET Core middleware pipeline?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspNetColor!20]{ASP.NET Core}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the middleware pipeline?%
+  }
+
+  {\footnotesize
+  Middleware components form a \textbf{chain of responsibility} around the HTTP request/response. Each calls \texttt{next()} to pass control forward. Components registered first wrap components registered later, so \textbf{order matters}: exception handling should be outermost, routing and auth innermost.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+var app = builder.Build();
+
+app.UseExceptionHandler("/error"); // catches unhandled exceptions
+app.UseHttpsRedirection();
+app.UseAuthentication();           // must precede UseAuthorization
+app.UseAuthorization();
+app.MapControllers();              // terminal middleware
+
+app.Run();
+  \end{minted}
+\end{frame}
+
+% 3 – DI Lifetimes
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What are the three DI service lifetimes in ASP.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspNetColor!20]{ASP.NET Core}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are the three DI lifetimes?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{Transient} – new instance on every injection; ideal for stateless, lightweight services.
+    \item \textbf{Scoped} – one instance per HTTP request; default for \texttt{DbContext}.
+    \item \textbf{Singleton} – one instance for the app lifetime; use for caches or config readers.
+  \end{itemize}
+  Injecting Scoped into Singleton is a \textbf{captive dependency} bug; \texttt{ValidateScopes()} catches it.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+builder.Services.AddTransient<IEmailSender, SmtpSender>();
+builder.Services.AddScoped<IOrderRepository, EfOrderRepo>();
+builder.Services.AddSingleton<IExchangeRateCache, ExchangeRateCache>();
+  \end{minted}
+\end{frame}
+
+% 4 – Minimal APIs
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What are Minimal APIs in ASP.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspNetColor!20]{ASP.NET Core}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are Minimal APIs?%
+  }
+
+  {\footnotesize
+  \textbf{Minimal APIs} (.NET 6+) define HTTP endpoints as lambda delegates on \texttt{WebApplication} — no controller classes or attributes needed. They support DI, endpoint filters, route groups, and OpenAPI while drastically reducing boilerplate.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<IProductService, ProductService>();
+var app = builder.Build();
+
+app.MapGet("/products/{id:int}", async (int id, IProductService svc) =>
+    await svc.GetByIdAsync(id) is { } p
+        ? Results.Ok(p)
+        : Results.NotFound())
+   .WithName("GetProduct")
+   .WithOpenApi();
+
+app.Run();
+  \end{minted}
+\end{frame}
+
+% 5 – Action Filters
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What are Action Filters in ASP.NET Core MVC?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspNetColor!20]{ASP.NET Core}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are Action Filters?%
+  }
+
+  {\footnotesize
+  \textbf{Action Filters} are attributes that execute code before/after a controller action. They handle cross-cutting concerns — validation, logging, caching — without polluting action bodies. Pipeline order: Authorization $\to$ Resource $\to$ Action $\to$ Result $\to$ Exception.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+public class ValidateModelFilter : ActionFilterAttribute
+{
+    public override void OnActionExecuting(ActionExecutingContext ctx)
+    {
+        if (!ctx.ModelState.IsValid)
+            ctx.Result = new UnprocessableEntityObjectResult(ctx.ModelState);
+    }
+}
+
+[ApiController, Route("api/[controller]")]
+[ValidateModelFilter]
+public class OrdersController : ControllerBase { }
+  \end{minted}
+\end{frame}
+
+% 6 – Output Caching
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What is Output Caching in ASP.NET Core 7+?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspNetColor!20]{ASP.NET Core}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Output Caching?%
+  }
+
+  {\footnotesize
+  \textbf{Output Caching} stores the full HTTP response and replays it without re-executing the endpoint. Configurable by duration, query-string keys, and custom policies. Backed by in-memory or distributed Redis storage. Distinct from Response Caching which relies on client cache headers.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+builder.Services.AddOutputCache(opts =>
+    opts.AddPolicy("products", p =>
+        p.Expire(TimeSpan.FromMinutes(5))
+         .SetVaryByQuery("category")));
+
+app.UseOutputCache();
+
+app.MapGet("/products", GetProducts).CacheOutput("products");
+  \end{minted}
+\end{frame}
+
+% 7 – Health Checks
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What are Health Checks in ASP.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspNetColor!20]{ASP.NET Core}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are Health Checks?%
+  }
+
+  {\footnotesize
+  \textbf{Health Checks} expose a \texttt{/health} endpoint reporting Healthy / Degraded / Unhealthy status. Kubernetes liveness and readiness probes, Azure App Service, and load balancers consume them. Implement \texttt{IHealthCheck} for custom dependencies (queue depth, third-party API).
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<AppDbContext>()
+    .AddCheck("payments-api", () =>
+        paymentGateway.IsReachable()
+            ? HealthCheckResult.Healthy()
+            : HealthCheckResult.Degraded("Slow response"));
+
+app.MapHealthChecks("/health");
+  \end{minted}
+\end{frame}
+
+% 8 – Options Pattern
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{* What is the Options pattern in ASP.NET Core?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspNetColor!20]{ASP.NET Core}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Options pattern?%
+  }
+
+  {\footnotesize
+  The \textbf{Options pattern} binds \texttt{IConfiguration} sections to strongly-typed classes via \texttt{IOptions<T>}, \texttt{IOptionsSnapshot<T>} (per-request), or \texttt{IOptionsMonitor<T>} (live reload). It provides type-safe access to configuration and supports validation with \texttt{DataAnnotations}.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+public class EmailOptions
+{
+    public string Host { get; set; } = "";
+    public int Port { get; set; } = 587;
+}
+
+builder.Services.Configure<EmailOptions>(
+    builder.Configuration.GetSection("Email"));
+
+// Consume
+public class Mailer(IOptions<EmailOptions> opts)
+{
+    private readonly EmailOptions _email = opts.Value;
+}
+  \end{minted}
+\end{frame}
+
+% 9 – Rate Limiting
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{*** What is Rate Limiting middleware in ASP.NET Core 7+?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AspNetColor!20]{ASP.NET Core}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Rate Limiting middleware?%
+  }
+
+  {\footnotesize
+  Built-in rate limiting (ASP.NET Core 7) protects APIs via \textbf{Fixed Window}, \textbf{Sliding Window}, \textbf{Token Bucket}, or \textbf{Concurrency} limiters. Apply globally or per-endpoint by policy name. Returns HTTP 429 when limits are exceeded.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+builder.Services.AddRateLimiter(opts =>
+{
+    opts.AddFixedWindowLimiter("api", limiter =>
+    {
+        limiter.Window = TimeSpan.FromSeconds(10);
+        limiter.PermitLimit = 100;
+        limiter.QueueLimit = 5;
+    });
+    opts.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
+
+app.UseRateLimiter();
+app.MapGet("/api/data", Handler).RequireRateLimiting("api");
+  \end{minted}
+\end{frame}
