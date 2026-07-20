@@ -1,0 +1,214 @@
+% AI Tools, LLMs & Observability section
+
+% 1 – What is an LLM?
+\QuestionSlide[\CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}]{* What is a Large Language Model (LLM)?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is a Large Language Model?%
+  }
+
+  {\footnotesize
+  A \textbf{Large Language Model} is a neural network trained on massive text corpora to predict the next token. At inference, it generates text autoregressively. LLMs exhibit emergent abilities: reasoning, code generation, translation, and tool use. Notable families: GPT-4o (OpenAI), Claude (Anthropic), Gemini (Google), Phi/Mistral (open-weight).
+  }
+\end{frame}
+
+% 2 – Tokens
+\QuestionSlide[\CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}]{* What are tokens in LLMs and why do they matter?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are tokens in LLMs?%
+  }
+
+  {\footnotesize
+  LLMs process text as \textbf{tokens} — sub-word pieces (e.g.\ \texttt{"programming"} $\to$ \texttt{["program","ming"]}). Pricing, context window limits, and latency are all measured in tokens. Rules of thumb: 1 token $\approx$ 0.75 English words; 1 page $\approx$ 500 tokens. The \textbf{context window} is the maximum total tokens (input + output) the model can process at once.
+  }
+\end{frame}
+
+% 3 – Fine-Tuning vs RAG
+\QuestionSlide[\CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}]{** When do you fine-tune vs use RAG?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: Fine-tuning vs RAG?%
+  }
+
+  {\footnotesize
+  \begin{tabular}{ll}
+    \textbf{Fine-Tuning} & \textbf{RAG} \\
+    Bakes knowledge into weights & Retrieves context at query time \\
+    Expensive, requires labelled data & Cheap, no GPU training \\
+    Good for style/format/task & Good for dynamic/private knowledge \\
+    Knowledge frozen at train time & Always up-to-date \\
+    Hard to audit/update & Easy to add/remove sources \\
+  \end{tabular}
+  \vspace{0.5em}
+  \textbf{Rule}: Use RAG first; fine-tune only for style/domain adaptation when RAG quality is insufficient.
+  }
+\end{frame}
+
+% 4 – Tool Use / Function Calling
+\QuestionSlide[\CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}]{** What is function calling / tool use in LLMs?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is function calling/tool use?%
+  }
+
+  {\footnotesize
+  \textbf{Tool use} (function calling) lets an LLM signal that it wants to invoke a defined function with structured arguments. Your code executes the function, returns the result, and continues the conversation. This gives LLMs real-world agency: database queries, HTTP calls, code execution, sending emails. In .NET: Semantic Kernel Plugins, \texttt{UseFunctionInvocation()} in Microsoft.Extensions.AI.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+[KernelFunction, Description("Get current stock price for a ticker symbol")]
+public async Task<string> GetStockPrice(
+    [Description("Stock ticker, e.g. MSFT")] string ticker)
+{
+    var price = await _stockApi.GetPriceAsync(ticker);
+    return $"{ticker}: {price:C}";
+}
+  \end{minted}
+\end{frame}
+
+% 5 – GitHub Copilot
+\QuestionSlide[\CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}]{* What is GitHub Copilot and how does it work?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is GitHub Copilot?%
+  }
+
+  {\footnotesize
+  \textbf{GitHub Copilot} is an AI pair programmer powered by OpenAI Codex / GPT-4o, integrated into VS Code, Visual Studio, JetBrains, and Neovim. It provides \textbf{inline completions}, \textbf{chat} (explain, refactor, fix bugs), \textbf{PR summaries}, and \textbf{Workspace agent} for repo-wide queries. \textbf{Copilot CLI} assists with shell commands.
+  }
+\end{frame}
+
+% 6 – Claude
+\QuestionSlide[\CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}]{* What is Claude and its model family?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Claude?%
+  }
+
+  {\footnotesize
+  \textbf{Claude} is Anthropic's family of AI assistants designed for safety, instruction-following, and long-context reasoning. Tiers:
+  \begin{itemize}
+    \item \textbf{Haiku} – fastest and cheapest; ideal for high-volume tasks.
+    \item \textbf{Sonnet} – balanced capability and speed; default for most workloads.
+    \item \textbf{Opus} – most capable; complex reasoning and agentic tasks.
+  \end{itemize}
+  Claude supports 200K-token context windows, vision, tool use, and is available via Anthropic API and Azure AI Foundry.
+  }
+\end{frame}
+
+% 7 – LangChain
+\QuestionSlide[\CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}]{** What is LangChain?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is LangChain?%
+  }
+
+  {\footnotesize
+  \textbf{LangChain} (Python / JS) is an open-source framework for composing LLM-powered applications: \textbf{chains} (pipelines of LLM calls), \textbf{agents} (LLMs that select and invoke tools dynamically), \textbf{memory} (conversation history), and \textbf{retrieval} (document loaders, text splitters, vector stores). \textbf{LangGraph} extends it with stateful, graph-based agentic workflows.
+  }
+\end{frame}
+
+% 8 – Multi-Agent Systems
+\QuestionSlide[\CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}]{*** What is a Multi-Agent System in the context of LLMs?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is a Multi-Agent System?%
+  }
+
+  {\footnotesize
+  A \textbf{Multi-Agent System} coordinates multiple specialised AI agents to complete complex tasks. Each agent has a role (Planner, Coder, Reviewer, Researcher) and communicates via messages. Patterns: \textbf{Orchestrator-Worker} (one agent delegates), \textbf{Group Chat} (agents debate), \textbf{Hierarchical} (nested orchestrators). Frameworks: Semantic Kernel \texttt{AgentGroupChat}, AutoGen, LangGraph.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+AgentGroupChat groupChat = new(plannerAgent, coderAgent, reviewerAgent)
+{
+    ExecutionSettings = new()
+    {
+        SelectionStrategy  = new RoundRobinSelectionStrategy(),
+        TerminationStrategy = new ApprovalTerminationStrategy()
+    }
+};
+
+await foreach (var msg in groupChat.InvokeAsync())
+    Console.WriteLine($"[{msg.AuthorName}] {msg.Content}");
+  \end{minted}
+\end{frame}
+
+% 9 – OpenTelemetry for LLM Observability
+\QuestionSlide[\CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}]{*** What is OpenTelemetry-based LLM observability?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[AiToolColor!20]{AI Tools \& LLMs}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: OpenTelemetry-based LLM observability?%
+  }
+
+  {\footnotesize
+  \textbf{OpenTelemetry for LLMs} captures spans for each model call with standardised attributes: model name, input/output token counts, latency, prompt/completion content (opt-in), and tool calls. The \textbf{GenAI Semantic Conventions} spec (CNCF) defines attribute names like \texttt{gen\_ai.system}, \texttt{gen\_ai.usage.input\_tokens}. \texttt{UseOpenTelemetry()} middleware on \texttt{IChatClient} wires this automatically.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+IChatClient client = new OpenAIClient(key)
+    .AsChatClient("gpt-4o")
+    .AsBuilder()
+    .UseOpenTelemetry(
+        loggerFactory: loggerFactory,
+        configure: t => t.EnableSensitiveData = false) // excludes prompts
+    .Build();
+
+// Every call now emits a span to your OTLP collector (Jaeger, Grafana, Azure Monitor)
+  \end{minted}
+\end{frame}

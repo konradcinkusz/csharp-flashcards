@@ -1,0 +1,241 @@
+% Blazor Server section
+
+% 1 – What is Blazor Server?
+\QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{* What is Blazor Server?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[BlazorColor!20]{Blazor Server}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is Blazor Server?%
+  }
+
+  {\footnotesize
+  \textbf{Blazor Server} runs C\# UI components on the server. The browser renders a thin HTML shell; user events (clicks, input) travel over a \textbf{SignalR WebSocket} to the server, which updates a virtual DOM diff and pushes only the changes back. This keeps all logic and data server-side but requires persistent connections.
+  }
+\end{frame}
+
+% 2 – Components
+\QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{* What is a Blazor component?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[BlazorColor!20]{Blazor Server}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is a Blazor component?%
+  }
+
+  {\footnotesize
+  A \textbf{component} is a self-contained unit of UI defined in a \texttt{.razor} file. It combines HTML markup, C\# logic in \texttt{@code\{\}}, and optionally CSS isolation. Components receive data through \texttt{[Parameter]} properties and communicate upward via \texttt{EventCallback}.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{html}
+<!-- Counter.razor -->
+<h3>Count: @count</h3>
+<button @onclick="Increment">+1</button>
+
+@code {
+    [Parameter] public int InitialValue { get; set; }
+    private int count;
+    protected override void OnInitialized() => count = InitialValue;
+    private void Increment() => count++;
+}
+  \end{minted}
+\end{frame}
+
+% 3 – Component Lifecycle
+\QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{** What is the Blazor component lifecycle?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[BlazorColor!20]{Blazor Server}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is the Blazor component lifecycle?%
+  }
+
+  {\footnotesize
+  Key lifecycle methods (sync + async variants):
+  \begin{enumerate}
+    \item \texttt{SetParametersAsync} – parameters set from parent.
+    \item \texttt{OnInitialized[Async]} – one-time init; fetch initial data here.
+    \item \texttt{OnParametersSet[Async]} – called when parameters change.
+    \item \texttt{OnAfterRender[Async]} – DOM is ready; safe for JS interop.
+    \item \texttt{Dispose} / \texttt{DisposeAsync} – clean up timers, subscriptions.
+  \end{enumerate}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+@implements IAsyncDisposable
+
+@code {
+    private List<Product> products = [];
+
+    protected override async Task OnInitializedAsync()
+        => products = await ProductService.GetAllAsync();
+
+    public async ValueTask DisposeAsync()
+        => await hubConnection.DisposeAsync();
+}
+  \end{minted}
+\end{frame}
+
+% 4 – Data Binding
+\QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{* What is data binding in Blazor?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[BlazorColor!20]{Blazor Server}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is data binding in Blazor?%
+  }
+
+  {\footnotesize
+  \begin{itemize}
+    \item \textbf{One-way} – \texttt{@variable} renders a value; updates do not flow back automatically.
+    \item \textbf{Two-way} – \texttt{@bind="property"} synchronises between the UI element and C\# field on the \texttt{oninput} or \texttt{onchange} event.
+    \item \textbf{Event-driven} – \texttt{@onclick}, \texttt{@oninput} call C\# handlers that update state and trigger re-render.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{html}
+<!-- two-way binding to a text field -->
+<input @bind="searchTerm" @bind:event="oninput" />
+<p>Searching: @searchTerm</p>
+
+@code {
+    private string searchTerm = "";
+}
+  \end{minted}
+\end{frame}
+
+% 5 – State Management
+\QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{** How do you manage state in Blazor Server?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[BlazorColor!20]{Blazor Server}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: How do you manage state in Blazor Server?%
+  }
+
+  {\footnotesize
+  Options from simplest to most powerful:
+  \begin{itemize}
+    \item \textbf{Component fields} – local, lost on reconnect.
+    \item \textbf{Scoped service} (injected) – lives per SignalR circuit; shared between components in the same browser tab.
+    \item \textbf{CascadingValue} – pass state down the component tree without prop-drilling.
+    \item \textbf{Browser storage} (via JS interop) – survives page refresh.
+    \item \textbf{Fluxor / Blazor-State} – Redux-style store for complex apps.
+  \end{itemize}
+  }
+\end{frame}
+
+% 6 – JS Interop
+\QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{** What is JavaScript Interop in Blazor?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[BlazorColor!20]{Blazor Server}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What is JavaScript Interop?%
+  }
+
+  {\footnotesize
+  \textbf{JS Interop} lets Blazor call JavaScript functions and JS call .NET methods. Use \texttt{IJSRuntime.InvokeAsync<T>} for calls that return values; \texttt{InvokeVoidAsync} when no return is needed. Only safe inside \texttt{OnAfterRenderAsync} when the DOM exists.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{csharp}
+@inject IJSRuntime JS
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await JS.InvokeVoidAsync("initChart", chartRef);
+    }
+
+    private async Task CopyToClipboard(string text)
+        => await JS.InvokeVoidAsync("navigator.clipboard.writeText", text);
+}
+  \end{minted}
+\end{frame}
+
+% 7 – EditForm & Validation
+\QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{** How do you handle forms and validation in Blazor?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[BlazorColor!20]{Blazor Server}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: How do you handle forms and validation in Blazor?%
+  }
+
+  {\footnotesize
+  \texttt{EditForm} wraps an \texttt{EditContext} bound to a model. \texttt{DataAnnotationsValidator} reads \texttt{[Required]}, \texttt{[Range]}, etc. \texttt{ValidationSummary} and \texttt{ValidationMessage<T>} display errors. \texttt{OnValidSubmit} fires only when validation passes.
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{html}
+<EditForm Model="order" OnValidSubmit="PlaceOrder">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText @bind-Value="order.CustomerName" />
+    <ValidationMessage For="@(() => order.CustomerName)" />
+
+    <button type="submit">Place Order</button>
+</EditForm>
+  \end{minted}
+\end{frame}
+
+% 8 – Render Modes (.NET 8)
+\QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{*** What are Blazor render modes in .NET 8?}
+
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[BlazorColor!20]{Blazor Server}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What are Blazor render modes in .NET 8?%
+  }
+
+  {\footnotesize
+  .NET 8 unified all Blazor hosting models under one project type with \textbf{per-component render modes}:
+  \begin{itemize}
+    \item \texttt{@rendermode InteractiveServer} – SignalR circuit, server-side logic.
+    \item \texttt{@rendermode InteractiveWebAssembly} – runs in browser WASM.
+    \item \texttt{@rendermode InteractiveAuto} – WASM on return visits, Server first load.
+    \item \textbf{Static SSR} (default) – HTML only, no interactivity.
+  \end{itemize}
+  }
+
+  \begin{minted}[fontsize=\scriptsize]{html}
+<!-- Per-page render mode -->
+@rendermode InteractiveServer
+
+<!-- Per-component in parent -->
+<Counter @rendermode="InteractiveWebAssembly" />
+  \end{minted}
+\end{frame}
