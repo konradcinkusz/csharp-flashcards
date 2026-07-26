@@ -1,4 +1,4 @@
-# CSharp FlashCards 2025
+# CSharp FlashCards 2026
 
 [![PDF download](https://img.shields.io/badge/PDF-download-blue)](https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf)
 [![CI](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml/badge.svg)](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml)
@@ -82,4 +82,4 @@ See [LICENSE](LICENSE)
 
 ---
 
-*Created with ♥ for anyone learning C# in 2025!*
+*Created with ♥ for anyone learning C# in 2026!*
