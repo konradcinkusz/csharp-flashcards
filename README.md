@@ -1,10 +1,10 @@
-# CSharp FlashCards 2025
+# CSharp FlashCards 2026
 
 [![PDF download](https://img.shields.io/badge/PDF-download-blue)](https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf)
 [![CI](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml/badge.svg)](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A Beamer slide deck of **Q-and-A flash-cards** that cover C# language basics, LINQ, async/await, Entity Framework, design principles and patterns, plus advanced cloud and leadership topics.
+A Beamer slide deck of **Q-and-A flash-cards** that cover C# language basics, LINQ, async/await, Entity Framework, design principles and patterns, OAuth, microservices, cloud and leadership topics, AI & .NET, ASP.NET Core, Blazor, .NET Aspire, databases, Docker & Kubernetes, CI/CD & IaC, Azure, DDD & CQRS, REST & SignalR, AI tools/LLMs, and tooling & agile practices.
 Use it for live classes, self-study, interview prep, or conference lightning talks.
 
 ---
@@ -45,7 +45,21 @@ Prefer a browser? Import the repo into Overleaf and press *Re-compile* – Overl
 │   ├── 7-design-principles.tex
 │   ├── 8-design-patterns.tex
 │   ├── 9-OAuth.tex
-│   └── 10-microservices.tex
+│   ├── 10-microservices.tex
+│   ├── 11-advanced-cloud-leadership.tex
+│   ├── 12-azure-serverless.tex
+│   ├── 13-csharp-ai.tex
+│   ├── 14-aspnetcore.tex
+│   ├── 15-blazor-server.tex
+│   ├── 16-dotnet-aspire.tex
+│   ├── 17-databases.tex
+│   ├── 18-docker-kubernetes.tex
+│   ├── 19-cicd-terraform.tex
+│   ├── 20-azure.tex
+│   ├── 21-ddd-cqrs.tex
+│   ├── 22-rest-signalr.tex
+│   ├── 23-ai-tools-llms.tex
+│   └── 24-tooling-agile.tex
 ├── main.tex
 ├── mybeamer.cls / mybeamer.sty
 └── .github/workflows/ci.yml
@@ -68,4 +82,4 @@ See [LICENSE](LICENSE)
 
 ---
 
-*Created with ♥ for anyone learning C# in 2025!*
+*Created with ♥ for anyone learning C# in 2026!*
