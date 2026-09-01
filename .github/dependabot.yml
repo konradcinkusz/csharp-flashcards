@@ -1,0 +1,36 @@
+# Dependency update automation — REPO-BASELINE.md §1, against the failure it
+# names: "vulnerable pins nobody owns; the 'we'll update later' that never comes".
+#
+# Only one ecosystem is listed, and the omission is deliberate rather than an
+# oversight. This repository has no package manifest: no .csproj, no
+# package.json, no requirements.txt. The C# in it is illustrative listings inside
+# slides and is never compiled, and the three scripts under scripts/ import only
+# the Python standard library. GitHub Actions are the only third-party code in
+# the tree, so they are the only thing there is to keep current.
+#
+# This is not merely hygiene here. ci.yml's release job runs with
+# contents: write, so the Actions pinned in it execute with credentials that can
+# write to this repository.
+#
+# Grouped into one pull request per week rather than eight: at this size a bump
+# per action is noise, and noise is what trains a maintainer to stop reading
+# Dependabot PRs. If a grouped bump ever fails CI, split it then — that is a
+# cheaper problem than an ignored bot.
+
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      # 06:00, half an hour after secret-scan.yml's weekly run at 05:30. The
+      # separation is deliberate: a finding from a newly added scanner rule and a
+      # dependency bump arriving together would be read as one event.
+      time: '06:00'
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'chore(ci)(deps)'
+    groups:
+      github-actions:
+        patterns: ['*']
