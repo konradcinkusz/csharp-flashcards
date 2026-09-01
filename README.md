@@ -1,8 +1,13 @@
 # CSharp FlashCards 2026
 
-[![PDF download](https://img.shields.io/badge/PDF-download-blue)](https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf)
-[![CI](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml/badge.svg)](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml)
+[![Build deck](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+**Get the PDF:** no release has been cut yet, so the deck is built on demand —
+[run the *Build & Release PDF* workflow](https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml)
+and download `CSharp_FlashCards` from the run's Artifacts. Once a `v*` tag is
+pushed the same workflow publishes a release, and this line is replaced by a
+direct download link.
 
 A Beamer slide deck of **Q-and-A flash-cards** that cover C# language basics, LINQ, async/await, Entity Framework, design principles and patterns, OAuth, microservices, cloud and leadership topics, AI & .NET, ASP.NET Core, Blazor, .NET Aspire, databases, Docker & Kubernetes, CI/CD & IaC, Azure, DDD & CQRS, REST & SignalR, AI tools/LLMs, and tooling & agile practices.
 Use it for live classes, self-study, interview prep, or conference lightning talks.
@@ -62,7 +67,10 @@ Prefer a browser? Import the repo into Overleaf and press *Re-compile* – Overl
 │   └── 24-tooling-agile.tex
 ├── main.tex
 ├── mybeamer.cls / mybeamer.sty
-└── .github/workflows/ci.yml
+└── .github/workflows/
+    ├── build.yml      # compiles main.tex on every push and PR
+    ├── ci.yml         # builds and publishes the release PDF
+    └── pages.yml      # deploys docs/ to GitHub Pages
 ```
 
 ---
@@ -80,7 +88,8 @@ that must not break. Progress is tracked on
 
 1. **Fork** → create a feature branch.
 2. Add or edit an `areas/*.tex` file, or improve the Beamer style.
-3. Open a **Pull Request** – automated checks will compile the PDF and comment with any LaTeX errors.
+3. Open a **Pull Request**. CI compiles `main.tex` on every pull request; if the
+   deck fails to build, the run's summary names the LaTeX error and the file it is in.
 
 ---
 
