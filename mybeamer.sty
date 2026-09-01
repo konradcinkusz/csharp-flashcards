@@ -60,28 +60,50 @@
 }
 
 %% ------------------------------------------------------------------------
-%% Answer slide:                \AnswerSlide[<badge>]{<short title>}{<body>}
+%% Answer frame title:   \frametitle{\AnswerTitle[<badge>]{<short title>}}
+%%
+%% The badge overlay used to be written out longhand in every answer frame --
+%% the same eight lines each time, 1,122 of the 7,617 lines under areas/, and
+%% the reason the deck had drifted into two spellings of
+%% `remember picture,overlay' and three different inset values.
+%%
+%% Why this is a TITLE macro and not a whole-frame one, which is what you would
+%% reach for first: this file used to define
+%%
+%%     \AnswerSlide[<badge>]{<short title>}{<body>}
+%%
+%% taking the frame body as an argument. It was never used by a single card in
+%% the deck, and it cannot be. 197 of the 270 answer frames contain minted, and
+%% a macro argument has no line structure. Measured rather than assumed --
+%% converting one card to it gives
+%%
+%%     ./areas/4-LINQ.tex:29: FancyVerb Error:
+%%       Extraneous input `... var names = context.Customers .Select(c =>
+%%       c.CustomerName) .ToList(); ...' between \begin{minted}[<key=value>]
+%%       and line end
+%%
+%% because by the time minted sees its content the newlines are gone. beamer's
+%% [fragile] wants the same thing from the other end: it scans the SOURCE for
+%% \end{frame}, so a frame generated inside a macro cannot be fragile either.
+%%
+%% So the frame and its body stay in the card file where verbatim needs them,
+%% and only the part that is genuinely identical every time moves in here. The
+%% inset is 0.4cm and the node carries text=black, matching what the 270
+%% hand-rolled frames did, so the rendered page is unchanged.
 %% ------------------------------------------------------------------------
-\NewDocumentCommand{\AnswerSlide}{ o m m }{%
-  % #1 = optional badge
-  % #2 = short title
-  % #3 = body content
-  \begin{frame}%
-    % badge overlay
-    \IfValueT{#1}{%
-      \begin{tikzpicture}[remember picture,overlay]
-        \node[
-          anchor=north east,
-          xshift=-0.5cm,
-          yshift=-0.5cm
-        ] at (current page.north east)
-        {#1};
-      \end{tikzpicture}%
-    }%
-    % frame title and body
-    \frametitle{Answer \theqcounter: #2}%
-    #3%
-  \end{frame}%
+\NewDocumentCommand{\AnswerTitle}{ o m }{%
+  % #1 = optional badge   #2 = short title
+  \IfValueT{#1}{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[
+        anchor=north east,
+        xshift=-0.4cm,
+        yshift=-0.4cm,
+        text=black
+      ] at (current page.north east) {#1};
+    \end{tikzpicture}%
+  }%
+  Answer \theqcounter: #2%
 }
 
 %% ------------------------------------------------------------------------

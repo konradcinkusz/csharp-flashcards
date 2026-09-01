@@ -4,14 +4,7 @@
 \QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{** What is the Bulkhead Pattern?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[MicroColor!20]{Microservices}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is the Bulkhead Pattern?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is the Bulkhead Pattern?}}
 
   {\footnotesize
   The Bulkhead Pattern isolates critical resources (threads, connections) into independent pools so that a failure in one area does not bring down the entire system.
@@ -30,14 +23,7 @@ await bulkhead.ExecuteAsync(() => httpClient.GetAsync(url));
 \QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{* What is the Sidecar Pattern?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[MicroColor!20]{Microservices}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is the Sidecar Pattern?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is the Sidecar Pattern?}}
 
   {\footnotesize
   The Sidecar Pattern deploys a helper service alongside the main service within the same host or pod. The sidecar handles cross-cutting concerns like logging or proxying without modifying the primary service.
@@ -61,14 +47,7 @@ spec:
 \QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{** What is a Service Mesh?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[MicroColor!20]{Microservices}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is a Service Mesh?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is a Service Mesh?}}
 
   {\footnotesize
   A Service Mesh is an infrastructure layer that manages service-to-service communication via sidecar proxies, providing features like traffic routing, retries, and observability without changing application code. Popular meshes include Istio and Linkerd.
@@ -84,14 +63,7 @@ kubectl label namespace default istio-injection=enabled
 \QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{* What is the Strangler Fig Pattern?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[MicroColor!20]{Microservices}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is the Strangler Fig Pattern?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is the Strangler Fig Pattern?}}
 
   {\footnotesize
   The Strangler Fig Pattern incrementally replaces pieces of a monolith with microservices. A facade routes requests between legacy and new components until the monolith can be retired.
@@ -109,14 +81,7 @@ app.Map("/orders", m => m.RunProxy("http://orders-service"));
 \QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{** What is Event Sourcing?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[MicroColor!20]{Microservices}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Event Sourcing?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is Event Sourcing?}}
 
   {\footnotesize
   Event Sourcing persists state as a sequence of immutable events. The current state is rebuilt by replaying events, enabling full audit history and temporal queries.
