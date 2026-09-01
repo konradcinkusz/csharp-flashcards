@@ -1,0 +1,33 @@
+# EditorConfig — https://editorconfig.org
+#
+# This deck is authored across at least three environments the README itself
+# names: a local latexmk, Overleaf's web editor, and whatever IDE a contributor
+# uses. They disagree about line endings and trailing whitespace by default, and
+# 7,600 lines of .tex across 24 files with no rule saying which is correct is how
+# a repository acquires a whitespace-only diff nobody can review.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.md]
+# Deliberately off, and the exception is load-bearing rather than cosmetic: two
+# trailing spaces are a Markdown hard line break. README.md relies on this in
+# two places today (lines 34 and 98, both exactly two spaces), so a trimming
+# editor would silently reflow the rendered page.
+trim_trailing_whitespace = false
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[LICENSE]
+# Verbatim licence text: no editor should reformat it, and it has no final
+# newline today. Left exactly as the MIT template ships it.
+insert_final_newline = false
+trim_trailing_whitespace = false
