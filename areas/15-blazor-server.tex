@@ -4,14 +4,7 @@
 \QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{* What is Blazor Server?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[BlazorColor!20]{Blazor Server}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Blazor Server?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[BlazorColor!20]{Blazor Server}]{What is Blazor Server?}}
 
   {\footnotesize
   \textbf{Blazor Server} runs C\# UI components on the server. The browser renders a thin HTML shell; user events (clicks, input) travel over a \textbf{SignalR WebSocket} to the server, which updates a virtual DOM diff and pushes only the changes back. This keeps all logic and data server-side but requires persistent connections.
@@ -22,14 +15,7 @@
 \QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{* What is a Blazor component?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[BlazorColor!20]{Blazor Server}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is a Blazor component?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[BlazorColor!20]{Blazor Server}]{What is a Blazor component?}}
 
   {\footnotesize
   A \textbf{component} is a self-contained unit of UI defined in a \texttt{.razor} file. It combines HTML markup, C\# logic in \texttt{@code\{\}}, and optionally CSS isolation. Components receive data through \texttt{[Parameter]} properties and communicate upward via \texttt{EventCallback}.
@@ -53,14 +39,7 @@
 \QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{** What is the Blazor component lifecycle?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[BlazorColor!20]{Blazor Server}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is the Blazor component lifecycle?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[BlazorColor!20]{Blazor Server}]{What is the Blazor component lifecycle?}}
 
   {\footnotesize
   Key lifecycle methods (sync + async variants):
@@ -92,14 +71,7 @@
 \QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{* What is data binding in Blazor?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[BlazorColor!20]{Blazor Server}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is data binding in Blazor?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[BlazorColor!20]{Blazor Server}]{What is data binding in Blazor?}}
 
   {\footnotesize
   \begin{itemize}
@@ -124,14 +96,7 @@
 \QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{** How do you manage state in Blazor Server?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[BlazorColor!20]{Blazor Server}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: How do you manage state in Blazor Server?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[BlazorColor!20]{Blazor Server}]{How do you manage state in Blazor Server?}}
 
   {\footnotesize
   Options from simplest to most powerful:
@@ -149,14 +114,7 @@
 \QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{** What is JavaScript Interop in Blazor?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[BlazorColor!20]{Blazor Server}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is JavaScript Interop?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[BlazorColor!20]{Blazor Server}]{What is JavaScript Interop?}}
 
   {\footnotesize
   \textbf{JS Interop} lets Blazor call JavaScript functions and JS call .NET methods. Use \texttt{IJSRuntime.InvokeAsync<T>} for calls that return values; \texttt{InvokeVoidAsync} when no return is needed. Only safe inside \texttt{OnAfterRenderAsync} when the DOM exists.
@@ -182,14 +140,7 @@
 \QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{** How do you handle forms and validation in Blazor?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[BlazorColor!20]{Blazor Server}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: How do you handle forms and validation in Blazor?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[BlazorColor!20]{Blazor Server}]{How do you handle forms and validation in Blazor?}}
 
   {\footnotesize
   \texttt{EditForm} wraps an \texttt{EditContext} bound to a model. \texttt{DataAnnotationsValidator} reads \texttt{[Required]}, \texttt{[Range]}, etc. \texttt{ValidationSummary} and \texttt{ValidationMessage<T>} display errors. \texttt{OnValidSubmit} fires only when validation passes.
@@ -212,14 +163,7 @@
 \QuestionSlide[\CategoryBadge[BlazorColor!20]{Blazor Server}]{*** What are Blazor render modes in .NET 8?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[BlazorColor!20]{Blazor Server}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are Blazor render modes in .NET 8?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[BlazorColor!20]{Blazor Server}]{What are Blazor render modes in .NET 8?}}
 
   {\footnotesize
   .NET 8 unified all Blazor hosting models under one project type with \textbf{per-component render modes}:

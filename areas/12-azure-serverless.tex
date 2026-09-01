@@ -2,14 +2,7 @@
 \QuestionSlide[\CategoryBadge[MicroColor!20]{Azure SQL}]{** What is Azure SQL Database?}
 
 \begin{frame}[fragile]
-\frametitle{%
-\begin{tikzpicture}[remember picture, overlay]
-\node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-\CategoryBadge[MicroColor!20]{Azure SQL}
-};
-\end{tikzpicture}
-Answer \theqcounter: What is Azure SQL Database?%
-}
+\frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Azure SQL}]{What is Azure SQL Database?}}
 
 {\footnotesize
 Azure SQL Database is Microsoft’s cloud-hosted, fully managed relational DBaaS built on the SQL Server engine. Microsoft handles patching, backups, high availability, and scaling, while you consume it via the TDS protocol using familiar tools (ADO.NET, EF Core, SSMS). Deployment models include Single DB, Elastic Pool, Serverless compute, and Hyperscale; security features like TDE, firewall rules, Azure AD auth, and private endpoints are built in.
@@ -54,14 +47,7 @@ REM -G = Azure AD authentication
 \QuestionSlide[\CategoryBadge[MicroColor!20]{Azure SQL}]{** What are the key differences between Azure SQL Database and SQL Server (MSSQL)?}
 
 \begin{frame}[fragile]
-\frametitle{%
-\begin{tikzpicture}[remember picture, overlay]
-\node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-\CategoryBadge[MicroColor!20]{Azure SQL}
-};
-\end{tikzpicture}
-Answer \theqcounter: Key differences Azure SQL vs. MSSQL%
-}
+\frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Azure SQL}]{Key differences Azure SQL vs. MSSQL}}
 
 {\scriptsize
 \setlength{\tabcolsep}{3pt}%
@@ -105,14 +91,7 @@ TDE by default, Azure AD auth, private endpoints & Manual setup for encryption, 
 \QuestionSlide[\CategoryBadge[MicroColor!20]{Azure SQL}]{* Can I use EF Core in Azure serverless scenarios (Azure Functions + Azure SQL Serverless)?}
 
 \begin{frame}[fragile]
-\frametitle{%
-\begin{tikzpicture}[remember picture, overlay]
-\node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-\CategoryBadge[MicroColor!20]{Azure SQL}
-};
-\end{tikzpicture}
-Answer \theqcounter: EF Core with Azure Functions \& Azure SQL Serverless%
-}
+\frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Azure SQL}]{EF Core with Azure Functions \& Azure SQL Serverless}}
 
 {\footnotesize
 Yes. Register EF Core via DI and create a fresh \texttt{DbContext} per invocation (prefer \texttt{IDbContextFactory<T>}). Use Azure AD Managed Identity, enable connection resiliency, and tune pooling to avoid exhausting connections when Functions scale out. Expect a cold query on auto-paused databases; mitigate with minimum vCores or disable auto-pause if latency sensitive.

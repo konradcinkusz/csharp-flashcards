@@ -4,14 +4,7 @@
 \QuestionSlide[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{* What is Docker?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DockerColor!20]{Docker \& K8s}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Docker?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{What is Docker?}}
 
   {\footnotesize
   \textbf{Docker} is a platform that packages an application and all its dependencies into a \textbf{container} — a lightweight, isolated, portable unit that runs identically on any host with a Docker engine. Containers share the host OS kernel (unlike VMs) and start in milliseconds.
@@ -22,14 +15,7 @@
 \QuestionSlide[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{* What is the difference between a Docker image and a container?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DockerColor!20]{Docker \& K8s}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: Image vs container?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{Image vs container?}}
 
   {\footnotesize
   An \textbf{image} is a read-only, layered filesystem template built from a \texttt{Dockerfile}. A \textbf{container} is a running (or stopped) instance of an image — an image plus a writable layer. Multiple containers can share the same underlying image; the image itself is never modified.
@@ -47,14 +33,7 @@ docker images                        # list images
 \QuestionSlide[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{** What does a multi-stage Dockerfile look like for a .NET app?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DockerColor!20]{Docker \& K8s}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: Multi-stage Dockerfile for .NET?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{Multi-stage Dockerfile for .NET?}}
 
   {\footnotesize
   \textbf{Multi-stage builds} keep the final image small: the SDK stage compiles, the runtime stage only ships the published output — no build tools included.
@@ -78,14 +57,7 @@ ENTRYPOINT ["dotnet", "MyApi.dll"]
 \QuestionSlide[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{* What is GHCR (GitHub Container Registry)?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DockerColor!20]{Docker \& K8s}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is GHCR?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{What is GHCR?}}
 
   {\footnotesize
   \textbf{GHCR} (\texttt{ghcr.io}) is GitHub's built-in OCI-compatible container registry. Images are stored alongside code, scoped to users or organisations, and access is controlled with GitHub tokens. Free for public images and public packages. Typical CI workflow: build $\to$ push to GHCR $\to$ deploy from GHCR.
@@ -111,14 +83,7 @@ ENTRYPOINT ["dotnet", "MyApi.dll"]
 \QuestionSlide[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{* What are the core Kubernetes objects: Pod, Service, Deployment?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DockerColor!20]{Docker \& K8s}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: Pod vs Service vs Deployment?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{Pod vs Service vs Deployment?}}
 
   {\footnotesize
   \begin{itemize}
@@ -134,14 +99,7 @@ ENTRYPOINT ["dotnet", "MyApi.dll"]
 \QuestionSlide[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{** What is a Kubernetes Ingress?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DockerColor!20]{Docker \& K8s}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is a Kubernetes Ingress?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{What is a Kubernetes Ingress?}}
 
   {\footnotesize
   \textbf{Ingress} is a cluster-wide API object that routes external HTTP/HTTPS traffic to Services based on host or path rules. An \textbf{Ingress Controller} (nginx, Traefik, Azure AGIC) watches Ingress resources and programs a reverse proxy. It also handles TLS termination via \texttt{cert-manager}.
@@ -171,14 +129,7 @@ spec:
 \QuestionSlide[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{** What is Helm and why use it?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DockerColor!20]{Docker \& K8s}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Helm?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{What is Helm?}}
 
   {\footnotesize
   \textbf{Helm} is the package manager for Kubernetes. A \textbf{Chart} bundles all K8s YAML manifests into a reusable, versioned package. \textbf{Values} files override defaults per environment. \texttt{helm upgrade --install} handles first deploy and subsequent upgrades idempotently, with rollback support.
@@ -200,14 +151,7 @@ helm upgrade --install my-api ./charts/my-api \
 \QuestionSlide[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{** What is the difference between a Kubernetes Deployment and a StatefulSet?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DockerColor!20]{Docker \& K8s}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: Deployment vs StatefulSet?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{Deployment vs StatefulSet?}}
 
   {\footnotesize
   \begin{tabular}{ll}
@@ -226,14 +170,7 @@ helm upgrade --install my-api ./charts/my-api \
 \QuestionSlide[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{** What are resource requests and limits in Kubernetes?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DockerColor!20]{Docker \& K8s}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: Resource requests and limits?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DockerColor!20]{Docker \& K8s}]{Resource requests and limits?}}
 
   {\footnotesize
   \textbf{Requests} are the guaranteed minimum (used by the scheduler to place Pods). \textbf{Limits} are the maximum a container can consume. Exceeding CPU limit throttles the container; exceeding memory limit kills it (OOMKilled). Always set both to prevent noisy-neighbour issues and enable safe autoscaling.

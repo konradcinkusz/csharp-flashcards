@@ -5,14 +5,7 @@
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is Microsoft.Extensions.AI?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Microsoft.Extensions.AI?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is Microsoft.Extensions.AI?}}
 
   {\footnotesize
   \textbf{Microsoft.Extensions.AI} is a set of provider-agnostic .NET abstractions for integrating AI services.
@@ -39,14 +32,7 @@ public class MyService(IChatClient chat)
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is IChatClient?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is IChatClient?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is IChatClient?}}
 
   {\footnotesize
   \texttt{IChatClient} is the core Microsoft.Extensions.AI interface for sending chat messages to any LLM.
@@ -73,14 +59,7 @@ await foreach (var chunk in client.CompleteStreamingAsync("Tell a joke"))
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is IEmbeddingGenerator?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is IEmbeddingGenerator?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is IEmbeddingGenerator?}}
 
   {\footnotesize
   \texttt{IEmbeddingGenerator<TInput, TEmbedding>} converts text (or other inputs) into numeric vectors.
@@ -105,14 +84,7 @@ Console.WriteLine($"Dimensions: {vec.Length}"); // 1536
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is Semantic Kernel?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Semantic Kernel?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is Semantic Kernel?}}
 
   {\footnotesize
   \textbf{Semantic Kernel (SK)} is Microsoft's open-source AI orchestration SDK for .NET (also Python/Java).
@@ -141,14 +113,7 @@ Console.WriteLine(result);
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What are Semantic Kernel Plugins?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are Semantic Kernel Plugins?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What are Semantic Kernel Plugins?}}
 
   {\footnotesize
   SK \textbf{Plugins} wrap your .NET methods so an LLM can discover and invoke them as \textbf{tools}
@@ -178,14 +143,7 @@ var result = await kernel.InvokePromptAsync(
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{*** What are Semantic Kernel Agents?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are Semantic Kernel Agents?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What are Semantic Kernel Agents?}}
 
   {\footnotesize
   SK \textbf{Agents} are autonomous AI entities that reason and act over multiple turns without manual
@@ -218,14 +176,7 @@ await foreach (var msg in chat.InvokeAsync())
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is RAG (Retrieval-Augmented Generation)?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is RAG?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is RAG?}}
 
   {\footnotesize
   \textbf{RAG} grounds LLM responses in your own data: chunk documents $\to$ generate embeddings $\to$
@@ -253,14 +204,7 @@ var answer = await chat.CompleteAsync(
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{*** What is IVectorStore in .NET AI?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is IVectorStore in .NET AI?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is IVectorStore in .NET AI?}}
 
   {\footnotesize
   \texttt{IVectorStore} (from \texttt{Microsoft.Extensions.VectorData}) is a provider-agnostic abstraction
@@ -293,14 +237,7 @@ await coll.UpsertAsync(new DocRecord { Id = "1", Text = "Hi", Embedding = vec })
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is the Semantic Kernel Kernel object?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is the Semantic Kernel Kernel object?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is the Semantic Kernel Kernel object?}}
 
   {\footnotesize
   \texttt{Kernel} is SK's central DI container. It holds AI services (chat, embedding), plugins, filters,
@@ -330,14 +267,7 @@ Console.WriteLine(time.GetValue<string>());
 \QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{*** What is AI middleware in Microsoft.Extensions.AI?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AIColor!20]{AI \& .NET}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is AI middleware in Microsoft.Extensions.AI?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is AI middleware in Microsoft.Extensions.AI?}}
 
   {\footnotesize
   \texttt{IChatClient} supports a \textbf{DelegatingChatClient} pipeline (like ASP.NET Core middleware).

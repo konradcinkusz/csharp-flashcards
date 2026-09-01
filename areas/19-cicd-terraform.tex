@@ -4,14 +4,7 @@
 \QuestionSlide[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{* What is CI/CD?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[CICDColor!20]{CI/CD \& IaC}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is CI/CD?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{What is CI/CD?}}
 
   {\footnotesize
   \textbf{CI (Continuous Integration)} automates build and test on every commit, catching integration bugs early.
@@ -23,14 +16,7 @@
 \QuestionSlide[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{** What is an Azure DevOps YAML Pipeline?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[CICDColor!20]{CI/CD \& IaC}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is an Azure DevOps YAML Pipeline?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{What is an Azure DevOps YAML Pipeline?}}
 
   {\footnotesize
   An \textbf{Azure Pipelines} YAML file (\texttt{azure-pipelines.yml}) defines the entire CI/CD flow as code: \textbf{stages} $\to$ \textbf{jobs} $\to$ \textbf{steps}. It runs on Microsoft-hosted or self-hosted agents. Pipeline templates enable reuse across repos and projects.
@@ -63,14 +49,7 @@ stages:
 \QuestionSlide[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{** What is a GitHub Actions workflow?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[CICDColor!20]{CI/CD \& IaC}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is a GitHub Actions workflow?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{What is a GitHub Actions workflow?}}
 
   {\footnotesize
   GitHub Actions workflows (\texttt{.github/workflows/*.yml}) are event-driven pipelines. \textbf{Triggers}: \texttt{push}, \texttt{pull\_request}, \texttt{schedule}, or \texttt{workflow\_dispatch}. \textbf{Jobs} run in parallel by default; \texttt{needs} declares ordering. Reusable workflows reduce duplication across repos.
@@ -99,14 +78,7 @@ jobs:
 \QuestionSlide[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{** What is Terraform?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[CICDColor!20]{CI/CD \& IaC}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Terraform?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{What is Terraform?}}
 
   {\footnotesize
   \textbf{Terraform} is HashiCorp's open-source \textbf{Infrastructure as Code} tool. You write declarative HCL (HashiCorp Configuration Language) describing the desired cloud state; Terraform diffs it against the current state and generates a \textbf{plan} showing exactly what will change before applying.
@@ -130,14 +102,7 @@ resource "azurerm_app_service" "api" {
 \QuestionSlide[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{** What is Terraform state and why does it need remote storage?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[CICDColor!20]{CI/CD \& IaC}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Terraform state?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{What is Terraform state?}}
 
   {\footnotesize
   \textbf{State} (\texttt{terraform.tfstate}) maps HCL resources to real cloud IDs. Without it, Terraform cannot know what already exists. Store state \textbf{remotely} (Azure Blob, Terraform Cloud, S3) so the whole team shares the same view and concurrent runs are serialised by \textbf{state locking}.
@@ -159,14 +124,7 @@ terraform {
 \QuestionSlide[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{** What is the difference between Blue-Green and Canary deployments?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[CICDColor!20]{CI/CD \& IaC}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: Blue-Green vs Canary deployments?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{Blue-Green vs Canary deployments?}}
 
   {\footnotesize
   \textbf{Blue-Green}: two identical environments — Blue (live), Green (new version). Traffic swaps instantly via a load balancer rule; rollback means switching back. Zero downtime but requires double the infrastructure.
@@ -180,14 +138,7 @@ terraform {
 \QuestionSlide[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{** What are environment protection rules in GitHub Actions / Azure DevOps?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[CICDColor!20]{CI/CD \& IaC}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are environment protection rules?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{What are environment protection rules?}}
 
   {\footnotesize
   \textbf{Protection rules} gate deployments to critical environments (staging, production): required approvals from reviewers, branch filters (only \texttt{main} can deploy to prod), wait timers, and secret scoping. In GitHub Actions, environments are declared on a job with \texttt{environment: production}; Azure DevOps uses \textbf{Environments} with approval checks.
@@ -209,14 +160,7 @@ jobs:
 \QuestionSlide[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{* What are Azure DevOps Artifacts?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[CICDColor!20]{CI/CD \& IaC}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are Azure DevOps Artifacts?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CICDColor!20]{CI/CD \& IaC}]{What are Azure DevOps Artifacts?}}
 
   {\footnotesize
   \textbf{Azure DevOps Artifacts} is a private package feed supporting NuGet, npm, Maven, PyPI, and Universal Packages. Teams publish internal libraries here so they can be consumed like public packages. \textbf{Upstream sources} proxy public registries (nuget.org) through the same feed, enabling policy control and caching.

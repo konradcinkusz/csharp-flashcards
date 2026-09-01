@@ -4,14 +4,7 @@
 \QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{* What are the key differences between SQL Server, Oracle, and PostgreSQL?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DbColor!20]{Databases}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: SQL Server vs Oracle vs PostgreSQL?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DbColor!20]{Databases}]{SQL Server vs Oracle vs PostgreSQL?}}
 
   {\footnotesize
   \begin{tabular}{p{2.8cm}p{2.8cm}p{2.8cm}}
@@ -28,14 +21,7 @@
 \QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What are database indexes and their key types?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DbColor!20]{Databases}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are indexes and their types?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DbColor!20]{Databases}]{What are indexes and their types?}}
 
   {\footnotesize
   An \textbf{index} is a data structure that speeds up row lookups at the cost of write overhead and storage. Key types:
@@ -60,14 +46,7 @@ CREATE INDEX IX_Orders_CustomerId_Status
 \QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What is an execution plan and how do you use it?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DbColor!20]{Databases}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is an execution plan?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DbColor!20]{Databases}]{What is an execution plan?}}
 
   {\footnotesize
   An \textbf{execution plan} is the query optimizer's step-by-step strategy for retrieving data. In SQL Server: \texttt{SET STATISTICS IO ON} or the graphical plan in SSMS. Look for: \textbf{Table Scan} (no index — bad), \textbf{Key Lookup} (missing include columns), \textbf{Sort} (no supporting index), and thick arrows (high row estimates). Use \texttt{EXPLAIN ANALYZE} in PostgreSQL.
@@ -90,14 +69,7 @@ WHERE  o.CustomerId = 42
 \QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What is a CTE (Common Table Expression)?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DbColor!20]{Databases}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is a CTE?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DbColor!20]{Databases}]{What is a CTE?}}
 
   {\footnotesize
   A \textbf{CTE} (\texttt{WITH} clause) is a named temporary result set scoped to a single query. CTEs improve readability, allow self-referencing for \textbf{recursive queries} (hierarchies, graphs), and can be referenced multiple times in the same query. They are not materialised by default in SQL Server.
@@ -124,14 +96,7 @@ SELECT * FROM OrgTree ORDER BY Level;
 \QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What are window functions in SQL?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DbColor!20]{Databases}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are window functions?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DbColor!20]{Databases}]{What are window functions?}}
 
   {\footnotesize
   \textbf{Window functions} apply aggregate-like calculations over a \textbf{sliding window} of rows relative to the current row, without collapsing the result set. Key functions:
@@ -158,14 +123,7 @@ FROM Orders;
 \QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What is the N+1 query problem?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DbColor!20]{Databases}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is the N+1 problem?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DbColor!20]{Databases}]{What is the N+1 problem?}}
 
   {\footnotesize
   The \textbf{N+1 problem} occurs when loading a list of N entities triggers N additional queries to load each entity's related data — totalling N+1 round trips to the database. Fix in EF Core: use \texttt{.Include()} (eager loading) or a single \texttt{JOIN}. Detect with MiniProfiler or EF Core logging.
@@ -188,14 +146,7 @@ var orders = await db.Orders
 \QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{** What are the first three normal forms in data modelling?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DbColor!20]{Databases}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are the first three normal forms?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DbColor!20]{Databases}]{What are the first three normal forms?}}
 
   {\footnotesize
   \begin{itemize}
@@ -211,14 +162,7 @@ var orders = await db.Orders
 \QuestionSlide[\CategoryBadge[DbColor!20]{Databases}]{*** What are the most impactful SQL query optimisation techniques?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DbColor!20]{Databases}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: Key query optimisation techniques?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DbColor!20]{Databases}]{Key query optimisation techniques?}}
 
   {\footnotesize
   \begin{itemize}

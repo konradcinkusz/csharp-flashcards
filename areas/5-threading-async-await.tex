@@ -2,16 +2,7 @@
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is a thread?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What is a thread?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is a thread?}}
 
   {\footnotesize
   A thread is the basic unit of CPU execution within a process.\\
@@ -30,16 +21,7 @@ t.Join();
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is the difference between synchronous and asynchronous code?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What is the difference between synchronous and asynchronous code?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is the difference between synchronous and asynchronous code?}}
 
   {\footnotesize
   Synchronous code blocks the calling thread until work completes.\\
@@ -56,16 +38,7 @@ await Task.Delay(1000);       // asynchronous pause
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is a \texttt{Task}?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What is a \texttt{Task}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is a \texttt{Task}?}}
 
   {\footnotesize
   A \texttt{Task} represents an asynchronous operation that may produce a result.\\
@@ -82,16 +55,7 @@ int result = await work;
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What does the \texttt{async} keyword do?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What does the \texttt{async} keyword do?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What does the \texttt{async} keyword do?}}
 
   {\footnotesize
   The \texttt{async} keyword marks a method as asynchronous and enables the use of \texttt{await}.\\
@@ -111,16 +75,7 @@ public async Task<int> GetValueAsync()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What does the \texttt{await} keyword do?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What does the \texttt{await} keyword do?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What does the \texttt{await} keyword do?}}
 
   {\footnotesize
   \texttt{await} asynchronously pauses the method until the awaited task completes.\\
@@ -137,16 +92,7 @@ Console.WriteLine("Done");
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What happens if you forget to \texttt{await} an async method?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What happens if you forget to \texttt{await} an async method?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What happens if you forget to \texttt{await} an async method?}}
 
   {\footnotesize
   The method starts but continues in the background.\\
@@ -170,16 +116,7 @@ public void Main()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** Does async always make code faster?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: Does async always make code faster?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{Does async always make code faster?}}
 
   {\footnotesize
   \begin{itemize}
@@ -202,16 +139,7 @@ public async Task FetchDataAsync()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** Why use async in console, desktop, and web apps?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: Why use async in console, desktop, and web apps?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{Why use async in console, desktop, and web apps?}}
 
   {\footnotesize
   \textbf{Console}: avoid blocking on I/O\\
@@ -235,16 +163,7 @@ public static async Task Main()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What's the difference between async and multithreading?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What's the difference between async and multithreading?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between async and multithreading?}}
 
   {\footnotesize
   Async is non-blocking and usually single-threaded, using an event loop.\\
@@ -267,16 +186,7 @@ public Task<int> HeavyWork() =>
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is the .NET Thread Pool?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What is the .NET Thread Pool?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is the .NET Thread Pool?}}
 
   {\footnotesize
   The thread pool is a shared set of worker threads managed by the CLR.\\
@@ -293,16 +203,7 @@ Task.Run(() =>
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What's the difference between \texttt{Task.Run} and \texttt{Thread}?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What's the difference between \texttt{Task.Run} and \texttt{Thread}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between \texttt{Task.Run} and \texttt{Thread}?}}
 
   {\footnotesize
   \texttt{Task.Run} queues work to the thread pool and returns a \texttt{Task}.\\
@@ -324,16 +225,7 @@ t.Start();
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** When should you use \texttt{Task.Run}?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: When should you use \texttt{Task.Run}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{When should you use \texttt{Task.Run}?}}
 
   {\footnotesize
   Use \texttt{Task.Run} to offload CPU-bound work to a background thread.\\
@@ -351,16 +243,7 @@ int result = await Task.Run(() =>
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** Which is faster: a synchronous or asynchronous endpoint? Why?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: Which is faster: a synchronous or asynchronous endpoint? Why?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{Which is faster: a synchronous or asynchronous endpoint? Why?}}
 
   {\footnotesize
   An asynchronous endpoint scales better under load because it doesn't block threads during I/O.\\
@@ -381,16 +264,7 @@ public async Task<string> GetDataAsync() =>
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** How can synchronous code calling asynchronous methods cause deadlocks?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: How can synchronous code calling asynchronous methods cause deadlocks?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{How can synchronous code calling asynchronous methods cause deadlocks?}}
 
   {\footnotesize
   Calling an async method with \texttt{.Result} or \texttt{.Wait()} blocks the thread.\\
@@ -416,16 +290,7 @@ public void Main()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** How do exceptions flow in async methods?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: How do exceptions flow in async methods?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{How do exceptions flow in async methods?}}
 
   {\footnotesize
   Exceptions thrown in an async method are captured in its \texttt{Task}.\\
@@ -458,16 +323,7 @@ public async Task DemoAsync()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** Why is \texttt{async void} usually a bad idea?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: Why is \texttt{async void} usually a bad idea?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{Why is \texttt{async void} usually a bad idea?}}
 
   {\footnotesize
   \texttt{async void} methods can't be awaited and exceptions bypass callers.\\
@@ -492,16 +348,7 @@ public async Task OnClickAsync()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** When and why should you use \texttt{ConfigureAwait(false)} in async methods?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: When and why should you use \texttt{ConfigureAwait(false)} in async methods?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{When and why should you use \texttt{ConfigureAwait(false)} in async methods?}}
 
   {\footnotesize
   Use \texttt{ConfigureAwait(false)} in library code to avoid capturing the synchronization context.\\
@@ -522,16 +369,7 @@ public async Task<string> GetContentAsync()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What's the difference between \texttt{Parallel.ForEach()} and \texttt{Task.WhenAll()}?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What's the difference between \texttt{Parallel.ForEach()} and \texttt{Task.WhenAll()}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between \texttt{Parallel.ForEach()} and \texttt{Task.WhenAll()}?}}
 
   {\footnotesize
   \textbf{Parallel.ForEach}: for CPU-bound work, uses multiple threads in parallel.\\
@@ -552,16 +390,7 @@ await Task.WhenAll(tasks);
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** How do you correctly implement cancellation in asynchronous methods?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: How do you correctly implement cancellation in asynchronous methods?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{How do you correctly implement cancellation in asynchronous methods?}}
 
   {\footnotesize
   Accept a \texttt{CancellationToken} and pass it to cancellable operations.\\
@@ -585,16 +414,7 @@ public async Task DownloadAsync(string url, CancellationToken token)
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What are async streams (\texttt{IAsyncEnumerable<T>})?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What are async streams (\texttt{IAsyncEnumerable<T>})?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What are async streams (\texttt{IAsyncEnumerable<T>})?}}
 
   {\footnotesize
   Async streams let you produce or consume data asynchronously using \texttt{await foreach}.\\
@@ -623,16 +443,7 @@ public async Task ConsumeAsync()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What's the difference between returning \texttt{IAsyncEnumerable<T>} and \texttt{Task<IEnumerable<T>>}?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What's the difference between returning \texttt{IAsyncEnumerable<T>} and \texttt{Task<IEnumerable<T>>}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between returning \texttt{IAsyncEnumerable<T>} and \texttt{Task<IEnumerable<T>>}?}}
 
   {\footnotesize
   \texttt{Task<IEnumerable<T>>} returns the whole collection after completion.\\
@@ -657,16 +468,7 @@ public async IAsyncEnumerable<int> GetStreamAsync()
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What's the difference between \texttt{Task} and \texttt{ValueTask}?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What's the difference between \texttt{Task} and \texttt{ValueTask}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between \texttt{Task} and \texttt{ValueTask}?}}
 
   {\footnotesize
   \texttt{Task} always allocates an object; \texttt{ValueTask} is a struct that can avoid allocation when a result is already available.\\
@@ -686,16 +488,7 @@ public ValueTask<int> GetCachedValueAsync(bool cached)
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What is the \texttt{SynchronizationContext} and why does it matter?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What is the \texttt{SynchronizationContext} and why does it matter?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is the \texttt{SynchronizationContext} and why does it matter?}}
 
   {\footnotesize
   \texttt{SynchronizationContext} represents the environment that handles continuation scheduling (e.g.\ UI thread).\\

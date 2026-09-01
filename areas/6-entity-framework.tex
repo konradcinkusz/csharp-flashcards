@@ -2,16 +2,7 @@
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is \textbf{lazy loading} in Entity Framework and how can you disable it?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What is \textbf{lazy loading} in Entity Framework and how can you disable it?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is \textbf{lazy loading} in Entity Framework and how can you disable it?}}
 
   {\footnotesize
   Navigation property loads related data on first access via proxy.
@@ -45,16 +36,7 @@
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What main risk does lazy loading introduce?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What main risk does lazy loading introduce?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What main risk does lazy loading introduce?}}
 
   {\footnotesize
   It can generate the \textbf{N+1} problem—one query for the root set and
@@ -67,16 +49,7 @@
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{* How do you enable eager loading?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: How do you enable eager loading?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{How do you enable eager loading?}}
 
   {\footnotesize
   By chaining \texttt{Include()} / \texttt{ThenInclude()} methods in LINQ.
@@ -89,16 +62,7 @@
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** Give one advantage of eager loading over lazy loading.}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: Give one advantage of eager loading over lazy loading.%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{Give one advantage of eager loading over lazy loading.}}
 
   {\footnotesize
   Eager loading eliminates unnecessary round-trips, preventing the N+1 issue
@@ -110,16 +74,7 @@
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{* When might lazy loading be preferred?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: When might lazy loading be preferred?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{When might lazy loading be preferred?}}
 
   {\footnotesize
   In highly interactive UIs or prototypes where most related entities
@@ -132,16 +87,7 @@
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What is \texttt{SplitQuery} vs \texttt{SingleQuery} in eager loading?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: What is \texttt{SplitQuery} vs \texttt{SingleQuery} in eager loading?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is \texttt{SplitQuery} vs \texttt{SingleQuery} in eager loading?}}
 
   {\footnotesize
   \begin{itemize}
@@ -174,16 +120,7 @@
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** When might \texttt{TemporalAsOf} be preferred?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[OOPColor!20]{C\#}
-        \CategoryBadge[PerfColor!20]{Async \& Threading}
-      };
-    \end{tikzpicture}
-
-    Answer \theqcounter: When might \texttt{TemporalAsOf} be preferred?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{When might \texttt{TemporalAsOf} be preferred?}}
 
   {\footnotesize
   When analysing how data \emph{looked at a specific point in time},

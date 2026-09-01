@@ -4,14 +4,7 @@
 \QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{* What is .NET Aspire?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AspireColor!20]{.NET Aspire}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is .NET Aspire?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AspireColor!20]{.NET Aspire}]{What is .NET Aspire?}}
 
   {\footnotesize
   \textbf{.NET Aspire} is an opinionated, cloud-native stack introduced in .NET 8. It provides \textbf{orchestration} (run all services locally with one command), \textbf{service discovery} (services find each other by name), \textbf{pre-built integrations} (Redis, SQL, RabbitMQ), and a \textbf{developer dashboard} with traces and logs.
@@ -22,14 +15,7 @@
 \QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** What is the .NET Aspire App Host?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AspireColor!20]{.NET Aspire}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is the Aspire App Host?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AspireColor!20]{.NET Aspire}]{What is the Aspire App Host?}}
 
   {\footnotesize
   The \textbf{App Host} is a C\# project that acts as the \textbf{composition root} for your distributed app. It declares which services and infrastructure to start, wires up references between them, and launches all processes (including Docker containers) with a single \texttt{dotnet run}.
@@ -56,14 +42,7 @@ await builder.Build().RunAsync();
 \QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** What is Service Discovery in .NET Aspire?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AspireColor!20]{.NET Aspire}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Service Discovery in .NET Aspire?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AspireColor!20]{.NET Aspire}]{What is Service Discovery in .NET Aspire?}}
 
   {\footnotesize
   Aspire injects connection strings and URLs into each service as environment variables at runtime. \texttt{WithReference()} wires a producer to a consumer. \texttt{AddServiceDiscovery()} on the \texttt{HttpClient} resolves logical names like \texttt{https://catalog-api} to the actual address, enabling zero-config communication across environments.
@@ -84,14 +63,7 @@ builder.Services.AddHttpClient<CatalogClient>(
 \QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{* What does the .NET Aspire Dashboard show?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AspireColor!20]{.NET Aspire}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What does the Aspire Dashboard show?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AspireColor!20]{.NET Aspire}]{What does the Aspire Dashboard show?}}
 
   {\footnotesize
   The built-in \textbf{Aspire Dashboard} (launched automatically during local development) provides:
@@ -109,14 +81,7 @@ builder.Services.AddHttpClient<CatalogClient>(
 \QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** What are .NET Aspire Integrations?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AspireColor!20]{.NET Aspire}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are .NET Aspire Integrations?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AspireColor!20]{.NET Aspire}]{What are .NET Aspire Integrations?}}
 
   {\footnotesize
   \textbf{Integrations} are NuGet packages that wire up infrastructure components (Redis, PostgreSQL, Azure Service Bus, RabbitMQ, etc.) into the Aspire pipeline. \textbf{Hosting integrations} add resources to the App Host; \textbf{client integrations} configure the connection inside consuming services via DI — both with OpenTelemetry and health checks pre-wired.
@@ -137,14 +102,7 @@ builder.AddRedisDistributedCache("cache"); // registers IDistributedCache
 \QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** What does WaitFor do in .NET Aspire?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AspireColor!20]{.NET Aspire}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What does WaitFor do in .NET Aspire?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AspireColor!20]{.NET Aspire}]{What does WaitFor do in .NET Aspire?}}
 
   {\footnotesize
   \texttt{.WaitFor(resource)} makes the App Host delay starting a dependent service until the resource reports \textbf{healthy}. This replaces fragile sleep-based startup scripts in \texttt{docker-compose}. For containers, health is determined by Docker health checks; for databases, by a successful connection probe.
@@ -164,14 +122,7 @@ builder.AddProject<Projects.MyApi>("my-api")
 \QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{*** What is the Aspire Manifest and how is it used for deployment?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AspireColor!20]{.NET Aspire}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is the Aspire Manifest?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AspireColor!20]{.NET Aspire}]{What is the Aspire Manifest?}}
 
   {\footnotesize
   Running the App Host with \texttt{--publisher manifest} outputs a \textbf{JSON manifest} describing all resources and their relationships. Tools like \textbf{azd} (Azure Developer CLI) and \textbf{Aspir8} (Kubernetes) read this manifest to generate deployment-ready \texttt{bicep}, \texttt{Helm} charts, or Docker Compose files — keeping deployment config derived from code.
@@ -192,14 +143,7 @@ azd up  # reads manifest and provisions infrastructure
 \QuestionSlide[\CategoryBadge[AspireColor!20]{.NET Aspire}]{** How does .NET Aspire differ from docker-compose?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AspireColor!20]{.NET Aspire}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: Aspire vs docker-compose?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AspireColor!20]{.NET Aspire}]{Aspire vs docker-compose?}}
 
   {\footnotesize
   \begin{tabular}{ll}
