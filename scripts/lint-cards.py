@@ -92,6 +92,60 @@ def check_file(path: str, s: str) -> list[str]:
     return out
 
 
+def check_landing_page(cards: int, areas: int) -> list[str]:
+    """The landing page's claims must be derived from the deck, not remembered.
+
+    docs/index.html advertised "300+ Q&A flashcards" against 269, and "13 topic
+    areas" against 24 -- it listed 13 and had never been updated for the eleven
+    added in July 2026, so LINQ was missing and every number from 04 onward
+    named the wrong section. Nothing reported any of it, because nothing
+    compared the page against the deck.
+    """
+    path = 'docs/index.html'
+    try:
+        s = open(path, encoding='utf-8').read()
+    except FileNotFoundError:
+        return []
+
+    out: list[str] = []
+
+    # The deck-wide claim, in the hero line and the meta description.
+    claimed = {int(m) for m in re.findall(r'(\d+)-card Q&amp;A deck', s)}
+    claimed |= {int(m) for m in re.findall(r'(\d+) Q&amp;A flashcards', s)}
+    for c in sorted(claimed - {cards}):
+        out.append(f'{path}: claims {c} cards deck-wide; the deck has {cards}')
+
+    claimed_areas = {int(m) for m in re.findall(r'(\d+) (?:topic areas|areas,)', s)}
+    claimed_areas |= {int(m) for m in re.findall(r'badge/Topics-(\d+)-', s)}
+    for a in sorted(claimed_areas - {areas}):
+        out.append(f'{path}: claims {a} topic areas; the deck has {areas}')
+
+    # Each topic tile carries its own count. Check every one against the file
+    # it names, so a card added to one area cannot silently make the page wrong.
+    tiles = re.findall(r'class="topic-num">(\d+)</div>.*?'
+                       r'class="topic-count">(\d+) cards', s, re.S)
+    if len(tiles) != areas:
+        out.append(f'{path}: lists {len(tiles)} topic tiles with counts; '
+                   f'the deck has {areas} areas')
+    for num, claimed_n in tiles:
+        hit = glob.glob(f'areas/{int(num)}-*.tex')
+        if not hit:
+            out.append(f'{path}: topic {num} names no area file')
+            continue
+        actual = len(re.findall(r'\\QuestionSlide',
+                                open(hit[0], encoding='utf-8').read()))
+        if int(claimed_n) != actual:
+            out.append(f'{path}: topic {num} claims {claimed_n} cards; '
+                       f'{hit[0]} has {actual}')
+
+    # No release has ever been cut, so a releases/latest link is a 404. Delete
+    # this check in the same commit that pushes the first v* tag.
+    if 'releases/latest' in s:
+        out.append(f'{path}: links to releases/latest, and no release exists')
+
+    return out
+
+
 def main() -> int:
     findings: list[str] = []
     cards = answers = 0
@@ -111,14 +165,18 @@ def main() -> int:
                         f'(expected {expected_answers}: one per card, less the '
                         f'{len(OVERLAY_EXCEPTIONS)} documented exceptions)')
 
+    areas = len(glob.glob('areas/*.tex'))
+    findings += check_landing_page(cards, areas)
+
     print(f'cards: {cards}')
     print(f'answer titles: {answers}')
+    print(f'areas: {areas}')
 
     summary = __import__('os').environ.get('GITHUB_STEP_SUMMARY')
     if summary:
         with open(summary, 'a', encoding='utf-8') as fh:
-            fh.write(f'\n## Cards\n\n**{cards}** question slides, '
-                     f'{answers} answer titles.\n')
+            fh.write(f'\n## Cards\n\n**{cards}** question slides across '
+                     f'**{areas}** areas, {answers} answer titles.\n')
 
     if findings:
         print('\n' + '\n'.join(findings), file=sys.stderr)
