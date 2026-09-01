@@ -67,6 +67,15 @@ Prefer a browser? Import the repo into Overleaf and press *Re-compile* – Overl
 
 ---
 
+## Roadmap
+
+Planned work lives in [`ROADMAP.md`](ROADMAP.md): what "complete" means for this
+deck, the four phases and their sequencing, the dependency list, and the paths
+that must not break. Progress is tracked on
+[issue #30](https://github.com/konradcinkusz/csharp-flashcards/issues/30).
+
+---
+
 ## Contributing
 
 1. **Fork** → create a feature branch.
