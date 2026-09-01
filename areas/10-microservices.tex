@@ -1,7 +1,7 @@
 % Microservices section
 
 % 1 – Bulkhead Pattern
-\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{** What is the Bulkhead Pattern?}
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]<2>{What is the Bulkhead Pattern?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is the Bulkhead Pattern?}}
@@ -20,7 +20,7 @@ await bulkhead.ExecuteAsync(() => httpClient.GetAsync(url));
 \end{frame}
 
 % 2 – Sidecar Pattern
-\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{* What is the Sidecar Pattern?}
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]<1>{What is the Sidecar Pattern?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is the Sidecar Pattern?}}
@@ -44,7 +44,7 @@ spec:
 \end{frame}
 
 % 3 – Service Mesh
-\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{** What is a Service Mesh?}
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]<2>{What is a Service Mesh?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is a Service Mesh?}}
@@ -60,7 +60,7 @@ kubectl label namespace default istio-injection=enabled
 \end{frame}
 
 % 4 – Strangler Fig Pattern
-\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{* What is the Strangler Fig Pattern?}
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]<1>{What is the Strangler Fig Pattern?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is the Strangler Fig Pattern?}}
@@ -78,7 +78,7 @@ app.Map("/orders", m => m.RunProxy("http://orders-service"));
 \end{frame}
 
 % 5 – Event Sourcing
-\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]{** What is Event Sourcing?}
+\QuestionSlide[\CategoryBadge[MicroColor!20]{Microservices}]<2>{What is Event Sourcing?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[MicroColor!20]{Microservices}]{What is Event Sourcing?}}
