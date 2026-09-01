@@ -4,14 +4,7 @@
 \QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{* What is Domain-Driven Design (DDD)?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DDDColor!20]{DDD \& CQRS}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Domain-Driven Design?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is Domain-Driven Design?}}
 
   {\footnotesize
   \textbf{DDD} is a software design approach introduced by Eric Evans that centres the model on the \textbf{business domain}. Core ideas: \textbf{Ubiquitous Language} (shared vocabulary between devs and domain experts), \textbf{Bounded Contexts} (clear model boundaries), and a rich \textbf{domain model} where behaviour lives alongside state rather than in anemic service classes.
@@ -22,14 +15,7 @@
 \QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What is a Bounded Context in DDD?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DDDColor!20]{DDD \& CQRS}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is a Bounded Context?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is a Bounded Context?}}
 
   {\footnotesize
   A \textbf{Bounded Context} is a linguistic and logical boundary within which a domain model is consistently defined. The same word (e.g.\ \emph{Product}) can mean different things in different contexts (Catalogue vs.\ Warehouse vs.\ Billing). Each BC maps to one or more microservices and has its own data store. \textbf{Context Maps} document how BCs integrate.
@@ -40,14 +26,7 @@
 \QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What is an Aggregate in DDD?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DDDColor!20]{DDD \& CQRS}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is an Aggregate?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is an Aggregate?}}
 
   {\footnotesize
   An \textbf{Aggregate} is a cluster of domain objects treated as a single unit for data changes. It has one \textbf{Aggregate Root} — the only entry point for external code. Invariants are enforced within the aggregate boundary; references to other aggregates use IDs only. Persist and load an aggregate as one transaction.
@@ -73,14 +52,7 @@ public class Order : AggregateRoot  // root entity
 \QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{* What is a Value Object in DDD?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DDDColor!20]{DDD \& CQRS}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is a Value Object?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is a Value Object?}}
 
   {\footnotesize
   A \textbf{Value Object} has no identity — two VOs with the same attributes are equal. They are \textbf{immutable} (replacing, not mutating). Use VOs for domain concepts like \texttt{Money}, \texttt{Address}, \texttt{Email}, \texttt{DateRange}. C\# \texttt{record} types are ideal: structural equality is generated automatically.
@@ -107,14 +79,7 @@ var total = price.Add(tax);  // new Money(10.79m, "USD")
 \QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What are Domain Events?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DDDColor!20]{DDD \& CQRS}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are Domain Events?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What are Domain Events?}}
 
   {\footnotesize
   \textbf{Domain Events} represent something significant that happened in the domain: \texttt{OrderPlaced}, \texttt{PaymentFailed}. Aggregates raise events; after the transaction is saved, handlers react (send email, update read model, publish integration event). This keeps business rules inside the aggregate while decoupling side effects.
@@ -139,14 +104,7 @@ public class SendOrderConfirmation(IEmailService email)
 \QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What is CQRS?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DDDColor!20]{DDD \& CQRS}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is CQRS?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is CQRS?}}
 
   {\footnotesize
   \textbf{CQRS} (Command Query Responsibility Segregation) separates \textbf{Commands} (write, change state) from \textbf{Queries} (read, never change state). This enables: independent scaling of reads/writes, optimised read models (flat DTOs, cached views), and a clean separation of domain logic (commands) from reporting logic (queries).
@@ -171,14 +129,7 @@ OrderSummaryDto dto = await _mediator.Send(new GetOrderSummaryQuery(id));
 \QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What is MediatR and how does it support CQRS in .NET?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DDDColor!20]{DDD \& CQRS}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is MediatR?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is MediatR?}}
 
   {\footnotesize
   \textbf{MediatR} is a lightweight in-process mediator library. Requests (\texttt{IRequest<T>}) are dispatched to exactly one handler; notifications (\texttt{INotification}) fan out to many handlers. \textbf{Pipeline behaviours} wrap every request: logging, validation (FluentValidation), transactions, and caching can be added without touching handlers.
@@ -203,14 +154,7 @@ public class ValidationBehaviour<TReq, TRes>(IEnumerable<IValidator<TReq>> valid
 \QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{*** What is Event Sourcing?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DDDColor!20]{DDD \& CQRS}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Event Sourcing?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is Event Sourcing?}}
 
   {\footnotesize
   \textbf{Event Sourcing} stores the aggregate's complete history as an immutable sequence of events instead of its current state. Current state is derived by replaying events. Benefits: full audit trail, temporal queries, ability to rebuild read models. Typically paired with CQRS. Implementations: EventStoreDB, Marten (PostgreSQL), Azure Cosmos DB Change Feed.
@@ -242,14 +186,7 @@ public class Order
 \QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{*** What is the Saga pattern in distributed systems?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[DDDColor!20]{DDD \& CQRS}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is the Saga pattern?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is the Saga pattern?}}
 
   {\footnotesize
   A \textbf{Saga} manages long-running distributed transactions without a two-phase commit. Each step publishes an event; subsequent services react. If a step fails, \textbf{compensating transactions} undo previous steps. Two styles:

@@ -88,3 +88,7 @@ out/
 *.tex.run.log
 
 repomix-output.xml
+
+# ─── Python (scripts/) ─────────────────────────────────────────────────
+__pycache__/
+*.py[cod]

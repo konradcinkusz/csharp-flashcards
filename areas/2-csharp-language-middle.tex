@@ -2,14 +2,7 @@
 \QuestionSlide[\CategoryBadge[LangColor!20]{C\#} \CategoryBadge[CollColor!20]{Collections} \CategoryBadge[CollColor!20]{Dictionary}] %"What is Dictionary of TKey and TValue in C#?"
   {** What is \texttt{Dictionary<TKey, TValue>} in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{C\#} \CategoryBadge[CollColor!20]{Collections} \CategoryBadge[CollColor!20]{Dictionary}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is \texttt{Dictionary<TKey, TValue>} in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{C\#} \CategoryBadge[CollColor!20]{Collections} \CategoryBadge[CollColor!20]{Dictionary}]{** What is \texttt{Dictionary<TKey, TValue>} in C\#?}}
 
   {\footnotesize %big O of one
     A \texttt{Dictionary<TKey, TValue>} is a generic collection in C\# that stores key–value pairs and provides fast lookup by key. It uses a hash table internally, offering average \(O(1)\) time complexity for \texttt{Add}, \texttt{Remove}, and \texttt{TryGetValue} operations. Keys must be unique and non-null (for reference types), and must implement a stable \texttt{GetHashCode()} and \texttt{Equals()}.
@@ -27,14 +20,7 @@ Console.WriteLine(dict["apple"]); // 3
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {** How does a dictionary handle keys in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** How does a dictionary handle keys in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{** How does a dictionary handle keys in C\#?}}
 
   {\footnotesize
     When inserting or retrieving a value, \texttt{Dictionary} calls the key’s \texttt{GetHashCode()} to locate the bucket and then \texttt{Equals()} to confirm equality. To work correctly, keys should be immutable and must not change their hash code while stored in the dictionary.
@@ -59,14 +45,7 @@ var dict = new Dictionary<MyKey, string>();
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {** What are the time and space complexities of \texttt{Dictionary<TKey, TValue>}?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are the time and space complexities of \texttt{Dictionary<TKey, TValue>}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{** What are the time and space complexities of \texttt{Dictionary<TKey, TValue>}?}}
 
   {\footnotesize
     \textbf{Average-case:}
@@ -98,14 +77,7 @@ class BadKey
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {** What are best practices when using \texttt{Dictionary<TKey, TValue>}?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are best practices when using \texttt{Dictionary<TKey, TValue>}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{** What are best practices when using \texttt{Dictionary<TKey, TValue>}?}}
 
   {\footnotesize
     \begin{itemize}
@@ -130,14 +102,7 @@ var dictInitialized = new Dictionary<int, string>(1000);
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {** What is the average time complexity of dictionary operations in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the average time complexity of dictionary operations in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{** What is the average time complexity of dictionary operations in C\#?}}
 
   {\footnotesize
     On average, \texttt{Add}, \texttt{Remove}, and \texttt{TryGetValue} all run in \(O(1)\), assuming a good hash distribution and low collision rate.
@@ -154,14 +119,7 @@ dict.Remove("key1");
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {** What is the worst-case time complexity for dictionary operations?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the worst-case time complexity for dictionary operations?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{** What is the worst-case time complexity for dictionary operations?}}
 
   {\footnotesize
     In the worst case (e.g., all keys collide), operations degrade to \(O(n)\), since the dictionary must scan a bucket list of all entries.
@@ -181,14 +139,7 @@ class BadKey
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {** What is a bucket list in a \texttt{Dictionary<TKey, TValue>}?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is a bucket list in a \texttt{Dictionary<TKey, TValue>}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{** What is a bucket list in a \texttt{Dictionary<TKey, TValue>}?}}
 
   {\footnotesize
     A bucket list refers to how a dictionary groups entries with the same hash code. Internally, each bucket holds a list of key-value pairs that hash to the same index. 
@@ -210,14 +161,7 @@ class BadKey
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {** What is the time complexity of iterating over a dictionary?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the time complexity of iterating over a dictionary?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{** What is the time complexity of iterating over a dictionary?}}
 
   {\footnotesize
     Iteration runs in \(O(n)\), where \(n\) is the number of entries. The order isn’t sorted and reflects internal bucket organization.
@@ -233,14 +177,7 @@ foreach (var kvp in dict)
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {** What is the space complexity of a dictionary in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the space complexity of a dictionary in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{** What is the space complexity of a dictionary in C\#?}}
 
 {\footnotesize
 \begin{itemize}
@@ -280,14 +217,7 @@ var dict = new Dictionary<string, int>(capacity: 1000);
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {** How do you ensure dictionary operations stay constant-time?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** How do you ensure dictionary operations stay constant-time?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{** How do you ensure dictionary operations stay constant-time?}}
 
   {\footnotesize
     \begin{itemize}
@@ -309,14 +239,7 @@ dict[id] = "session";
 \QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
   {** What can you do with reflection in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[MetaColor!20]{Metaprogramming}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What can you do with reflection in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{** What can you do with reflection in C\#?}}
 
   {\footnotesize
     Reflection allows you to:
@@ -343,14 +266,7 @@ var attrs = type.GetProperty("Name")
 \QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
   {** What is runtime reflection in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[MetaColor!20]{Metaprogramming}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is runtime reflection in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{** What is runtime reflection in C\#?}}
 
   {\footnotesize
     Runtime reflection is inspecting and interacting with a program’s metadata and types during execution. It uses \texttt{System.Reflection} to examine assemblies, types, members, and attributes dynamically, at the cost of performance and compile-time safety.
@@ -367,14 +283,7 @@ foreach (var prop in t.GetProperties())
 \QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
   {** What is the difference between reflection and runtime reflection?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[MetaColor!20]{Metaprogramming}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the difference between reflection and runtime reflection?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{** What is the difference between reflection and runtime reflection?}}
 
   {\footnotesize
     “Reflection” refers broadly to \texttt{System.Reflection} APIs for inspecting metadata. “Runtime reflection” emphasizes that this inspection occurs during program execution, highlighting dynamic behavior and performance overhead.
@@ -390,14 +299,7 @@ method.Invoke(Activator.CreateInstance(typeof(MyClass)), null);
 \QuestionSlide[\CategoryBadge[PerfColor!20]{Performance}]
   {** What is \texttt{Span<T>}?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[PerfColor!20]{Performance}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is \texttt{Span<T>}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[PerfColor!20]{Performance}]{** What is \texttt{Span<T>}?}}
 
   {\footnotesize
     \texttt{Span<T>} is a stack-only struct that provides a safe, memory-efficient slice over contiguous memory (arrays, strings, or unmanaged buffers) without allocations. It’s ideal for performance-critical parsing or buffer manipulation.
@@ -415,14 +317,7 @@ Console.WriteLine(numbers[1]); // 42
 \QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
   {** What is code weaving in .NET?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[MetaColor!20]{Metaprogramming}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is code weaving in .NET?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{** What is code weaving in .NET?}}
 
   {\footnotesize
     Code weaving is a post-compile technique where tools (e.g., Fody) inject or modify IL in assemblies for cross-cutting concerns (logging, validation, metrics) without altering source code, though it can obscure behavior and complicate debugging.
@@ -441,14 +336,7 @@ public class Person : INotifyPropertyChanged
 \QuestionSlide[\CategoryBadge[ArchColor!20]{Architecture}]
   {** What are cross-cutting concerns?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[ArchColor!20]{Architecture}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are cross-cutting concerns?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[ArchColor!20]{Architecture}]{** What are cross-cutting concerns?}}
 
   {\footnotesize
     Cross-cutting concerns—such as logging, validation, error handling, caching, or security—affect multiple layers of an application. They're centralized via middleware, AOP frameworks, or source generators to avoid duplication and maintain separation of concerns.
@@ -475,14 +363,7 @@ public class LoggingMiddleware
 \QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
   {** What are source generators?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[MetaColor!20]{Metaprogramming}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are source generators?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{** What are source generators?}}
 
   {\footnotesize
     Source generators run at compile time to analyze user code and emit additional C\# files. They reduce boilerplate and eliminate runtime reflection, enabling high-performance metaprogramming (e.g., JSON serializers, DI scaffolding).
@@ -510,14 +391,7 @@ public class HelloWorldGenerator : ISourceGenerator
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is the \texttt{params} keyword?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the \texttt{params} keyword?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is the \texttt{params} keyword?}}
 
   {\footnotesize
     The \texttt{params} keyword allows a method to accept a variable number of arguments as an array.  
@@ -538,14 +412,7 @@ Foo(1,2,3); // outputs 1, 2, 3
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are iterators and the \texttt{yield} keyword?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are iterators and the \texttt{yield} keyword?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are iterators and the \texttt{yield} keyword?}}
 
   {\footnotesize
     Iterators with \texttt{yield return} allow lazy, streaming generation of sequences without intermediate collections.
@@ -567,14 +434,7 @@ foreach (var x in CountTo(3))
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are partial classes and methods?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are partial classes and methods?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are partial classes and methods?}}
 
   {\footnotesize
     \texttt{partial class} lets you split a class definition across files.  
@@ -601,14 +461,7 @@ public partial class MyClass
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are anonymous types?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are anonymous types?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are anonymous types?}}
 
   {\footnotesize
     Anonymous types are compiler-generated reference types with readonly properties inferred from initializer syntax, ideal for LINQ projections without declaring a class.
@@ -626,14 +479,7 @@ var users = people.Select(u => new { u.Id, u.Name });
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is pattern matching?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is pattern matching?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is pattern matching?}}
 
   {\footnotesize
     Pattern matching enhances \texttt{is} and \texttt{switch} with rich syntax for type, constant, property, positional, relational, and logical patterns, simplifying complex conditional logic.
@@ -657,14 +503,7 @@ public static string Classify(object o) =>
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are default interface implementations?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are default interface implementations?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are default interface implementations?}}
 
   {\footnotesize
     Introduced in C\# 8, default implementations let interfaces provide method bodies, enabling API evolution without breaking existing implementers.
@@ -691,14 +530,7 @@ public class Customer : ICustomer
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are record types?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are record types?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are record types?}}
 
   {\footnotesize
     Records are immutable reference types for value-based data models. They support concise syntax, built-in \texttt{Equals}, \texttt{GetHashCode}, \texttt{ToString}, and non-destructive mutation via \texttt{with}.
@@ -716,14 +548,7 @@ Console.WriteLine(p1 == p2); // False
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is value-based equality in record types?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is value-based equality in record types?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is value-based equality in record types?}}
 
   {\footnotesize
     Two record instances are equal if all their properties have equal values, regardless of reference identity, unlike classes which default to reference equality.
@@ -740,14 +565,7 @@ Console.WriteLine(p1 == p2); // True
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What does concise syntax mean for record types?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What does concise syntax mean for record types?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What does concise syntax mean for record types?}}
 
   {\footnotesize
     Records allow defining data carriers, constructors, and value-based behaviors (e.g., \texttt{ToString}, equality) in a single line, reducing boilerplate.
@@ -771,14 +589,7 @@ public record Person(string Name,int Age);
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is non-destructive mutation using \texttt{with}?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is non-destructive mutation using \texttt{with}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is non-destructive mutation using \texttt{with}?}}
 
   {\footnotesize
     The \texttt{with} expression creates a new record instance with specified property changes, leaving the original unchanged.
@@ -796,14 +607,7 @@ Console.WriteLine(updated.Age);  // 31
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is the \texttt{dynamic} type?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the \texttt{dynamic} type?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is the \texttt{dynamic} type?}}
 
   {\footnotesize
     \texttt{dynamic} bypasses compile-time type checking, resolving member calls at runtime. Useful for COM interop, dynamic languages, or loosely typed data, but error-prone if misused.
@@ -821,14 +625,7 @@ obj = 123;
 \QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]
   {** What are expression trees?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[MetaColor!20]{Metaprogramming}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are expression trees?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{** What are expression trees?}}
 
   {\footnotesize
     Expression trees are data structures representing code as a tree of \texttt{Expression} objects (e.g., \texttt{Expression<Func<T,bool>>}), used by LINQ providers to translate queries.
@@ -845,14 +642,7 @@ Console.WriteLine(isEven.Body); // (x % 2) == 0
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is the difference between \texttt{ref} and \texttt{out} keywords?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the difference between \texttt{ref} and \texttt{out}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is the difference between \texttt{ref} and \texttt{out}?}}
 
   {\footnotesize
     \begin{itemize}
@@ -874,14 +664,7 @@ int b;     N(out b);
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {When would you use the \texttt{ref}, \texttt{out} and \texttt{in} modifiers?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: When would you use \texttt{ref}, \texttt{out}, and \texttt{in}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{When would you use \texttt{ref}, \texttt{out}, and \texttt{in}?}}
 
   {\footnotesize
     \begin{itemize}
@@ -905,14 +688,7 @@ void Process(in BigStruct data) { /* read-only */ }
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are delegates?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are delegates?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are delegates?}}
 
   {\footnotesize
     Delegates are type-safe function pointers encapsulating method references. They enable passing methods as parameters, support multicast invocation, and underpin events.
@@ -930,14 +706,7 @@ m.Send("Hello");
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are events?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are events?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are events?}}
 
   {\footnotesize
     Events are special delegates enabling the publish–subscribe pattern. The \texttt{event} keyword restricts raising to the declaring class, ensuring encapsulation.
@@ -956,14 +725,7 @@ public class Button
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is an anonymous method?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is an anonymous method?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is an anonymous method?}}
 
   {\footnotesize
     An anonymous method defines an inline delegate with the \texttt{delegate} keyword, useful for quick, short-lived functions and closures.
@@ -980,14 +742,7 @@ g("Alice");
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are lambda expressions?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are lambda expressions?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are lambda expressions?}}
 
   {\footnotesize
     Lambdas (\texttt{(args) => expr/body}) provide concise syntax for anonymous functions, widely used with LINQ and delegates.
@@ -1003,14 +758,7 @@ Console.WriteLine(sq(5)); // 25
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What does type-safe mean?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What does type-safe mean?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What does type-safe mean?}}
 
   {\footnotesize
     Type-safe code enforces consistent use of data types at compile time, preventing type errors and reducing runtime exceptions.
@@ -1033,14 +781,7 @@ int y = ints[0];      // no cast
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are generics?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are generics?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are generics?}}
 
   {\footnotesize
     Generics allow defining classes and methods with type parameters (e.g., \texttt{List<T>}), enabling type-safe, reusable data structures without performance penalty.
@@ -1057,14 +798,7 @@ var strBox = new Box<string> { Value = "hello" };
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is exception handling in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is exception handling in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is exception handling in C\#?}}
 
   {\footnotesize
     Exception handling uses \texttt{try}, \texttt{catch}, \texttt{finally}, and \texttt{throw} to manage runtime errors and ensure resource cleanup.
@@ -1090,14 +824,7 @@ finally
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is the \texttt{IDisposable} interface, and why implement it?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the \texttt{IDisposable} interface, and why implement it?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is the \texttt{IDisposable} interface, and why implement it?}}
 
   {\footnotesize
     \texttt{IDisposable} defines \texttt{Dispose()} to release unmanaged resources (file handles, DB connections). Implementing it allows deterministic cleanup and the \texttt{using} pattern.
@@ -1120,14 +847,7 @@ logger.Log("Start");
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What is the \texttt{using} statement and \texttt{IDisposable}?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What is the \texttt{using} statement and \texttt{IDisposable}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What is the \texttt{using} statement and \texttt{IDisposable}?}}
 
   {\footnotesize
     The \texttt{using} statement ensures \texttt{Dispose()} is called on \texttt{IDisposable} objects when the block exits, even if an exception occurs.
@@ -1145,14 +865,7 @@ using (var fs = File.OpenRead("data.txt"))
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are tuples in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are tuples in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are tuples in C\#?}}
 
   {\footnotesize
     Tuples group multiple values into one. Unnamed (\texttt{(int,string)}) or named (\texttt{(int Id,string Name)}), with deconstruction support, useful for returning multiple values without custom types.
@@ -1170,14 +883,7 @@ Console.WriteLine($"{i},{n}");
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** When to use tuples?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** When to use tuples?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** When to use tuples?}}
 
   {\footnotesize
     Use tuples for quick, one-off groupings or returning multiple values from methods where defining a class is overkill.
@@ -1195,14 +901,7 @@ Console.WriteLine($"Min:{r.Min},Max:{r.Max}");
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** Tuple is reference or value type?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** Tuple is reference or value type?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** Tuple is reference or value type?}}
 
   {\footnotesize
     \texttt{System.Tuple<…>} is a reference type.  
@@ -1219,14 +918,7 @@ var valT = (Id:1,Name:"A");       // value type (ValueTuple)
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are value tuples?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are value tuples?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are value tuples?}}
 
   {\footnotesize
     \texttt{ValueTuple<…>} are lightweight, mutable structs with named fields and deconstruction, offering better performance than \texttt{System.Tuple<…>}.
@@ -1242,14 +934,7 @@ var vt = (Id:1,Name:"A");
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are nullable types?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are nullable types?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are nullable types?}}
 
   {\footnotesize
     Value types can be made nullable with \texttt{?} (e.g., \texttt{int?}), providing \texttt{HasValue} and \texttt{Value}.
@@ -1265,14 +950,7 @@ if (age.HasValue) Console.WriteLine(age.Value);
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are extension methods?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are extension methods?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are extension methods?}}
 
   {\footnotesize
     Static methods in static classes with \texttt{this} on the first parameter, enabling adding methods to existing types without inheritance.
@@ -1292,14 +970,7 @@ Console.WriteLine("Alice".IsCapital()); // True
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are attributes?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are attributes?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are attributes?}}
 
   {\footnotesize
     Attributes are metadata annotations (\texttt{[AttrName]}), used by reflection, serializers, and frameworks to influence behavior at runtime or compile time.
@@ -1315,14 +986,7 @@ public void OldMethod() { }
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are virtual methods in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are virtual methods in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are virtual methods in C\#?}}
 
   {\footnotesize
     Virtual methods marked with \texttt{virtual} in a base class can be overridden by derived classes. Dispatch is determined by the runtime type via v-table.
@@ -1339,14 +1003,7 @@ Animal a=new Cat(); a.Speak(); // Meow
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** What are virtual properties in C\#?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** What are virtual properties in C\#?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** What are virtual properties in C\#?}}
 
   {\footnotesize
     Virtual properties allow derived classes to override getters/setters. Mark base with \texttt{virtual} and derived with \texttt{override} for polymorphic behavior.
@@ -1363,14 +1020,7 @@ Person p=new Employee(); Console.WriteLine(p.Name); // Y
 \QuestionSlide[\CategoryBadge[LangColor!20]{Language Feature}]
   {** Where are virtual properties used in C\#? (Example with EF)}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[LangColor!20]{Language Feature}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: ** Where are virtual properties used in C\#? (Example with EF)%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LangColor!20]{Language Feature}]{** Where are virtual properties used in C\#? (Example with EF)}}
 
   {\footnotesize
     Entity Framework uses virtual navigation properties to enable lazy loading. EF generates proxies that override these properties to load related entities on demand.
@@ -1440,14 +1090,7 @@ Console.WriteLine(tc.DetachLeft() == 7);
 \QuestionSlide[\CategoryBadge[CollColor!20]{Collections}]
   {* What are the primary collection types in .NET and their typical use cases?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=north east,xshift=-0.4cm,yshift=-0.4cm] at (current page.north east) {
-        \CategoryBadge[CollColor!20]{Collections}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: * What are the primary collection types in .NET and their typical use cases?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[CollColor!20]{Collections}]{* What are the primary collection types in .NET and their typical use cases?}}
 
   {\footnotesize
     \begin{itemize}

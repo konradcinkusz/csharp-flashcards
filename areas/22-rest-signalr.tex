@@ -4,14 +4,7 @@
 \QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{* What are the six REST architectural constraints?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[RestColor!20]{REST \& SignalR}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: The six REST constraints?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[RestColor!20]{REST \& SignalR}]{The six REST constraints?}}
 
   {\footnotesize
   \begin{enumerate}
@@ -29,14 +22,7 @@
 \QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{* What HTTP verbs and status codes are standard in REST APIs?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[RestColor!20]{REST \& SignalR}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: HTTP verbs and status codes?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[RestColor!20]{REST \& SignalR}]{HTTP verbs and status codes?}}
 
   {\footnotesize
   \begin{tabular}{lll}
@@ -56,14 +42,7 @@
 \QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{** What are the main strategies for REST API versioning?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[RestColor!20]{REST \& SignalR}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: REST API versioning strategies?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[RestColor!20]{REST \& SignalR}]{REST API versioning strategies?}}
 
   {\footnotesize
   \begin{itemize}
@@ -89,14 +68,7 @@ builder.Services.AddApiVersioning(opt =>
 \QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{* What is OpenAPI / Swagger in ASP.NET Core?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[RestColor!20]{REST \& SignalR}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is OpenAPI/Swagger?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[RestColor!20]{REST \& SignalR}]{What is OpenAPI/Swagger?}}
 
   {\footnotesize
   \textbf{OpenAPI} is a machine-readable JSON/YAML specification for REST APIs. \textbf{Swagger UI} renders it as interactive docs. In ASP.NET Core, \texttt{Microsoft.AspNetCore.OpenApi} (built-in .NET 9) or \textbf{Swashbuckle} generates the spec from controller metadata and XML comments. Clients can auto-generate SDKs with \texttt{NSwag} or \texttt{kiota}.
@@ -119,14 +91,7 @@ app.UseSwaggerUI();
 \QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{** What is Problem Details (RFC 7807) in ASP.NET Core?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[RestColor!20]{REST \& SignalR}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Problem Details?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[RestColor!20]{REST \& SignalR}]{What is Problem Details?}}
 
   {\footnotesize
   \textbf{Problem Details} (RFC 7807) is a standard JSON format for HTTP error responses: \texttt{type}, \texttt{title}, \texttt{status}, \texttt{detail}, and \texttt{instance}. ASP.NET Core \texttt{[ApiController]} returns Problem Details automatically for 4xx errors. \texttt{IProblemDetailsService} lets you customise and extend the format.
@@ -149,14 +114,7 @@ app.UseSwaggerUI();
 \QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{* What is SignalR?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[RestColor!20]{REST \& SignalR}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is SignalR?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[RestColor!20]{REST \& SignalR}]{What is SignalR?}}
 
   {\footnotesize
   \textbf{SignalR} is ASP.NET Core's real-time communication library. It abstracts transport selection: \textbf{WebSockets} (preferred), \textbf{Server-Sent Events}, and \textbf{Long Polling} fallbacks. The server \textbf{pushes} messages to clients rather than clients polling. Used in live dashboards, chat, notifications, multiplayer games, and Blazor Server.
@@ -167,14 +125,7 @@ app.UseSwaggerUI();
 \QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{** What are SignalR Hubs?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[RestColor!20]{REST \& SignalR}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What are SignalR Hubs?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[RestColor!20]{REST \& SignalR}]{What are SignalR Hubs?}}
 
   {\footnotesize
   A \textbf{Hub} is a server-side class that acts as the central communication endpoint. Clients call Hub methods; the Hub calls client methods via \texttt{Clients.All}, \texttt{Clients.Caller}, or \texttt{Clients.Group(name)}. Hubs are transient — no state between calls; use DI for persistent services.
@@ -199,14 +150,7 @@ app.MapHub<ChatHub>("/chat");
 \QuestionSlide[\CategoryBadge[RestColor!20]{REST \& SignalR}]{** When would you choose WebSockets vs SSE vs Long Polling?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[RestColor!20]{REST \& SignalR}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: WebSockets vs SSE vs Long Polling?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[RestColor!20]{REST \& SignalR}]{WebSockets vs SSE vs Long Polling?}}
 
   {\footnotesize
   \begin{tabular}{p{2.3cm}p{2.3cm}p{2.3cm}}

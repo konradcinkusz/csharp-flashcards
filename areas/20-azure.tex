@@ -4,14 +4,7 @@
 \QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{* What is Azure App Service?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AzureColor!20]{Azure}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Azure App Service?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AzureColor!20]{Azure}]{What is Azure App Service?}}
 
   {\footnotesize
   \textbf{Azure App Service} is a fully managed PaaS for hosting web apps, REST APIs, and WebJobs. Supports .NET, Node.js, Python, Java, and containers. Key features: \textbf{deployment slots} for staged rollouts, \textbf{autoscaling}, \textbf{managed TLS}, VNet integration, and built-in monitoring via Application Insights.
@@ -35,14 +28,7 @@ az webapp deployment source config-zip \
 \QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Azure Managed Identity?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AzureColor!20]{Azure}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Managed Identity?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AzureColor!20]{Azure}]{What is Managed Identity?}}
 
   {\footnotesize
   \textbf{Managed Identity} gives an Azure resource (App Service, AKS Pod, VM) an AAD identity without storing credentials. The Azure platform issues and rotates tokens automatically. Use \texttt{DefaultAzureCredential} in the Azure SDK — it tries Managed Identity in production and developer credentials locally, requiring zero config changes between environments.
@@ -64,14 +50,7 @@ KeyVaultSecret secret = await secretClient.GetSecretAsync("DbPassword");
 \QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{* What is Azure Key Vault?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AzureColor!20]{Azure}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Azure Key Vault?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AzureColor!20]{Azure}]{What is Azure Key Vault?}}
 
   {\footnotesize
   \textbf{Azure Key Vault} is a managed HSM-backed service for storing \textbf{secrets} (connection strings, API keys), \textbf{certificates}, and \textbf{cryptographic keys}. Access is controlled via AAD roles (RBAC) or access policies. Integrate with ASP.NET Core \texttt{IConfiguration} to surface secrets as configuration values without code changes.
@@ -91,14 +70,7 @@ var connStr = builder.Configuration.GetConnectionString("DefaultConnection");
 \QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Azure AI Foundry?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AzureColor!20]{Azure}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Azure AI Foundry?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AzureColor!20]{Azure}]{What is Azure AI Foundry?}}
 
   {\footnotesize
   \textbf{Azure AI Foundry} (formerly Azure AI Studio) is Microsoft's unified platform for building, evaluating, and deploying AI applications. It provides: a \textbf{model catalogue} (OpenAI GPT-4o, Phi, Llama), \textbf{Prompt Flow} for LLM pipeline authoring, \textbf{evaluation} dashboards for quality/safety, and \textbf{deployment} to managed endpoints behind Azure OpenAI APIs.
@@ -109,14 +81,7 @@ var connStr = builder.Configuration.GetConnectionString("DefaultConnection");
 \QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Azure AI Foundry Prompt Flow?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AzureColor!20]{Azure}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Prompt Flow?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AzureColor!20]{Azure}]{What is Prompt Flow?}}
 
   {\footnotesize
   \textbf{Prompt Flow} is a low-code / code-first tool for building LLM pipelines as directed acyclic graphs (DAGs) of \textbf{nodes}: LLM calls, Python code, conditional branches, and vector index lookups. Flows can be tested, evaluated against ground-truth datasets, and deployed as streaming HTTP endpoints. SDK available for .NET and Python.
@@ -139,14 +104,7 @@ result = client.run(
 \QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Azure Service Bus and when do you use it?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AzureColor!20]{Azure}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Azure Service Bus?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AzureColor!20]{Azure}]{What is Azure Service Bus?}}
 
   {\footnotesize
   \textbf{Azure Service Bus} is a fully managed enterprise message broker. Use \textbf{Queues} for point-to-point async communication; \textbf{Topics + Subscriptions} for pub/sub fan-out. Key features: message sessions, dead-letter queue, scheduled delivery, and exactly-once delivery with duplicate detection. Ideal for decoupling microservices and smoothing traffic spikes.
@@ -170,14 +128,7 @@ await proc.StartProcessingAsync();
 \QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{* What are essential Azure CLI patterns for .NET developers?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AzureColor!20]{Azure}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: Essential Azure CLI patterns?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AzureColor!20]{Azure}]{Essential Azure CLI patterns?}}
 
   {\footnotesize
   The Azure CLI (\texttt{az}) automates provisioning and deployment from scripts and pipelines. Authenticate via \texttt{az login} or a Service Principal in CI. Use \texttt{--output table/json/tsv} for scripting.
@@ -205,14 +156,7 @@ az webapp log tail -n myapi -g myRG
 \QuestionSlide[\CategoryBadge[AzureColor!20]{Azure}]{** What is Application Insights and how do you add it to an ASP.NET Core app?}
 
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[AzureColor!20]{Azure}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is Application Insights?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[AzureColor!20]{Azure}]{What is Application Insights?}}
 
   {\footnotesize
   \textbf{Application Insights} (part of Azure Monitor) collects traces, metrics, exceptions, dependencies, and live metrics from your app. \texttt{AddApplicationInsightsTelemetry()} wires it into ASP.NET Core with zero code changes. It integrates with OpenTelemetry exporters so the same instrumentation works locally and in Azure.
