@@ -1,0 +1,7 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Get the PDF
+    url: https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml
+    about: >-
+      No release has been cut yet. Run the "Build & Release PDF" workflow and
+      download CSharp_FlashCards from the run's Artifacts.

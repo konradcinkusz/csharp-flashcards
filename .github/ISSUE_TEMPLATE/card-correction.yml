@@ -1,0 +1,52 @@
+name: Card correction
+description: A card's C# or .NET content is wrong, outdated, or misleading
+title: "Card correction: "
+labels: ["card-correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For a card that says something untrue or out of date. If the deck does
+        not **build**, use *Build problem* instead.
+
+  - type: input
+    id: card
+    attributes:
+      label: Which card
+      description: >-
+        The number shown on the slide, and the area file if you know it. The
+        number is the one printed on the question slide, e.g. "142".
+      placeholder: "142 — areas/14-aspnetcore.tex"
+    validations:
+      required: true
+
+  - type: textarea
+    id: says
+    attributes:
+      label: What the card says now
+      description: Quote it, so the claim being corrected is unambiguous.
+    validations:
+      required: true
+
+  - type: textarea
+    id: correct
+    attributes:
+      label: What is correct, and how you know
+      description: >-
+        A link to documentation, a release note, or a snippet that demonstrates
+        it. "This changed in .NET 8" is much easier to act on with the note that
+        says so.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of correction
+      options:
+        - Factually wrong
+        - Was true, now out of date
+        - Ambiguous or misleading
+        - Code listing does not compile or run
+    validations:
+      required: true

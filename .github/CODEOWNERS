@@ -1,0 +1,34 @@
+# Every path in this repository is owned by its maintainer.
+#
+# REPO-BASELINE.md §1: the failure this prevents is a security-relevant path
+# merged without the right reviewer. In a single-maintainer repository that is a
+# low bar — but the file is also the machine-readable answer to "who reviews
+# this", which is what makes it worth committing before there is a second
+# contributor rather than after the first surprise merge.
+
+*                           @konradcinkusz
+
+# The paths called out below are ROADMAP.md §5's protected paths, and the two
+# lists are meant to stay identical. A change to any of them breaks EVERY later
+# pull request rather than only its own:
+#
+#   main.tex          the document root — broken, nothing builds
+#   mybeamer.cls      loads every package, defines every section colour, and
+#                     owns \RepoURL and the footline
+#   mybeamer.sty      defines \QuestionSlide, \AnswerTitle and \Difficulty, on
+#                     which all 269 cards now depend
+#   .github/workflows the build itself
+#   scripts/          the card linter and the secret scanner's local half; a
+#                     broken validator turns every later PR into
+#                     three-retries-and-force-merge
+#   .gitleaks.toml    a scanner that passes vacuously is worse than none
+#
+# areas/*.tex are deliberately NOT here. A LaTeX error in one card does break the
+# build, but it is contained, obvious, and named by the compiler.
+
+/main.tex                   @konradcinkusz
+/mybeamer.cls               @konradcinkusz
+/mybeamer.sty               @konradcinkusz
+/.github/workflows/         @konradcinkusz
+/scripts/                   @konradcinkusz
+/.gitleaks.toml             @konradcinkusz

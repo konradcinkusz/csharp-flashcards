@@ -1,0 +1,53 @@
+name: Build problem
+description: The deck fails to compile, or renders wrongly
+title: "Build problem: "
+labels: ["build-problem"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For the deck not building, or building into something that looks wrong.
+        For a card whose *content* is incorrect, use *Card correction* instead.
+
+  - type: dropdown
+    id: what
+    attributes:
+      label: What happens
+      options:
+        - LaTeX errors and no PDF is produced
+        - It compiles, but something renders wrongly
+        - It compiles locally and fails in CI, or the reverse
+    validations:
+      required: true
+
+  - type: input
+    id: engine
+    attributes:
+      label: How you built it
+      description: >-
+        The README's documented command is
+        `latexmk -xelatex -shell-escape main.tex`. `-shell-escape` is not
+        optional — mybeamer.cls loads minted, which shells out to Pygments.
+      placeholder: "latexmk -xelatex -shell-escape main.tex, TeX Live 2025, macOS"
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: The error
+      description: >-
+        The first line beginning with `!` and the twenty lines after it.
+        Everything before that first `!` is usually noise, and everything well
+        after it is usually fallout.
+      render: text
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checked
+    attributes:
+      label: Before filing
+      options:
+        - label: "`python3 scripts/lint-cards.py` passes (it catches the two commonest causes: a verbatim frame missing `[fragile]`, and a malformed card)"
+        - label: I checked whether the same commit builds in CI
