@@ -86,9 +86,16 @@ that must not break. Progress is tracked on
 
 ## Contributing
 
-1. **Fork** → create a feature branch.
+Read [`CONTRIBUTING.md`](CONTRIBUTING.md) — it has the anatomy of a card, what the
+three difficulty levels mean, the seven coordinated edits that adding a whole
+area takes, and what CI checks.
+
+The short version:
+
+1. **Fork** → create a feature branch, and run `./scripts/install-hooks.sh` once.
 2. Add or edit an `areas/*.tex` file, or improve the Beamer style.
-3. Open a **Pull Request**. CI compiles `main.tex` on every pull request; if the
+3. Run `python3 scripts/lint-cards.py` — the same command CI runs.
+4. Open a **Pull Request**. CI compiles `main.tex` on every pull request; if the
    deck fails to build, the run's summary names the LaTeX error and the file it is in.
 
 ---
