@@ -1,0 +1,105 @@
+name: Build deck
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Compiles main.tex on every pull request and every push to the default
+#  branch, and uploads the resulting PDF as a run artifact.
+#
+#  Separate from ci.yml deliberately. ci.yml is the *release* path: it fires on
+#  a 'v*' tag and publishes a GitHub release. This workflow answers a different
+#  question — "does the deck still compile?" — and has to answer it on every
+#  change, not only when someone decides to cut a version.
+#
+#  Until this workflow existed the repository had no pull-request CI at all, and
+#  ci.yml had never run: it triggers on tags only and the repository has never
+#  been tagged. 7,617 lines of LaTeX across 24 area files had therefore reached
+#  the default branch with no build behind them, while README.md's Contributing
+#  section promised that "automated checks will compile the PDF".
+#
+#  Three latex-action inputs are load-bearing and none is a default:
+#    • latexmk_use_xelatex  — main.tex sets a 1080x1920pt geometry through
+#      \PassOptionsToPackage before \documentclass, and the class loads
+#      fontawesome5; the deck is authored for xelatex.
+#    • latexmk_shell_escape — mybeamer.cls loads minted, which shells out to
+#      Pygments. Without it the run dies on the first of 197 code frames.
+#    • root_file            — main.tex, not the presentations/ tree, which is a
+#      separate deck with its own root.
+#
+#  PDFs are build output, never committed (.gitignore's *.pdf rule). The
+#  artifact on the run is how you get one.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read          # this workflow publishes nothing; ci.yml owns releases
+
+concurrency:
+  group: build-deck-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Compile main.tex
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # 20 minutes against a deck that compiles in ~3. GitHub's default is six
+    # hours, which is not a ceiling anybody chose: a wedged Pygments call would
+    # otherwise burn an afternoon and report only that the job was cancelled.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: main.tex
+          latexmk_use_xelatex: true
+          latexmk_shell_escape: true
+
+      - name: Rename PDF
+        run: mv main.pdf CSharp_FlashCards.pdf
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: CSharp_FlashCards_PDF
+          path: CSharp_FlashCards.pdf
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Summary
+        if: success()
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          ## Deck compiled
+
+          Download **CSharp_FlashCards_PDF** from this run's Artifacts section.
+          SUMMARY
+
+      - name: Explain a failure
+        if: failure()
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          ## The deck did not compile
+
+          The LaTeX log is in the **Compile** step's output above. The first line
+          beginning with `!` is the real error; everything after it is fallout.
+
+          Two failures account for most of them:
+
+          * **A frame containing code is missing `[fragile]`.** Every frame using
+            `minted`, `lstlisting` or `\verb` needs it.
+          * **An unescaped `#`, `%`, `_` or `&` in card text.** Write `\#`, `\%`,
+            `\_`, `\&` — `C\#` in particular.
+
+          Reproduce locally:
+
+          ```
+          latexmk -xelatex -shell-escape main.tex
+          ```
+          SUMMARY
