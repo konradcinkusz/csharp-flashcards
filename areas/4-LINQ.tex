@@ -16,7 +16,15 @@
 
 % 2 ── .Select() in LINQ
 \QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{* What does \texttt{.Select()} do in LINQ?}
-\AnswerSlide[\CategoryBadge[LinqColor!20]{LINQ}]{What does \texttt{.Select()} do in LINQ?}{%
+\begin{frame}[fragile]
+  \frametitle{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
+        \CategoryBadge[LinqColor!20]{LINQ}
+      };
+    \end{tikzpicture}
+    Answer \theqcounter: What does \texttt{.Select()} do in LINQ?%
+  }
   {\footnotesize
   \texttt{.Select()} projects each element of a sequence into a new form. It returns a collection where each element corresponds 1-to-1 with the input sequence.
   }
@@ -25,8 +33,8 @@
   var names = context.Customers
                      .Select(c => c.CustomerName)
                      .ToList();
-  \end{minted}%
-}
+  \end{minted}
+\end{frame}
 
 % 3 ── .SelectMany() in LINQ
 \QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{** What does \texttt{.SelectMany()} do in LINQ?}
