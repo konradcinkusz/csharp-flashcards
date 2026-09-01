@@ -69,11 +69,14 @@ ehthumbs.db
 .vscode/
 .idea/
 *.sublime-*
-*~                # Backup files (Emacs, some editors)
-~$*               # Temporary MS Office files
+# Backup files (Emacs, some editors)
+*~
+# Temporary MS Office files
+~$*
 
 # Overleaf-generated sync files
-_*              # e.g., _main.tex (deprecated, but still seen)
+# Overleaf sync leftovers, e.g. _main.tex (deprecated, but still seen)
+_*
 
 # Jupyter/VSCode built files (if included)
 .ipynb_checkpoints/
@@ -83,8 +86,15 @@ build/
 _build/
 out/
 
+# ─── xelatex + minted, which is what this deck actually builds with ────
+# The README's documented command is `latexmk -xelatex -shell-escape main.tex`.
+# xelatex writes an .xdv on the way to the PDF, and minted -- loaded by
+# mybeamer.cls -- caches a directory per document. Neither was ignored, so a
+# local build left `git status` dirty.
+*.xdv
+_minted-*/
+
 # ─── Action artifacts (local) ──────────────────────────────────────────
-*.pdf            # redundant consolidation again if needed
 *.tex.run.log
 
 repomix-output.xml
