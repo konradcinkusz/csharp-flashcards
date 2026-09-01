@@ -1,0 +1,32 @@
+# Git attributes — rules, not a commented-out template.
+#
+# The normalisation below is currently a no-op: all 38 tracked files are already
+# LF. That is the point of writing it down now rather than after the first
+# CRLF commit — `git add --renormalize .` produces an empty diff today, so this
+# file can be added without a reformatting commit tangled up in it.
+
+# Normalise everything to LF in the repository, whatever the working tree uses.
+* text=auto eol=lf
+
+# Be explicit for the formats this repository actually contains, so a new file
+# type does not silently rely on `text=auto` guessing correctly.
+*.tex   text
+*.sty   text
+*.cls   text
+*.md    text
+*.yml   text
+*.yaml  text
+*.html  text
+*.json  text
+*.gitignore text
+
+# Binary: never line-ending-converted, never diffed as text. *.pdf is ignored
+# today, but a deliberately versioned one must not be mangled — which is exactly
+# the case the .gitignore rule would stop protecting the moment someone adds a
+# `!keep-this.pdf` exception.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.otf   binary
+*.ttf   binary
