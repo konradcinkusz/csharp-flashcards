@@ -88,7 +88,10 @@ that must not break. Progress is tracked on
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md) — it has the anatomy of a card, what the
 three difficulty levels mean, the seven coordinated edits that adding a whole
-area takes, and what CI checks.
+area takes, and what CI checks. This repository's conformance to the estate's
+[repository baseline](https://github.com/konradcinkusz/architecture-standards/blob/main/docs/guides/REPO-BASELINE.md)
+is declared in [`docs/BASELINE-COMPLIANCE.md`](docs/BASELINE-COMPLIANCE.md),
+including what is deliberately not applicable and why.
 
 The short version:
 
