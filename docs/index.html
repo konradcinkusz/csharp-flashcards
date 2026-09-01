@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>C# FlashCards 2026 — Interview prep deck for C# developers</title>
-<meta name="description" content="300+ Q&amp;A flashcards covering C# language basics, LINQ, async/await, Entity Framework, design patterns, OAuth, microservices, Azure serverless, and AI — compiled to a one-click PDF via GitHub Actions.">
+<meta name="description" content="269 Q&amp;A flashcards covering C# language basics, LINQ, async/await, Entity Framework, design patterns, OAuth, microservices, Azure serverless, and AI — compiled to a one-click PDF via GitHub Actions.">
 <style>
 /* ── tokens ─────────────────────────────────────────────────────────────── */
 :root {
@@ -283,12 +283,12 @@ footer{
   </a>
   <div class="nav-links">
     <a href="#topics">Topics</a>
-    <a href="https://github.com/konradcinkusz/csharp-flashcards/releases">Releases</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml">Build PDF</a>
     <a href="https://github.com/konradcinkusz/csharp-flashcards" class="btn-secondary btn" style="padding:5px 12px;font-size:13px">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       GitHub
     </a>
-    <a href="https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf" class="btn btn-primary nav-cta" style="padding:5px 14px;font-size:13px">↓ Download PDF</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml" class="btn btn-primary nav-cta" style="padding:5px 14px;font-size:13px">↓ Build the PDF</a>
   </div>
 </nav>
 
@@ -309,22 +309,22 @@ footer{
 
   <h1>C# <span>FlashCards</span> 2026</h1>
   <p class="hero-sub">
-    A <strong>300+ card Q&amp;A deck</strong> for C# developers.
+    A <strong>269-card Q&amp;A deck</strong> for C# developers.
     Covers language basics through async/await, Entity Framework, design patterns,
     OAuth, microservices, Azure serverless, and AI — compiled to a
     <strong>one-click PDF</strong> via GitHub Actions.
   </p>
   <div class="hero-actions">
-    <a href="https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf" class="btn btn-primary">↓ Download PDF</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml" class="btn btn-primary">↓ Build the PDF</a>
     <a href="https://github.com/konradcinkusz/csharp-flashcards" class="btn btn-secondary">View on GitHub</a>
     <a href="#quickstart" class="btn btn-secondary">Quick Start</a>
   </div>
   <div class="badges">
-    <img src="https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml/badge.svg" alt="CI">
+    <img src="https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/build.yml/badge.svg?branch=main" alt="Build deck">
     <img src="https://img.shields.io/badge/PDF-download-7c3aed" alt="PDF download">
     <img src="https://img.shields.io/badge/License-MIT-e0a458.svg" alt="MIT">
     <img src="https://img.shields.io/badge/LaTeX-XeLaTeX-008080?logo=latex&amp;logoColor=white" alt="LaTeX">
-    <img src="https://img.shields.io/badge/Topics-13-a855f7" alt="13 topics">
+    <img src="https://img.shields.io/badge/Topics-24-a855f7" alt="24 topics">
   </div>
 </section>
 
@@ -385,7 +385,7 @@ footer{
       <div class="feat">
         <div class="feat-icon">🎨</div>
         <h3>Colour-coded sections</h3>
-        <p>Each of the 13 topic areas has its own accent colour for instant visual orientation when skimming the deck.</p>
+        <p>Each of the 24 topic areas has its own accent colour for instant visual orientation when skimming the deck.</p>
       </div>
       <div class="feat">
         <div class="feat-icon">⚡</div>
@@ -409,7 +409,7 @@ footer{
       </div>
       <div class="feat">
         <div class="feat-icon">🔬</div>
-        <h3>13 topic areas</h3>
+        <h3>24 topic areas</h3>
         <p>From C# beginner syntax to AI integration with Semantic Kernel — the deck grows with your career.</p>
       </div>
       <div class="feat">
@@ -427,98 +427,175 @@ footer{
 <section class="section" id="topics">
   <div class="section-inner">
     <p class="section-label">Topics</p>
-    <h2>13 areas, beginner to expert</h2>
+    <h2>24 areas, beginner to expert</h2>
     <p>Each area is an independent file — study them in order or jump straight to the section you need.</p>
     <div class="topics-grid">
       <div class="topic">
         <div class="topic-num">01</div>
         <div>
           <div class="topic-name">C# Language — Beginner</div>
-          <div class="topic-count">types · classes · interfaces · generics</div>
+          <div class="topic-count">22 cards · types · memory · language basics</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">02</div>
         <div>
-          <div class="topic-name">C# Language — Middle</div>
-          <div class="topic-count">delegates · events · iterators · pattern matching</div>
+          <div class="topic-name">C# Language — Intermediate</div>
+          <div class="topic-count">52 cards · language features · collections · metaprogramming</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">03</div>
         <div>
           <div class="topic-name">C# Language — Advanced</div>
-          <div class="topic-count">spans · unsafe · source generators · Roslyn</div>
+          <div class="topic-count">6 cards · metaprogramming · performance · Span&lt;T&gt;</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">04</div>
         <div>
           <div class="topic-name">LINQ</div>
-          <div class="topic-count">deferred execution · expression trees · custom operators</div>
+          <div class="topic-count">4 cards · projection · flattening · deferred execution</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">05</div>
         <div>
-          <div class="topic-name">Threading &amp; Async/Await</div>
-          <div class="topic-count">Task · ValueTask · Channels · SynchronizationContext</div>
+          <div class="topic-name">Threading & Async/Await</div>
+          <div class="topic-count">23 cards · tasks · synchronisation · cancellation</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">06</div>
         <div>
           <div class="topic-name">Entity Framework</div>
-          <div class="topic-count">migrations · change tracking · raw SQL · performance</div>
+          <div class="topic-count">7 cards · tracking · split queries · migrations</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">07</div>
         <div>
           <div class="topic-name">Design Principles</div>
-          <div class="topic-count">SOLID · DRY · YAGNI · clean architecture</div>
+          <div class="topic-count">5 cards · SOLID · cohesion · coupling</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">08</div>
         <div>
           <div class="topic-name">Design Patterns</div>
-          <div class="topic-count">GoF · CQRS · Repository · Mediator</div>
+          <div class="topic-count">8 cards · creational · structural · behavioural</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">09</div>
         <div>
           <div class="topic-name">OAuth &amp; Security</div>
-          <div class="topic-count">OAuth 2.0 · OIDC · JWT · PKCE flows</div>
+          <div class="topic-count">21 cards · OAuth 2.0 · OIDC · JWT · PKCE flows</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">10</div>
         <div>
           <div class="topic-name">Microservices</div>
-          <div class="topic-count">resilience · service mesh · event-driven · saga</div>
+          <div class="topic-count">5 cards · bulkhead · sidecar · service mesh · strangler fig</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">11</div>
         <div>
           <div class="topic-name">Advanced Cloud &amp; Leadership</div>
-          <div class="topic-count">CAP theorem · SRE · platform engineering · team topologies</div>
+          <div class="topic-count">10 cards · poison messages · resilience · trade-offs</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">12</div>
         <div>
           <div class="topic-name">Azure Serverless</div>
-          <div class="topic-count">Functions · Durable · Event Grid · Logic Apps</div>
+          <div class="topic-count">4 cards · Azure SQL · Functions · serverless tiers</div>
         </div>
       </div>
       <div class="topic">
         <div class="topic-num">13</div>
         <div>
-          <div class="topic-name">C# &amp; AI</div>
-          <div class="topic-count">Semantic Kernel · ML.NET · Azure OpenAI · RAG</div>
+          <div class="topic-name">C# AI &amp; .NET</div>
+          <div class="topic-count">10 cards · Microsoft.Extensions.AI · Semantic Kernel · RAG</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">14</div>
+        <div>
+          <div class="topic-name">ASP.NET Core</div>
+          <div class="topic-count">9 cards · middleware · DI lifetimes · Minimal APIs · filters</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">15</div>
+        <div>
+          <div class="topic-name">Blazor Server</div>
+          <div class="topic-count">8 cards · circuits · render modes · state</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">16</div>
+        <div>
+          <div class="topic-name">.NET Aspire</div>
+          <div class="topic-count">8 cards · orchestration · service discovery · telemetry</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">17</div>
+        <div>
+          <div class="topic-name">Databases &amp; Query Optimisation</div>
+          <div class="topic-count">8 cards · indexes · execution plans · recursive CTEs</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">18</div>
+        <div>
+          <div class="topic-name">Docker &amp; Kubernetes</div>
+          <div class="topic-count">9 cards · images · probes · deployments</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">19</div>
+        <div>
+          <div class="topic-name">CI/CD, Azure DevOps &amp; Terraform</div>
+          <div class="topic-count">8 cards · pipelines · IaC · state</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">20</div>
+        <div>
+          <div class="topic-name">Azure</div>
+          <div class="topic-count">8 cards · App Service · SDK/CLI · AI Foundry</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">21</div>
+        <div>
+          <div class="topic-name">Domain-Driven Design &amp; CQRS</div>
+          <div class="topic-count">9 cards · aggregates · bounded contexts · read models</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">22</div>
+        <div>
+          <div class="topic-name">RESTful APIs &amp; SignalR</div>
+          <div class="topic-count">8 cards · resources · versioning · real-time hubs</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">23</div>
+        <div>
+          <div class="topic-name">AI Tools, LLMs &amp; Observability</div>
+          <div class="topic-count">9 cards · prompting · evals · OpenTelemetry</div>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-num">24</div>
+        <div>
+          <div class="topic-name">Developer Tooling &amp; Agile</div>
+          <div class="topic-count">8 cards · git · reviews · delivery practice</div>
         </div>
       </div>
     </div>
@@ -544,10 +621,10 @@ footer{
       <div id="tab-download" class="qs-panel active first">
         <div class="code-block"><span class="c"># Grab the latest compiled PDF — no LaTeX needed</span>
 <span class="cmd">curl</span> -L -o CSharp_FlashCards.pdf \
-  <span class="url">https://github.com/konradcinkusz/csharp-flashcards/releases/latest/download/CSharp_FlashCards.pdf</span>
+  <span class="url">Actions → Build &amp; Release PDF → Run workflow → download the artifact</span>
 
 <span class="c"># Or visit the Releases page in your browser:</span>
-<span class="url">https://github.com/konradcinkusz/csharp-flashcards/releases/latest</span></div>
+<span class="url">https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml</span></div>
         <p class="qs-note">A new PDF is published automatically whenever a <code>v*</code> tag is pushed. Bookmark the latest-release URL to always get the most recent version.</p>
       </div>
 
@@ -560,8 +637,8 @@ footer{
 <span class="c"># Output: main.pdf in the repo root</span>
 
 <span class="c"># To add your own cards:</span>
-<span class="c"># 1. Create areas/14-my-topic.tex  (copy an existing file as template)</span>
-<span class="c"># 2. Add \input{areas/14-my-topic} to main.tex</span>
+<span class="c"># 1. Create areas/25-my-topic.tex  (copy an existing file as template)</span>
+<span class="c"># 2. Add \input{areas/25-my-topic} to main.tex</span>
 <span class="c"># 3. Run latexmk again</span></div>
         <p class="qs-note">Run <strong><code>latexmk -xelatex -shell-escape main.tex</code></strong> — it re-runs as many times as needed and handles all auxiliary files. Requires XeLaTeX for the custom font configuration.</p>
       </div>
@@ -604,7 +681,7 @@ footer{
   </div>
   <div class="footer-links">
     <a href="https://github.com/konradcinkusz/csharp-flashcards">GitHub</a>
-    <a href="https://github.com/konradcinkusz/csharp-flashcards/releases">Releases</a>
+    <a href="https://github.com/konradcinkusz/csharp-flashcards/actions/workflows/ci.yml">Build PDF</a>
     <a href="https://github.com/konradcinkusz/csharp-flashcards/blob/main/README.md">README</a>
     <a href="https://github.com/konradcinkusz/csharp-flashcards/blob/main/MASTER_PROMPT.md">Master Prompt</a>
     <a href="https://github.com/konradcinkusz/csharp-flashcards/blob/main/LICENSE">License</a>
