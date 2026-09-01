@@ -43,8 +43,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint:
+    name: Card conventions
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # Runs before the compile and gates it. A convention failure is reported in
+    # seconds rather than after a three-minute LaTeX run, and the two checks are
+    # separate names on the pull request so "the deck does not build" and "a card
+    # is written wrongly" are never the same red tick.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint the cards
+        run: python3 scripts/lint-cards.py
+
   build:
     name: Compile main.tex
+    needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 20
     # 20 minutes against a deck that compiles in ~3. GitHub's default is six
@@ -63,6 +79,25 @@ jobs:
 
       - name: Rename PDF
         run: mv main.pdf CSharp_FlashCards.pdf
+
+      - name: Record page count
+        run: |
+          # TeX writes this once per pass; the last one is the final document.
+          # #37 had to infer "did pagination change?" from the PDF's byte size
+          # because nothing recorded it. Now it is a number two runs can be
+          # compared on.
+          pages=$(sed -n 's/.*Output written on main\.\(xdv\|pdf\) (\([0-9]*\) pages.*/\2/p' main.log | tail -1)
+          bytes=$(stat -c%s CSharp_FlashCards.pdf)
+          echo "PAGES=${pages:-unknown} BYTES=$bytes"
+          {
+            echo
+            echo "## Document"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Pages | ${pages:-unknown} |"
+            echo "| PDF bytes | $bytes |"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
