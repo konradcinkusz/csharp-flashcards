@@ -1,33 +1,74 @@
 name: Build & Release PDF
 
+# ─────────────────────────────────────────────────────────────────────────────
+#  The release path: builds the deck and publishes it as a GitHub release asset.
+#
+#  Separate from build.yml, which compiles main.tex on every push and pull
+#  request. That one answers "does the deck still compile?"; this one answers
+#  "should this version be published?" — and only a human cutting a tag can
+#  answer the second.
+#
+#  workflow_dispatch is here because the answer to "where do I get the PDF?" was
+#  nowhere for this repository's entire history. ci.yml fired on 'v*' tags
+#  exclusively, no tag was ever pushed, and so the README's PDF-download badge
+#  pointed at a releases/latest URL that 404s. A manual run now produces the PDF
+#  as an artifact without anyone having to decide on a version number first.
+#
+#  The release job is therefore guarded on the ref being a tag: a dispatched run
+#  builds and uploads, and stops. Without that guard, action-gh-release on a
+#  branch ref either fails or publishes a release named after the branch.
+#
+#  contents: write is scoped to the release job alone. The build job publishes
+#  nothing and does not need credentials that can write to the repository —
+#  which matters because every third-party Action in that job would inherit them.
+# ─────────────────────────────────────────────────────────────────────────────
+
 on:
   push:
     tags:
       - 'v*'            # trigger on version tags
+  workflow_dispatch:
 
 permissions:
-  contents: write       # needed to create a release via API
+  contents: read        # least privilege by default; the release job widens it
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+  # Deliberately NOT cancel-in-progress, unlike build.yml. Cancelling a
+  # half-finished release leaves a published release with no asset attached.
 
 jobs:
   build:
+    name: Build release PDF
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: xu-cheng/latex-action@v4
         with:
           root_file: main.tex
           latexmk_use_xelatex: true
-          latexmk_shell_escape: true 
+          latexmk_shell_escape: true
       - name: Rename PDF
         run: mv main.pdf CSharp_FlashCards.pdf
       - uses: actions/upload-artifact@v4
         with:
           name: CSharp_FlashCards
           path: CSharp_FlashCards.pdf
+          if-no-files-found: error
+          # Without this, a failed `mv` uploads an empty artifact and the
+          # release job below publishes a release with nothing attached.
+          retention-days: 30
 
   release:
+    name: Publish release
     runs-on: ubuntu-latest
     needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    timeout-minutes: 10
+    permissions:
+      contents: write   # create a release and upload its asset
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -35,3 +76,4 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: CSharp_FlashCards.pdf
+          fail_on_unmatched_files: true
