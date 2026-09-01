@@ -1,14 +1,7 @@
 % 1 ── What is LINQ?
 \QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{** What is LINQ?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[LinqColor!20]{LINQ}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What is LINQ?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LinqColor!20]{LINQ}]{What is LINQ?}}
   {\footnotesize
   Language Integrated Query enables querying collections with SQL-like syntax or fluent methods (\texttt{Where}, \texttt{Select}, etc.).
   }
@@ -17,14 +10,7 @@
 % 2 ── .Select() in LINQ
 \QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{* What does \texttt{.Select()} do in LINQ?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[LinqColor!20]{LINQ}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What does \texttt{.Select()} do in LINQ?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LinqColor!20]{LINQ}]{What does \texttt{.Select()} do in LINQ?}}
   {\footnotesize
   \texttt{.Select()} projects each element of a sequence into a new form. It returns a collection where each element corresponds 1-to-1 with the input sequence.
   }
@@ -39,14 +25,7 @@
 % 3 ── .SelectMany() in LINQ
 \QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{** What does \texttt{.SelectMany()} do in LINQ?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[LinqColor!20]{LINQ}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: What does \texttt{.SelectMany()} do in LINQ?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LinqColor!20]{LINQ}]{What does \texttt{.SelectMany()} do in LINQ?}}
   {\footnotesize
   \texttt{.SelectMany()} flattens nested collections. It projects each element to a collection, then merges all collections into a single flat result set.
   }
@@ -61,14 +40,7 @@
 % 4 ── When to use .SelectMany()
 \QuestionSlide[\CategoryBadge[LinqColor!20]{LINQ}]{** When would you use \texttt{.SelectMany()} instead of \texttt{.Select()}?}
 \begin{frame}[fragile]
-  \frametitle{%
-    \begin{tikzpicture}[remember picture, overlay]
-      \node[anchor=north east, xshift=-0.4cm, yshift=-0.4cm, text=black] at (current page.north east) {
-        \CategoryBadge[LinqColor!20]{LINQ}
-      };
-    \end{tikzpicture}
-    Answer \theqcounter: When would you use \texttt{.SelectMany()} instead of \texttt{.Select()}?%
-  }
+  \frametitle{\AnswerTitle[\CategoryBadge[LinqColor!20]{LINQ}]{When would you use \texttt{.SelectMany()} instead of \texttt{.Select()}?}}
   {\footnotesize
   Use \texttt{.SelectMany()} when projecting nested collections and you want to work with their individual elements directly in a flat structure.
   }
