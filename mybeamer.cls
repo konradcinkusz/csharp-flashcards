@@ -93,7 +93,6 @@
 \definecolor{sec22bg}{HTML}{FF9800} % REST & SignalR
 \definecolor{sec23bg}{HTML}{7B1FA2} % AI Tools & LLMs
 \definecolor{sec24bg}{HTML}{E67E22} % Tooling & Agile
-\definecolor{sec25bg}{HTML}{00897B} % gRPC (probe)
 
 \setbeamercolor{sec1}{fg=white,bg=sec1bg}
 \setbeamercolor{sec2}{fg=white,bg=sec2bg}
@@ -119,7 +118,6 @@
 \setbeamercolor{sec22}{fg=white,bg=sec22bg}
 \setbeamercolor{sec23}{fg=white,bg=sec23bg}
 \setbeamercolor{sec24}{fg=white,bg=sec24bg}
-\setbeamercolor{sec25}{fg=white,bg=sec25bg}
 
 \lstset{
   basicstyle=\tiny\ttfamily,
