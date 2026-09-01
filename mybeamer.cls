@@ -3,6 +3,20 @@
 
 \LoadClass{beamer}
 
+% ── Where this deck comes from ──────────────────────────────────────────────
+%
+% Defined once. It used to be written out twice -- in the footline below and in
+% main.tex's Contribute block -- and both copies said CSharp-FlashCards-2025,
+% which is not this repository. Two hardcoded copies is how they drifted from
+% the real name in the first place, so the next rename is a one-line change
+% here rather than a search across the tree.
+%
+% The footline puts this on every page of a 621-page deck, which is the one
+% element whose whole job is telling a reader where the deck came from.
+\newcommand{\RepoSlug}{konradcinkusz/csharp-flashcards}
+\newcommand{\RepoName}{csharp-flashcards}
+\newcommand{\RepoURL}{https://github.com/\RepoSlug}
+
 \setbeamertemplate{navigation symbols}{
   \hyperlink{toc}{\beamerbutton{Contents}}\quad
   \insertslidenavigationsymbol
@@ -13,7 +27,7 @@
   \hbox{%
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=1em,rightskip=1em]{author in head/foot}
       \scriptsize
-      \href{https://github.com/konradcinkusz/CSharp-FlashCards-2025}{\faGithub\;CSharp-FlashCards}
+      \href{\RepoURL}{\faGithub\;\RepoName}
     \end{beamercolorbox}%
   }
 }
