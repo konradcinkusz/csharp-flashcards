@@ -1,0 +1,47 @@
+# gitleaks configuration — csharp-flashcards
+#
+# Runs in two places, deliberately:
+#   • pre-commit hook (scripts/hooks/pre-commit) — catches the mistake before it
+#     becomes history;
+#   • CI job (.github/workflows/secret-scan.yml)  — catches contributors without hooks.
+#
+# REPO-BASELINE.md §2 explains why both halves exist rather than either alone.
+#
+# If a secret ever does land here: ROTATE FIRST, clean history second. This
+# repository is public; a pushed commit is disclosed the moment it is pushed, and
+# scrubbing without rotating is theatre.
+
+title = "csharp-flashcards secret scanning"
+
+[extend]
+# The upstream provider rules (AWS, GitHub, Slack, Stripe, OpenAI, …).
+#
+# This repository adds none of its own, and the reason is worth writing down
+# rather than leaving as an apparent omission: it holds no secrets. It is a
+# LaTeX deck and a build. There is no credential it is *supposed* to have, so
+# there is no variable whose shape a bespoke rule could match.
+#
+# What the upstream set is here for is the plausible accident. 197 of the deck's
+# frames carry code listings, and the deck covers OAuth, Azure, Docker, CI/CD and
+# Terraform — so the realistic failure is an appsettings.json fragment or an `az`
+# command line pasted into a card with a real key still in it, by somebody
+# illustrating a point.
+#
+# The corollary for whoever adds the first real secret: it gets its detection
+# rule in the same commit, because a secret with no rule is a secret nobody will
+# notice leaving.
+useDefault = true
+
+# No [allowlist] section, and that is a finding rather than an oversight. The
+# tree was searched for credential-shaped strings before this file was written —
+# JWTs, base64 blobs, provider key prefixes, and `password=`/`secret=`
+# assignments — and the only hit was
+#
+#     KeyVaultSecret secret = await secretClient.GetSecretAsync("DbPassword");
+#
+# in areas/20-azure.tex, which is a key *name* in a card teaching people to keep
+# the value out of the source. Nothing here needs waving through.
+#
+# When the first false positive appears, allowlist it by PATH with a comment
+# saying why. Never by pasting the real value into a regex: that is how a genuine
+# credential eventually gets waved through by a rule written for a fake one.
