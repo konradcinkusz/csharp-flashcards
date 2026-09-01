@@ -126,13 +126,27 @@ Say you are adding area 25, "gRPC":
 
 **1. The card file** — `areas/25-grpc.tex`, cards only, no preamble.
 
-**2–5. `main.tex`**, four edits:
+**2–5. `main.tex`**, four edits.
+
+The Table of Contents is a **two-column `tabular`**, so where the new button goes
+depends on whether your area number is odd or even. Getting this wrong is a build
+error — `Extra alignment tab has been changed to \cr` — and it is the mistake this
+checklist was written by making:
 
 ```latex
-% with the other \TOCButtonTall entries, in the Table of Contents frame
-\TOCButtonTall{sec25}{sec25}{gRPC} \\[0.6em]
+% ODD area number: starts a new row, and ends it with \\
+    \TOCButtonTall{sec24}{sec24}{Tooling \& Agile} \\[0.6em]
+    \TOCButtonTall{sec25}{sec25}{gRPC} \\[0.6em]
 
-% at the end, with the other sections
+% EVEN area number: completes the previous row, so the entry BEFORE it
+% gains a trailing &
+    \TOCButtonTall{sec25}{sec25}{gRPC} &
+    \TOCButtonTall{sec26}{sec26}{Kafka} \\[0.6em]
+```
+
+Then, at the end of the file with the other sections:
+
+```latex
 \hypertarget{sec25}{}
 \section{gRPC}
 \input{areas/25-grpc}
