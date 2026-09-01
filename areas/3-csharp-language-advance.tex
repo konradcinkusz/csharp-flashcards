@@ -1,6 +1,6 @@
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]{* What is C\#?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]<1>{What is C\#?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language \& Platform}]{* What is C\#?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language \& Platform}]{What is C\#?}}
 
   {\footnotesize
     C\# is a modern, object-oriented language developed by Microsoft as part of the .NET ecosystem. It features strong static typing, garbage collection, LINQ for data queries, async/await for asynchronous programming, and interoperability across different platforms.
@@ -20,9 +20,9 @@ public class HelloWorld
 \end{frame}
 
 % 2 ── Span<T>
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Performance}]{*** What is \texttt{Span<T>}?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Performance}]<3>{What is \texttt{Span<T>}?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[PerfColor!20]{Performance}]{*** What is \texttt{Span<T>}?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[PerfColor!20]{Performance}]{What is \texttt{Span<T>}?}}
 
   {\footnotesize
     \texttt{Span<T>} is a stack-only struct that provides a safe, memory-efficient “window” over contiguous data (arrays, strings, or unmanaged memory) without allocations. It’s ideal for high-performance scenarios like parsing or buffer manipulation because it avoids copying and heap allocations.
@@ -38,9 +38,9 @@ Console.WriteLine(numbers[1]);          // outputs 42
 \end{frame}
 
 % 3 ── Code weaving
-\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]{** What is code weaving in .NET?}
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]<2>{What is code weaving in .NET?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{** What is code weaving in .NET?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{What is code weaving in .NET?}}
 
   {\footnotesize
     Code weaving is a post-compile process where tools (like Fody) inject or modify IL code in assemblies. It’s used for cross-cutting concerns—such as logging, validation, or performance instrumentation—without cluttering source code, though it can make debugging more complex.
@@ -56,9 +56,9 @@ public class Person : INotifyPropertyChanged
 \end{frame}
 
 % 4 ── Cross-cutting concerns
-\QuestionSlide[\CategoryBadge[ArchColor!20]{Architecture}]{** What are cross-cutting concerns?}
+\QuestionSlide[\CategoryBadge[ArchColor!20]{Architecture}]<2>{What are cross-cutting concerns?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[ArchColor!20]{Architecture}]{** What are cross-cutting concerns?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[ArchColor!20]{Architecture}]{What are cross-cutting concerns?}}
 
   {\footnotesize
     Cross-cutting concerns are aspects that span multiple parts of an application—like logging, security, caching, or error handling. Instead of scattering their code everywhere, you centralize them (via middleware, AOP, or source generators) to keep business logic clean and DRY.
@@ -82,9 +82,9 @@ public class LoggingMiddleware
 \end{frame}
 
 % 5 ── Source generators
-\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]{*** What are source generators?}
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]<3>{What are source generators?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{*** What are source generators?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{What are source generators?}}
 
   {\footnotesize
     Source generators run at compile time to analyze your code and produce new C\# files. They eliminate reflection and boilerplate by generating optimized code—ideal for scenarios like JSON serializers, dependency injection makers, or performance-critical scaffolding.
@@ -110,9 +110,9 @@ public class HelloWorldGenerator : ISourceGenerator
 \end{frame}
 
 % 6 ── Expression trees
-\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]{*** What are expression trees?}
+\QuestionSlide[\CategoryBadge[MetaColor!20]{Metaprogramming}]<3>{What are expression trees?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{*** What are expression trees?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MetaColor!20]{Metaprogramming}]{What are expression trees?}}
 
   {\footnotesize
     Expression trees represent code as a data structure (e.g.\ \texttt{Expression<Func<T,bool>>}). LINQ providers use them to translate C\# lambda expressions into SQL, JSON queries, or other domain-specific languages.

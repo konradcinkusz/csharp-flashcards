@@ -1,5 +1,5 @@
 % 1 ── What is a thread?
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is a thread?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{What is a thread?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is a thread?}}
@@ -18,7 +18,7 @@ t.Join();
 \end{frame}
 
 % 2 ── Synchronous vs asynchronous code
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is the difference between synchronous and asynchronous code?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{What is the difference between synchronous and asynchronous code?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is the difference between synchronous and asynchronous code?}}
@@ -35,7 +35,7 @@ await Task.Delay(1000);       // asynchronous pause
 \end{frame}
 
 % 3 ── Task basics
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is a \texttt{Task}?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{What is a \texttt{Task}?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is a \texttt{Task}?}}
@@ -52,7 +52,7 @@ int result = await work;
 \end{frame}
 
 % 4 ── The \texttt{async} keyword
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What does the \texttt{async} keyword do?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{What does the \texttt{async} keyword do?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What does the \texttt{async} keyword do?}}
@@ -72,7 +72,7 @@ public async Task<int> GetValueAsync()
 \end{frame}
 
 % 5 ── The \texttt{await} keyword
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What does the \texttt{await} keyword do?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{What does the \texttt{await} keyword do?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What does the \texttt{await} keyword do?}}
@@ -89,7 +89,7 @@ Console.WriteLine("Done");
 \end{frame}
 
 % 6 ── Forgetting to await
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What happens if you forget to \texttt{await} an async method?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{What happens if you forget to \texttt{await} an async method?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What happens if you forget to \texttt{await} an async method?}}
@@ -113,7 +113,7 @@ public void Main()
 \end{frame}
 
 % 7 ── Does async always make code faster?
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** Does async always make code faster?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{Does async always make code faster?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{Does async always make code faster?}}
@@ -136,7 +136,7 @@ public async Task FetchDataAsync()
 \end{frame}
 
 % 8 ── Why use async in different app types?
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** Why use async in console, desktop, and web apps?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{Why use async in console, desktop, and web apps?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{Why use async in console, desktop, and web apps?}}
@@ -160,7 +160,7 @@ public static async Task Main()
 \end{frame}
 
 % 9 ── Async vs multithreading
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What's the difference between async and multithreading?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{What's the difference between async and multithreading?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between async and multithreading?}}
@@ -183,7 +183,7 @@ public Task<int> HeavyWork() =>
 \end{frame}
 
 % 10 ── Thread-pool basics
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What is the .NET Thread Pool?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{What is the .NET Thread Pool?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is the .NET Thread Pool?}}
@@ -200,7 +200,7 @@ Task.Run(() =>
 \end{frame}
 
 % 11 ── Task.Run vs Thread
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** What's the difference between \texttt{Task.Run} and \texttt{Thread}?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{What's the difference between \texttt{Task.Run} and \texttt{Thread}?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between \texttt{Task.Run} and \texttt{Thread}?}}
@@ -222,7 +222,7 @@ t.Start();
 \end{frame}
 
 % 12 ── When to use Task.Run
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** When should you use \texttt{Task.Run}?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{When should you use \texttt{Task.Run}?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{When should you use \texttt{Task.Run}?}}
@@ -240,7 +240,7 @@ int result = await Task.Run(() =>
 \end{frame}
 
 % 13 ── Sync vs async endpoint
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{** Which is faster: a synchronous or asynchronous endpoint? Why?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<2>{Which is faster: a synchronous or asynchronous endpoint? Why?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{Which is faster: a synchronous or asynchronous endpoint? Why?}}
@@ -261,7 +261,7 @@ public async Task<string> GetDataAsync() =>
 \end{frame}
 
 % 14 ── Deadlocks from sync-over-async
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** How can synchronous code calling asynchronous methods cause deadlocks?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{How can synchronous code calling asynchronous methods cause deadlocks?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{How can synchronous code calling asynchronous methods cause deadlocks?}}
@@ -287,7 +287,7 @@ public void Main()
 \end{frame}
 
 % 15 ── Exception flow in async methods
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** How do exceptions flow in async methods?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{How do exceptions flow in async methods?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{How do exceptions flow in async methods?}}
@@ -320,7 +320,7 @@ public async Task DemoAsync()
 \end{frame}
 
 % 16 ── Async void pitfalls
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** Why is \texttt{async void} usually a bad idea?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{Why is \texttt{async void} usually a bad idea?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{Why is \texttt{async void} usually a bad idea?}}
@@ -345,7 +345,7 @@ public async Task OnClickAsync()
 \end{frame}
 
 % 17 ── ConfigureAwait(false)
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** When and why should you use \texttt{ConfigureAwait(false)} in async methods?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{When and why should you use \texttt{ConfigureAwait(false)} in async methods?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{When and why should you use \texttt{ConfigureAwait(false)} in async methods?}}
@@ -366,7 +366,7 @@ public async Task<string> GetContentAsync()
 \end{frame}
 
 % 18 ── Parallel.ForEach vs Task.WhenAll
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What's the difference between \texttt{Parallel.ForEach()} and \texttt{Task.WhenAll()}?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{What's the difference between \texttt{Parallel.ForEach()} and \texttt{Task.WhenAll()}?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between \texttt{Parallel.ForEach()} and \texttt{Task.WhenAll()}?}}
@@ -387,7 +387,7 @@ await Task.WhenAll(tasks);
 \end{frame}
 
 % 19 ── Cancellation tokens
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** How do you correctly implement cancellation in asynchronous methods?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{How do you correctly implement cancellation in asynchronous methods?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{How do you correctly implement cancellation in asynchronous methods?}}
@@ -411,7 +411,7 @@ public async Task DownloadAsync(string url, CancellationToken token)
 \end{frame}
 
 % 20 ── Async streams
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What are async streams (\texttt{IAsyncEnumerable<T>})?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{What are async streams (\texttt{IAsyncEnumerable<T>})?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What are async streams (\texttt{IAsyncEnumerable<T>})?}}
@@ -440,7 +440,7 @@ public async Task ConsumeAsync()
 \end{frame}
 
 % 21 ── IAsyncEnumerable<T> vs Task<IEnumerable<T>>
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What's the difference between returning \texttt{IAsyncEnumerable<T>} and \texttt{Task<IEnumerable<T>>}?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{What's the difference between returning \texttt{IAsyncEnumerable<T>} and \texttt{Task<IEnumerable<T>>}?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between returning \texttt{IAsyncEnumerable<T>} and \texttt{Task<IEnumerable<T>>}?}}
@@ -465,7 +465,7 @@ public async IAsyncEnumerable<int> GetStreamAsync()
 \end{frame}
 
 % 22 ── Task vs ValueTask
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What's the difference between \texttt{Task} and \texttt{ValueTask}?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{What's the difference between \texttt{Task} and \texttt{ValueTask}?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What's the difference between \texttt{Task} and \texttt{ValueTask}?}}
@@ -485,7 +485,7 @@ public ValueTask<int> GetCachedValueAsync(bool cached)
 \end{frame}
 
 % 23 ── SynchronizationContext
-\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]{*** What is the \texttt{SynchronizationContext} and why does it matter?}
+\QuestionSlide[\CategoryBadge[PerfColor!20]{Async \& Threading}]<3>{What is the \texttt{SynchronizationContext} and why does it matter?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{C\#} \CategoryBadge[PerfColor!20]{Async \& Threading}]{What is the \texttt{SynchronizationContext} and why does it matter?}}

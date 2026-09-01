@@ -1,7 +1,7 @@
 % ASP.NET Core section
 
 % 1 – What is ASP.NET Core?
-\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{* What is ASP.NET Core?}
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]<1>{What is ASP.NET Core?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{What is ASP.NET Core?}}
@@ -12,7 +12,7 @@
 \end{frame}
 
 % 2 – Middleware Pipeline
-\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What is the ASP.NET Core middleware pipeline?}
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]<2>{What is the ASP.NET Core middleware pipeline?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{What is the middleware pipeline?}}
@@ -35,7 +35,7 @@ app.Run();
 \end{frame}
 
 % 3 – DI Lifetimes
-\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What are the three DI service lifetimes in ASP.NET Core?}
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]<2>{What are the three DI service lifetimes in ASP.NET Core?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{What are the three DI lifetimes?}}
@@ -57,7 +57,7 @@ builder.Services.AddSingleton<IExchangeRateCache, ExchangeRateCache>();
 \end{frame}
 
 % 4 – Minimal APIs
-\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What are Minimal APIs in ASP.NET Core?}
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]<2>{What are Minimal APIs in ASP.NET Core?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{What are Minimal APIs?}}
@@ -83,7 +83,7 @@ app.Run();
 \end{frame}
 
 % 5 – Action Filters
-\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What are Action Filters in ASP.NET Core MVC?}
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]<2>{What are Action Filters in ASP.NET Core MVC?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{What are Action Filters?}}
@@ -109,7 +109,7 @@ public class OrdersController : ControllerBase { }
 \end{frame}
 
 % 6 – Output Caching
-\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What is Output Caching in ASP.NET Core 7+?}
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]<2>{What is Output Caching in ASP.NET Core 7+?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{What is Output Caching?}}
@@ -131,7 +131,7 @@ app.MapGet("/products", GetProducts).CacheOutput("products");
 \end{frame}
 
 % 7 – Health Checks
-\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{** What are Health Checks in ASP.NET Core?}
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]<2>{What are Health Checks in ASP.NET Core?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{What are Health Checks?}}
@@ -153,7 +153,7 @@ app.MapHealthChecks("/health");
 \end{frame}
 
 % 8 – Options Pattern
-\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{* What is the Options pattern in ASP.NET Core?}
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]<1>{What is the Options pattern in ASP.NET Core?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{What is the Options pattern?}}
@@ -181,7 +181,7 @@ public class Mailer(IOptions<EmailOptions> opts)
 \end{frame}
 
 % 9 – Rate Limiting
-\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{*** What is Rate Limiting middleware in ASP.NET Core 7+?}
+\QuestionSlide[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]<3>{What is Rate Limiting middleware in ASP.NET Core 7+?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AspNetColor!20]{ASP.NET Core}]{What is Rate Limiting middleware?}}

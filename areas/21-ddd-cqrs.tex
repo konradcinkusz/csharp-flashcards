@@ -1,7 +1,7 @@
 % Domain-Driven Design & CQRS section
 
 % 1 – What is DDD?
-\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{* What is Domain-Driven Design (DDD)?}
+\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]<1>{What is Domain-Driven Design (DDD)?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is Domain-Driven Design?}}
@@ -12,7 +12,7 @@
 \end{frame}
 
 % 2 – Bounded Context
-\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What is a Bounded Context in DDD?}
+\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]<2>{What is a Bounded Context in DDD?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is a Bounded Context?}}
@@ -23,7 +23,7 @@
 \end{frame}
 
 % 3 – Aggregate
-\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What is an Aggregate in DDD?}
+\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]<2>{What is an Aggregate in DDD?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is an Aggregate?}}
@@ -49,7 +49,7 @@ public class Order : AggregateRoot  // root entity
 \end{frame}
 
 % 4 – Value Object
-\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{* What is a Value Object in DDD?}
+\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]<1>{What is a Value Object in DDD?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is a Value Object?}}
@@ -76,7 +76,7 @@ var total = price.Add(tax);  // new Money(10.79m, "USD")
 \end{frame}
 
 % 5 – Domain Events
-\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What are Domain Events?}
+\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]<2>{What are Domain Events?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What are Domain Events?}}
@@ -101,7 +101,7 @@ public class SendOrderConfirmation(IEmailService email)
 \end{frame}
 
 % 6 – CQRS
-\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What is CQRS?}
+\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]<2>{What is CQRS?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is CQRS?}}
@@ -126,7 +126,7 @@ OrderSummaryDto dto = await _mediator.Send(new GetOrderSummaryQuery(id));
 \end{frame}
 
 % 7 – MediatR
-\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{** What is MediatR and how does it support CQRS in .NET?}
+\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]<2>{What is MediatR and how does it support CQRS in .NET?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is MediatR?}}
@@ -151,7 +151,7 @@ public class ValidationBehaviour<TReq, TRes>(IEnumerable<IValidator<TReq>> valid
 \end{frame}
 
 % 8 – Event Sourcing
-\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{*** What is Event Sourcing?}
+\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]<3>{What is Event Sourcing?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is Event Sourcing?}}
@@ -183,7 +183,7 @@ public class Order
 \end{frame}
 
 % 9 – Saga / Process Manager
-\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{*** What is the Saga pattern in distributed systems?}
+\QuestionSlide[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]<3>{What is the Saga pattern in distributed systems?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[DDDColor!20]{DDD \& CQRS}]{What is the Saga pattern?}}

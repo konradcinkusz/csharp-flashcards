@@ -1,8 +1,7 @@
 % 1 ── What is C#?
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]
-  {* What is C\#?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]<1>{What is C\#?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language \& Platform}]{* What is C\#?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language \& Platform}]{What is C\#?}}
 
   {\footnotesize
     C\# is a modern, object-oriented programming language developed by Microsoft as part of the .NET platform. It supports strong static typing, garbage collection, LINQ for data queries, async/await for asynchronous programming, and deep integration with the .NET ecosystem.
@@ -10,10 +9,9 @@
 \end{frame}
 
 % 2 ── What is the .NET Framework?
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]
-  {* What is the .NET Framework?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]<1>{What is the .NET Framework?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language \& Platform}]{* What is the .NET Framework?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language \& Platform}]{What is the .NET Framework?}}
 
   {\footnotesize
     The .NET Framework is Microsoft’s original managed runtime for Windows applications. It includes the Common Language Runtime (CLR), a comprehensive base class library, and development tools for building desktop and server applications.
@@ -21,10 +19,9 @@
 \end{frame}
 
 % 3 ── What is the CLR?
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]
-  {* What is the Common Language Runtime (CLR)?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language \& Platform}]<1>{What is the Common Language Runtime (CLR)?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language \& Platform}]{* What is the Common Language Runtime (CLR)?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language \& Platform}]{What is the Common Language Runtime (CLR)?}}
 
   {\footnotesize
     The CLR is the execution engine for .NET applications. It loads and runs IL code, performing JIT compilation, garbage collection, security checks, exception handling, and interoperability with unmanaged code.
@@ -32,10 +29,9 @@
 \end{frame}
 
 % 4 ── What is the CTS?
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {* What is the Common Type System (CTS)?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<1>{What is the Common Type System (CTS)?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{* What is the Common Type System (CTS)?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{What is the Common Type System (CTS)?}}
 
   {\footnotesize
     The CTS defines all data types and programming constructs supported by the CLR. It ensures that objects written in different .NET languages can interoperate safely by adhering to a common type specification.
@@ -43,10 +39,9 @@
 \end{frame}
 
 % 5 ── What is the CLS?
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {* What is the Common Language Specification (CLS)?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<1>{What is the Common Language Specification (CLS)?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{* What is the Common Language Specification (CLS)?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{What is the Common Language Specification (CLS)?}}
 
   {\footnotesize
     The CLS is a subset of the CTS that defines rules and conventions (naming, visibility, type usage) which all .NET languages must follow to guarantee interoperability.
@@ -54,10 +49,9 @@
 \end{frame}
 
 % 6 ── What is an immutable object?
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {* What does it mean that an object is immutable?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<1>{What does it mean that an object is immutable?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{* What does it mean that an object is immutable?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{What does it mean that an object is immutable?}}
 
   {\footnotesize
     An \textbf{immutable object} cannot change state after construction. All its fields are set once (typically via constructor) with no setters exposed, making instances inherently thread-safe and predictable.
@@ -80,10 +74,9 @@ public class ImmutableUser
 \end{frame}
 
 % 7 ── Stack vs Heap
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {** What is stack vs heap allocation?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<2>{What is stack vs heap allocation?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{** What is stack vs heap allocation?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{What is stack vs heap allocation?}}
 
   {\footnotesize
     The stack is a fast LIFO region for value types and local method data. The heap is a managed region for reference types and objects whose lifetimes are controlled by the garbage collector.
@@ -97,10 +90,9 @@ Person p = new Person(); // reference on stack, object on heap
 \end{frame}
 
 % 8 ── Which types go where?
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {** Which types go on the stack vs the heap?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<2>{Which types go on the stack vs the heap?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{** Which types go on the stack vs the heap?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{Which types go on the stack vs the heap?}}
 
   {\footnotesize
     \begin{itemize}
@@ -121,10 +113,9 @@ void Method()
 \end{frame}
 
 % 9 ── Why is stack faster?
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {** Why is stack allocation faster than heap?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<2>{Why is stack allocation faster than heap?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{** Why is stack allocation faster than heap?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{Why is stack allocation faster than heap?}}
 
   {\footnotesize
     Stack allocation is a simple pointer bump (push/pop). Heap allocation involves complex bookkeeping, fragmentation, and later garbage collection.
@@ -140,10 +131,9 @@ void DoWork()
 \end{frame}
 
 % 10 ── Can structs be on the heap?
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {** Can structs be on the heap?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<2>{Can structs be on the heap?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{** Can structs be on the heap?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{Can structs be on the heap?}}
 
   {\footnotesize
     Yes. When a struct is a field of a class or captured by a lambda, it’s stored on the heap as part of that object’s memory.
@@ -158,10 +148,9 @@ var c = new Container(); // Container and its Point live on the heap
 \end{frame}
 
 % 11 ── Where is a struct allocated?
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {** Where is a struct instance allocated—stack or heap?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<2>{Where is a struct instance allocated—stack or heap?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{** Where is a struct instance allocated—stack or heap?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{Where is a struct instance allocated—stack or heap?}}
 
   {\footnotesize
     Allocation depends on context:
@@ -187,10 +176,9 @@ class Garage
 \end{frame}
 
 % 12 ── Can structs store class types?
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {** What type can be inside a struct—can struct store a class type?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<2>{What type can be inside a struct—can struct store a class type?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{** What type can be inside a struct—can struct store a class type?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{What type can be inside a struct—can struct store a class type?}}
 
   {\footnotesize
     Structs can contain any field type, including reference types (classes). The struct remains a value type but holds references to heap-allocated objects.
@@ -209,10 +197,9 @@ struct Car
 \end{frame}
 
 % 13 ── Value vs Reference types
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {** What are value types and reference types?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<2>{What are value types and reference types?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{** What are value types and reference types?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{What are value types and reference types?}}
 
   {\footnotesize
     \begin{itemize}
@@ -223,10 +210,9 @@ struct Car
 \end{frame}
 
 % 14 ── Boxing and Unboxing
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {** What is boxing and unboxing?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<2>{What is boxing and unboxing?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{** What is boxing and unboxing?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{What is boxing and unboxing?}}
 
   {\footnotesize
     Boxing wraps a value type into an \texttt{object} (heap allocation). Unboxing extracts the value type from the \texttt{object}. Both incur performance overhead.
@@ -240,10 +226,9 @@ int unboxed = (int)boxed;  // unboxing
 \end{frame}
 
 % 15 ── Classes vs Structs
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
-  {** What are classes and structs?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]<2>{What are classes and structs?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{** What are classes and structs?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{What are classes and structs?}}
 
   {\footnotesize
     \begin{itemize}
@@ -254,10 +239,9 @@ int unboxed = (int)boxed;  // unboxing
 \end{frame}
 
 % 16 ── Interfaces
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
-  {** What are interfaces?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]<2>{What are interfaces?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{** What are interfaces?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{What are interfaces?}}
 
   {\footnotesize
     Interfaces declare method and property contracts without implementation. Classes or structs implement them to ensure specific behaviors.
@@ -265,10 +249,9 @@ int unboxed = (int)boxed;  // unboxing
 \end{frame}
 
 % 17 ── Abstract Classes
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
-  {** What are abstract classes?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]<2>{What are abstract classes?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{** What are abstract classes?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{What are abstract classes?}}
 
   {\footnotesize
     Abstract classes can define both abstract (no body) and concrete members. They cannot be instantiated directly and serve as base types for derived classes.
@@ -276,10 +259,9 @@ int unboxed = (int)boxed;  // unboxing
 \end{frame}
 
 % 18 ── Properties
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
-  {** What are properties?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]<2>{What are properties?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{** What are properties?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{What are properties?}}
 
   {\footnotesize
     Properties encapsulate fields with \texttt{get}/\texttt{set} accessors, enabling validation, lazy loading, and encapsulation while preserving field-like syntax.
@@ -287,10 +269,9 @@ int unboxed = (int)boxed;  // unboxing
 \end{frame}
 
 % 19 ── Indexers
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
-  {** What are indexers?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]<2>{What are indexers?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{** What are indexers?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{What are indexers?}}
 
   {\footnotesize
     Indexers allow objects to be accessed like arrays via the \texttt{this[]} syntax, routing get/set through custom logic.
@@ -315,10 +296,9 @@ Console.WriteLine(book[1]); // Alice
 \end{frame}
 
 % 20 ── Methods & Overloading
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
-  {** What are methods and method overloading?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]<2>{What are methods and method overloading?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{** What are methods and method overloading?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{What are methods and method overloading?}}
 
   {\footnotesize
     Methods encapsulate behavior. Overloading lets you define multiple methods with the same name but different parameter lists or signatures.
@@ -326,10 +306,9 @@ Console.WriteLine(book[1]); // Alice
 \end{frame}
 
 % 21 ── Constructors & Destructors
-\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]
-  {** What are constructors and destructors?}
+\QuestionSlide[\CategoryBadge[OOPColor!20]{Language Basics}]<2>{What are constructors and destructors?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{** What are constructors and destructors?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[OOPColor!20]{Language Basics}]{What are constructors and destructors?}}
 
   {\footnotesize
     \begin{itemize}
@@ -340,10 +319,9 @@ Console.WriteLine(book[1]); // Alice
 \end{frame}
 
 % 22 ── Garbage Collection
-\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]
-  {** What is garbage collection?}
+\QuestionSlide[\CategoryBadge[MemoryColor!20]{Types \& Memory}]<2>{What is garbage collection?}
 \begin{frame}[fragile]
-  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{** What is garbage collection?}}
+  \frametitle{\AnswerTitle[\CategoryBadge[MemoryColor!20]{Types \& Memory}]{What is garbage collection?}}
 
   {\footnotesize
     Garbage collection is the CLR’s automatic memory management. It periodically identifies unreachable objects and reclaims their memory, preventing leaks and reducing the need for manual deallocation.

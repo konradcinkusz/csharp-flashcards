@@ -2,7 +2,7 @@
 % Covers Microsoft.Extensions.AI, Semantic Kernel, RAG, Vector Stores, Agents
 
 % 1 – Microsoft.Extensions.AI
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is Microsoft.Extensions.AI?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<2>{What is Microsoft.Extensions.AI?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is Microsoft.Extensions.AI?}}
@@ -29,7 +29,7 @@ public class MyService(IChatClient chat)
 \end{frame}
 
 % 2 – IChatClient
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is IChatClient?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<2>{What is IChatClient?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is IChatClient?}}
@@ -56,7 +56,7 @@ await foreach (var chunk in client.CompleteStreamingAsync("Tell a joke"))
 \end{frame}
 
 % 3 – IEmbeddingGenerator
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is IEmbeddingGenerator?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<2>{What is IEmbeddingGenerator?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is IEmbeddingGenerator?}}
@@ -81,7 +81,7 @@ Console.WriteLine($"Dimensions: {vec.Length}"); // 1536
 \end{frame}
 
 % 4 – Semantic Kernel
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is Semantic Kernel?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<2>{What is Semantic Kernel?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is Semantic Kernel?}}
@@ -110,7 +110,7 @@ Console.WriteLine(result);
 \end{frame}
 
 % 5 – Semantic Kernel Plugins
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What are Semantic Kernel Plugins?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<2>{What are Semantic Kernel Plugins?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What are Semantic Kernel Plugins?}}
@@ -140,7 +140,7 @@ var result = await kernel.InvokePromptAsync(
 \end{frame}
 
 % 6 – Semantic Kernel Agents
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{*** What are Semantic Kernel Agents?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<3>{What are Semantic Kernel Agents?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What are Semantic Kernel Agents?}}
@@ -173,7 +173,7 @@ await foreach (var msg in chat.InvokeAsync())
 \end{frame}
 
 % 7 – RAG
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is RAG (Retrieval-Augmented Generation)?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<2>{What is RAG (Retrieval-Augmented Generation)?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is RAG?}}
@@ -201,7 +201,7 @@ var answer = await chat.CompleteAsync(
 \end{frame}
 
 % 8 – IVectorStore
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{*** What is IVectorStore in .NET AI?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<3>{What is IVectorStore in .NET AI?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is IVectorStore in .NET AI?}}
@@ -234,7 +234,7 @@ await coll.UpsertAsync(new DocRecord { Id = "1", Text = "Hi", Embedding = vec })
 \end{frame}
 
 % 9 – Kernel object
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{** What is the Semantic Kernel Kernel object?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<2>{What is the Semantic Kernel Kernel object?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is the Semantic Kernel Kernel object?}}
@@ -264,7 +264,7 @@ Console.WriteLine(time.GetValue<string>());
 \end{frame}
 
 % 10 – AI middleware pipeline
-\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]{*** What is AI middleware in Microsoft.Extensions.AI?}
+\QuestionSlide[\CategoryBadge[AIColor!20]{AI \& .NET}]<3>{What is AI middleware in Microsoft.Extensions.AI?}
 
 \begin{frame}[fragile]
   \frametitle{\AnswerTitle[\CategoryBadge[AIColor!20]{AI \& .NET}]{What is AI middleware in Microsoft.Extensions.AI?}}
