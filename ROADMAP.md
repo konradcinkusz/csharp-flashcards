@@ -10,6 +10,12 @@ the work.
 
 Tracking issue: **#30**. It hosts the running log and the decision log.
 
+> **Status: complete.** All four phases and all 17 issues were delivered on
+> 2026-09-01, in 18 pull requests, with no force-merges and no skipped issues.
+> The measurements in §1 are the state this repository started from and are kept
+> as the historical record; §2 records what each phase closed. The execution
+> policy in §6 and the protected paths in §5 remain live for future work.
+
 ---
 
 ## 1. What "complete" means
@@ -44,8 +50,8 @@ Measured on `main` at `d3333e4`, not assumed:
 | Tags / releases | **0** — `ci.yml` triggers on `v*` only, so it has never run |
 | Workflows triggered by `pull_request` | **0** |
 | Uses of `\AnswerSlide`, the macro `mybeamer.sty` defines for answers | **0** |
-| Badge-overlay boilerplate in `areas/` | 1,122 of 7,617 lines (15%) |
-| Cards whose question text begins with a literal `*` | 188 of 195 parsed; 7 unrated |
+| Badge-overlay boilerplate in `areas/` | 1,926 of 7,554 lines (26%) — the figure first recorded here was 1,122, from a grep matching only one of the two spellings the overlay had drifted into; #17 measured the real total when it removed them |
+| Cards whose question text begins with a literal `*` | 261 of 269; 8 unrated. The figure first recorded here was "188 of 195 parsed", because the parser could not read a call whose arguments were separated by a comment |
 | `.gitignore` patterns dead to inline comments | 3 |
 | Landing page card claim vs. actual | "300+" vs 269 |
 | Baseline files present | **0 of 6** |
@@ -54,12 +60,12 @@ Measured on `main` at `d3333e4`, not assumed:
 
 ## 2. Phases
 
-| Phase | Label | Due | Issues | Goal |
-|---|---|---|---|---|
-| 1 — The build is real | `phase-1-build` | 2026-09-15 | #13, #14, #15 | The deck compiles on every PR, and a reader can obtain the PDF |
-| 2 — One authoring convention | `phase-2-authoring` | 2026-09-29 | #16, #17, #18, #19 | Cards are written one way, and CI enforces it |
-| 3 — Claims match the deck | `phase-3-claims` | 2026-10-13 | #20, #21, #22 | Nothing the repository says about itself is false |
-| 4 — Repo baseline | `phase-4-baseline` | 2026-10-27 | #23, #24, #25, #26, #27, #28, #29 | The estate baseline, applied and declared |
+| Phase | Label | Due | Issues | Goal | Status |
+|---|---|---|---|---|---|
+| 1 — The build is real | `phase-1-build` | 2026-09-15 | #13, #14, #15 | The deck compiles on every PR, and a reader can obtain the PDF | ✅ closed |
+| 2 — One authoring convention | `phase-2-authoring` | 2026-09-29 | #16, #17, #18, #19 | Cards are written one way, and CI enforces it | ✅ closed |
+| 3 — Claims match the deck | `phase-3-claims` | 2026-10-13 | #20, #21, #22 | Nothing the repository says about itself is false | ✅ closed |
+| 4 — Repo baseline | `phase-4-baseline` | 2026-10-27 | #23, #24, #25, #26, #27, #28, #29 | The estate baseline, applied and declared | ✅ closed |
 
 Phases are represented by the `phase-*` labels above rather than by GitHub
 milestones — see §7.
@@ -133,8 +139,8 @@ Files whose breakage compromises **every later PR**, not just their own:
 | `mybeamer.cls` | Loads every package and defines every section colour |
 | `mybeamer.sty` | Defines `\QuestionSlide` / `\AnswerSlide`; after Phase 2 every one of 269 cards depends on it |
 | `.github/workflows/**` | The build itself |
-| `scripts/lint-cards.py` | *(from #19)* A broken validator turns every later PR into three-retries-and-force-merge |
-| `.gitleaks.toml`, `scripts/hooks/pre-commit` | *(from #25)* A scanner that passes vacuously is worse than none |
+| `scripts/lint-cards.py` | A broken validator turns every later PR into three-retries-and-force-merge |
+| `.gitleaks.toml`, `scripts/hooks/pre-commit` | A scanner that passes vacuously is worse than none |
 
 `areas/*.tex` are deliberately **not** protected. A LaTeX error in one card does
 break the build, but it is contained, obvious, and named by the compiler. A
