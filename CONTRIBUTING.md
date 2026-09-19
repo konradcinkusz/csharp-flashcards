@@ -169,9 +169,39 @@ against the deck. It will tell you exactly which number is wrong.
 
 ---
 
+## The deck also compiles to a content bundle
+
+[ab-ovo](https://github.com/konradcinkusz/ab-ove) is a learning platform that reads
+content bundles, and this deck is one of its tracks. The deck stays the source; what
+crosses is JSON:
+
+```bash
+python3 scripts/compile-bundle.py            # rebuild bundle/csharp-flashcards.bundle.json
+python3 scripts/compile-bundle.py --check    # what CI runs; writes nothing
+```
+
+**Run it in the same commit as a card change.** The bundle is committed and derived, and
+CI fails when the two disagree — which is also the only thing standing between a corrected
+card and a platform still serving the old wording.
+
+Two things the compiler will tell you about, and both are worth knowing before you meet
+them:
+
+- **A macro it does not know fails the run**, with the file and the line. That is
+  deliberate: the alternative is a reader meeting a stray backslash on a web page. Teach
+  `scripts/compile-bundle.py` what the macro means, in the same pull request.
+- **A card whose answer is a diagram and nothing else cannot cross at all.** There is one,
+  it is named in the compiler's `CANNOT_CROSS` with its reason, and that list is checked in
+  both directions.
+
+[`bundle/README.md`](bundle/README.md) has the rest: what the tag is, and what a `tabular`
+and a difficulty rating turn into.
+
+---
+
 ## What CI checks
 
-Two workflows run on every pull request.
+Three workflows run on every pull request.
 
 **Card conventions** (~4 seconds) — `scripts/lint-cards.py`. Runs first and gates
 the compile, so a convention mistake costs seconds rather than a three-minute
@@ -189,7 +219,11 @@ reports the page count and byte size to the run summary. If it fails, the summar
 names the two commonest causes and the log's first line beginning with `!` is the
 real error.
 
-A third, **gitleaks**, scans full history on every push and weekly.
+**Content bundle** (~2 seconds) — `scripts/compile-bundle.py --check`. Recompiles the
+deck and fails if the result differs from the committed `bundle/csharp-flashcards.bundle.json`,
+so a card edited without a rebuild is a red tick rather than a stale bundle.
+
+A fourth, **gitleaks**, scans full history on every push and weekly.
 
 Every one of those checks was verified by introducing the defect and watching it
 fail. If you add a check, do the same — a check nobody has watched fail is not

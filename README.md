@@ -65,13 +65,36 @@ Prefer a browser? Import the repo into Overleaf and press *Re-compile* – Overl
 │   ├── 22-rest-signalr.tex
 │   ├── 23-ai-tools-llms.tex
 │   └── 24-tooling-agile.tex
+├── bundle/            # derived: the deck as an ab-ovo content bundle
 ├── main.tex
 ├── mybeamer.cls / mybeamer.sty
+├── scripts/
+│   ├── lint-cards.py      # the card conventions CI enforces
+│   └── compile-bundle.py  # areas/*.tex -> bundle/csharp-flashcards.bundle.json
 └── .github/workflows/
-    ├── build.yml      # compiles main.tex on every push and PR
+    ├── build.yml      # card lint, bundle check and main.tex, on every push and PR
     ├── ci.yml         # builds and publishes the release PDF
     └── pages.yml      # deploys docs/ to GitHub Pages
 ```
+
+---
+
+## The deck as a content bundle
+
+The same cards also compile to a JSON **content bundle** for
+[ab-ovo](https://github.com/konradcinkusz/ab-ove), a learning platform that reads bundles
+against a schema it owns. ab-ovo never parses LaTeX, so the normalisation happens here —
+in the repository that knows this dialect — and what crosses the boundary is
+[`bundle/csharp-flashcards.bundle.json`](bundle/csharp-flashcards.bundle.json).
+
+```bash
+python3 scripts/compile-bundle.py            # rebuild the bundle after changing a card
+python3 scripts/compile-bundle.py --check    # what CI runs; writes nothing
+```
+
+The bundle is **derived and committed**, and CI proves the two agree on every pull request.
+Read [`bundle/README.md`](bundle/README.md) before editing it — the short version is: don't,
+edit the card and recompile.
 
 ---
 
@@ -97,7 +120,9 @@ The short version:
 
 1. **Fork** → create a feature branch, and run `./scripts/install-hooks.sh` once.
 2. Add or edit an `areas/*.tex` file, or improve the Beamer style.
-3. Run `python3 scripts/lint-cards.py` — the same command CI runs.
+3. Run `python3 scripts/lint-cards.py` and `python3 scripts/compile-bundle.py` — the
+   same commands CI runs, and the second one rebuilds the content bundle that a card
+   change makes stale.
 4. Open a **Pull Request**. CI compiles `main.tex` on every pull request; if the
    deck fails to build, the run's summary names the LaTeX error and the file it is in.
 
