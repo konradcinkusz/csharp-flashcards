@@ -58,6 +58,26 @@ jobs:
       - name: Lint the cards
         run: python3 scripts/lint-cards.py
 
+  bundle:
+    name: Content bundle
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # bundle/csharp-flashcards.bundle.json is committed and derived, which is only safe
+    # while something proves the two agree. This is that something: it recompiles the deck
+    # and fails if the result differs from the committed file, so a card edited without a
+    # rebuild -- or a bundle edited by hand -- is a red tick rather than a platform serving
+    # text this repository no longer contains.
+    #
+    # Its own name on the pull request, beside the card conventions and the compile, because
+    # "the bundle is stale" and "the deck does not build" need different fixes.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: The committed bundle is what the deck compiles to
+        run: python3 scripts/compile-bundle.py --check
+
   build:
     name: Compile main.tex
     needs: lint
