@@ -85,7 +85,9 @@ The same cards also compile to a JSON **content bundle** for
 [ab-ovo](https://github.com/konradcinkusz/ab-ove), a learning platform that reads bundles
 against a schema it owns. ab-ovo never parses LaTeX, so the normalisation happens here —
 in the repository that knows this dialect — and what crosses the boundary is
-[`bundle/csharp-flashcards.bundle.json`](bundle/csharp-flashcards.bundle.json).
+[`bundle/csharp-flashcards.bundle.json`](bundle/csharp-flashcards.bundle.json), whose
+bodies are **Markdown**: code listings become fenced blocks, `tabular` becomes a GFM table
+and `\item` becomes a list.
 
 ```bash
 python3 scripts/compile-bundle.py            # rebuild the bundle after changing a card

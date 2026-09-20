@@ -184,6 +184,12 @@ python3 scripts/compile-bundle.py --check    # what CI runs; writes nothing
 CI fails when the two disagree — which is also the only thing standing between a corrected
 card and a platform still serving the old wording.
 
+**What you write comes out as Markdown.** `\texttt{X}` becomes `` `X` ``, `\textbf{X}`
+becomes `**X**`, a `minted` block becomes a ```` ```csharp ```` fence, a `tabular` becomes a
+GFM table and `\item` becomes a bullet — because ab-ovo renders bodies as Markdown through
+a closed allow-list of token kinds. You do not have to do anything differently; this is what
+the existing conventions already compile to.
+
 Two things the compiler will tell you about, and both are worth knowing before you meet
 them:
 
@@ -194,8 +200,8 @@ them:
   it is named in the compiler's `CANNOT_CROSS` with its reason, and that list is checked in
   both directions.
 
-[`bundle/README.md`](bundle/README.md) has the rest: what the tag is, and what a `tabular`
-and a difficulty rating turn into.
+[`bundle/README.md`](bundle/README.md) has the rest: what the tag is, what a title may not
+contain, and what a difficulty rating turns into.
 
 ---
 

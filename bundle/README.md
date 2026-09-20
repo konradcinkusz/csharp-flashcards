@@ -35,15 +35,31 @@ that guarantee only as good as the last person to edit one; a digest makes it me
 consequence is worth knowing before it surprises you: **any** change to any card moves the
 tag, and moving the tag is what a consumer re-pins to.
 
-## What does not cross, and why
+## The output is Markdown
 
-The compiler carries prose, `\item` lists and `minted` listings. Three things it does not:
+ab-ovo renders a body, an answer and a title as Markdown — lexed with `marked` in GFM mode
+and rendered through a **closed allow-list** of token kinds. Three of those kinds are
+exactly what this deck needs and could not otherwise send:
+
+| The deck writes | The bundle carries | ab-ovo renders |
+|---|---|---|
+| `\begin{minted}{csharp}` | a ```` ```csharp ```` fence | `<pre><code data-lang="csharp">` |
+| `\begin{tabular}` | a GFM table | a real table |
+| `\item` | a `-` list | a list |
+| `\texttt{X}` | `` `X` `` | inline code |
+| `\textbf{X}` | `**X**` | bold |
+
+A **title** is a different shape and the difference is load-bearing: ab-ovo lexes one with
+`parseInline`, which *throws* on block structure rather than rendering the first paragraph
+and dropping the rest. So titles get no lists, tables, fences or blank lines, and the
+compiler's own `verify()` refuses a title that would become a block.
+
+## What does not cross, and why
 
 | Not carried | Why |
 |---|---|
-| The difficulty rating (`<1>`, `<2>`, `<3>`) | The schema has nowhere to put it. Recorded as a gap in ab-ovo's ADR-0037 rather than worked around here. |
+| The difficulty rating (`<1>`, `<2>`, `<3>`) | The schema has nowhere to put it, and ab-ovo counted the cost of a field nothing could fill before refusing three of its own. Left as a gap rather than worked around here. |
 | `tikzpicture` diagrams | A drawing has no sentence inside it to carry, and the schema has no figure. |
-| The layout of a `tabular` | The cells survive as prose — a row becomes a sentence, a cell a clause. The alignment does not, and the alignment is not the content. |
 
 One card is a diagram and nothing else, so it does not cross at all. It is named in
 `CANNOT_CROSS` in the compiler, with its reason, and the compiler fails if that list stops
@@ -58,7 +74,8 @@ backslash on a web page.
 
 The compiler applies ab-ovo's structural rules itself — steps contiguous from 1, a cue
 matched by the answer that follows it, section anchors that exist, every declared language
-present in every text — so a bundle that would be refused is refused here first.
+present in every text, every title inline-safe — so a bundle that would be refused is
+refused here first.
 
 It can also check the document shape against ab-ovo's schema directly:
 
@@ -67,8 +84,6 @@ pip install jsonschema
 python3 scripts/compile-bundle.py --schema path/to/ab-ove/web/app/src/lib/content/content-schema.v1.json
 ```
 
-This is not yet a CI gate, and the reason is specific rather than an omission: 196 of the
-deck's cards carry a code listing, and schema v1 has no field for one. That single property
-is the only thing the bundle fails on, and adding it is
-[ab-ove#81](https://github.com/konradcinkusz/ab-ove/issues/81)'s other half. The gate lands
-in the same change as the pin.
+The bundle validates against **schema v1 unchanged** — no field was added on the other side
+for this deck. Making that a CI gate means fetching the schema at a pin, which lands with
+[ab-ove#81](https://github.com/konradcinkusz/ab-ove/issues/81)'s pin rather than here.

@@ -31,6 +31,28 @@ So an area of N cards is N+1 steps, and the last one exists to carry the last an
 Its body is the one string in the bundle that is not in the deck; it is named as a
 constant below rather than buried in a format string, because a reader will meet it.
 
+THE OUTPUT IS MARKDOWN, AND THAT IS WHAT MAKES THIS A COMPILER AND NOT A FLATTENER
+=================================================================================
+
+ab-ovo renders a body, an answer and a title as the book's own Markdown -- lexed with
+`marked` in GFM mode and rendered through a closed allow-list of token kinds.  Three of
+those kinds are exactly what this deck needs and could not otherwise send:
+
+    ```csharp fences   the 196 cards whose answer is a code listing
+    | GFM | tables |   the eight comparison cards
+    - bullet lists     the 53 `itemize` blocks
+
+An earlier draft of this script predated that renderer and flattened all three into one
+paragraph of prose -- a table became cells joined with a middle dot, a list became a run
+of sentences, and a listing needed a new field in the schema.  None of that is necessary
+and all of it lost something.  What is emitted now is Markdown, and the deck arrives on
+the other side looking like the deck.
+
+Titles are a DIFFERENT shape and the difference is load-bearing: ab-ovo lexes a title
+with `parseInline`, which THROWS on block structure rather than rendering the first
+paragraph and dropping the rest.  So `to_markdown(..., inline=True)` emits one
+paragraph's worth of inline text and refuses anything that would become a block.
+
 WHAT IS DROPPED, AND SAID OUT LOUD
 ==================================
 
@@ -38,18 +60,18 @@ A compiler that quietly emits less than it was given is the failure ab-ovo's own
 contract names first: "the compiler REFUSES rather than degrades."  This one therefore
 knows exactly three categories and treats them differently:
 
-  carried   prose, `\\item` lists, and `minted` listings (the schema's `code`)
-  dropped   `tikzpicture`, `tabular` and the `center`/`resizebox` wrappers around them,
-            because the schema has no figure and no table.  Every card that loses one
-            is COUNTED AND NAMED in the report, never silently trimmed.
+  carried   prose, `\\item` lists, `tabular` grids and `minted` listings -- as Markdown
+  dropped   `tikzpicture`, because a drawing has no sentence inside it to carry and the
+            schema has no figure.  Every card that loses one is COUNTED AND NAMED in the
+            report, never silently trimmed.
   refused   anything else.  A LaTeX command this script does not know survives
             normalisation and fails the run with its file and line, so the next macro
             somebody adds to the deck is discovered here and not by a reader looking at
             a backslash on a web page.
 
-The deck's difficulty rating (1, 2 or 3) is dropped too, and that is a schema gap
-rather than a normalisation choice: ab-ovo has nowhere to put it.  It is recorded in
-that repository's ADR-0037 rather than worked around here.
+The deck's difficulty rating (1, 2 or 3) is dropped too, and that is a schema gap rather
+than a normalisation choice: ab-ovo has nowhere to put it, and counted the cost of
+adding a field it could not fill before refusing three of its own.
 
 USAGE
 =====
@@ -78,7 +100,7 @@ OUT = os.path.join(ROOT, 'bundle', 'csharp-flashcards.bundle.json')
 TRACK_ID = 'csharp-flashcards'
 TRACK_TITLE = 'C# Flashcards'
 LANGUAGE = 'en'          # the deck has one edition; ab-ovo's switch hides itself below two
-CODE_LANGUAGE = 'csharp'
+CODE_FENCE_LANGUAGE = 'csharp'
 
 # The body of the step that carries an area's last answer, and the only sentence in the
 # bundle that no card wrote.  See the header: the chain needs a step after the last
@@ -105,13 +127,6 @@ BADGE = re.compile(r'\\CategoryBadge(?:\[[^\]]*\])?\{((?:[^{}]|\{[^{}]*\})*)\}')
 FRAME = re.compile(r'\\begin\{frame\}(?:\[[^\]]*\])?(.*?)\\end\{frame\}', re.S)
 MINTED = re.compile(r'\\begin\{minted\}(?:\[[^\]]*\])?\{[^}]*\}\n?(.*?)\\end\{minted\}', re.S)
 
-# A PICTURE IS THE ONLY THING DROPPED WHOLE.  A `tabular` is text in a grid and its
-# cells survive as prose (see `flatten_table`); a `tikzpicture` is a drawing, and there
-# is no sentence inside it to carry.  `center` and `resizebox` are layout around one of
-# the two and are unwrapped rather than dropped.
-DROPPED_ENVIRONMENTS = ('tikzpicture',)
-UNWRAPPED_ENVIRONMENTS = ('center',)
-
 TABULAR = re.compile(
     r'\\begin\{tabular\}(?:\[[^\]]*\])?'
     # The column spec NESTS -- `{p{2.8cm}p{2.8cm}}` -- and a `[^}]*` stops at the first
@@ -119,20 +134,21 @@ TABULAR = re.compile(
     r'\{(?:[^{}]|\{[^{}]*\})*\}'
     r'(.*?)\\end\{tabular\}', re.S)
 
-# A row becomes a sentence and a cell becomes a clause.  The separator is a middle dot
-# rather than a pipe or a comma: a comma is already inside cells, and a pipe reads as a
-# shell.  Alignment is the one thing lost, and alignment is not the content.
-CELL = ' · '
+# A PICTURE IS THE ONLY THING DROPPED WHOLE. A `tabular` is text in a grid and becomes a
+# GFM table; a `tikzpicture` is a drawing, and there is no sentence inside it to carry.
+# `center` and `resizebox` are layout around one of the two and are unwrapped.
+DROPPED_ENVIRONMENTS = ('tikzpicture',)
+UNWRAPPED_ENVIRONMENTS = ('center',)
 
 # The cards that cannot cross at all, named rather than counted, with the reason each
-# one is here.  The key is the file and the question AS THIS SCRIPT PRINTS IT, trailing
-# full stop included, so the line the failure tells you to add is the line you add.
+# one is here.  The key is the file and the question AS THIS SCRIPT PRINTS IT, so the
+# line the failure tells you to add is the line you add.
 #
 # The compiler FAILS both ways -- a card on this list that now compiles is as much a
 # finding as a card that stops compiling and is not on it -- because a list of exceptions
 # nobody re-checks is how one of them becomes thirty.
 CANNOT_CROSS = {
-    ('areas/9-OAuth.tex', 'Authorization Code Flow Diagram.'):
+    ('areas/9-OAuth.tex', 'Authorization Code Flow Diagram'):
         'the answer is a tikzpicture and nothing else; ab-ovo has no figure',
 }
 
@@ -157,36 +173,50 @@ def braced(text: str, open_index: int) -> tuple[str, int]:
 
 
 def strip_environment(text: str, name: str) -> str:
-    pattern = re.compile(r'\\begin\{' + name + r'\}.*?\\end\{' + name + r'\}', re.S)
-    return pattern.sub(' ', text)
+    return re.sub(r'\\begin\{' + name + r'\}.*?\\end\{' + name + r'\}', ' ', text, flags=re.S)
 
 
 def unwrap_environment(text: str, name: str) -> str:
     return re.sub(r'\\(?:begin|end)\{' + name + r'\}', ' ', text)
 
 
-def flatten_table(match: re.Match) -> str:
-    """A LaTeX table as lines of prose.
-
-    The cells are already text; what a `tabular` adds is a grid, and the grid is exactly
-    what does not survive a schema whose body is one paragraph.  Rather than drop eight
-    comparison cards -- which is what dropping the environment did, and three of them had
-    nothing else in the answer -- each row becomes a line and each cell a clause.
-    `normalise` turns the lines into sentences afterwards, as it does for a bullet list.
-    """
-    body = match.group(1)
-    body = re.sub(r'\\multicolumn\{[^}]*\}\{[^}]*\}\{((?:[^{}]|\{[^{}]*\})*)\}', r'\1', body)
-    body = re.sub(r'(?<!\\)&', CELL, body)
-    return body
-
-
 # ──────────────────────────────────────────────────────────────────────────────────────
-# LaTeX -> text.  P11's normalisation, and the whole of it is here.
+# LaTeX -> Markdown.  P11's normalisation, and the whole of it is here.
 # ──────────────────────────────────────────────────────────────────────────────────────
 
-# Commands whose ARGUMENT is the text and whose name is presentation: \texttt{Task} is
-# the word Task. Applied repeatedly because they nest.
-UNWRAP = ('texttt', 'textbf', 'textit', 'emph', 'textsf', 'underline', 'mbox', 'text')
+# A block lifted out before the inline pass and put back after it, so that nothing done
+# to prose can reach inside a code listing. The delimiters are control characters, which
+# cannot occur in the deck.
+BLOCK = '\x00{}\x00'
+BLOCK_AT = re.compile(r'\x00(\d+)\x00')
+
+# Where a list item begins, before the final assembly turns it into `- `. A private
+# marker rather than the Markdown itself, so the escaping pass can tell a bullet this
+# script produced from a hyphen a card happened to start a line with.
+ITEM = '\x01'
+
+# WHERE A BLOCK ACTUALLY ENDS, which is NOT wherever the .tex file happens to wrap.
+#
+# A card's prose is wrapped by whoever typed it, so a raw newline in the source carries no
+# meaning at all -- and splitting on one turned a single sentence into three paragraphs
+# ("...for the root set and" / "an additional query for each..."). Measured on the first
+# Markdown compile. Only three things really end a block: `\\`, a blank line, and the edge
+# of a list. Each becomes this marker before newlines are collapsed to spaces.
+BREAK = '\x02'
+
+# Commands whose ARGUMENT is the text, mapped to what they become in Markdown.
+# `\texttt` is the valuable one: 379 of them, almost all type and member names, and
+# `codespan` is in the renderer's allow-list.
+WRAPPERS = {
+    'texttt': ('`', '`'),
+    'textbf': ('**', '**'),
+    'textit': ('*', '*'),
+    'emph': ('*', '*'),
+    'underline': ('', ''),
+    'textsf': ('', ''),
+    'mbox': ('', ''),
+    'text': ('', ''),
+}
 
 # Commands that take an argument that is NOT text to keep.
 DISCARD_WITH_ARGUMENT = ('vspace', 'hspace', 'setlength', 'label', 'hypertarget', 'phantom')
@@ -212,45 +242,57 @@ SYMBOLS = {
     r'\.': '.',
 }
 
+# ANY surviving backslash, not just a `\word`: the deck's maths is written `\(O(1)\)`
+# and a guard that only looked for letters after the backslash let every one of them
+# through to a reader. Measured on the first full compile.
+LEFTOVER_COMMAND = re.compile(r'\\[^\s]*')
 
-def normalise(latex: str, *, sentences: bool = True) -> str:
-    """One card's LaTeX to one paragraph of text.
+# A LaTeX comment: a `%` that is not `\%`, to the end of ITS OWN LINE.
+#
+# Two things about it are load-bearing and both were measured as defects. It is `[^\n]*`
+# rather than `.*` because by the time the inline pass runs on a body the newlines have
+# been collapsed to spaces, and `.*` then ate everything after the first `%` in the card --
+# one answer lost its table and kept the string "3pt". And it is applied BEFORE the symbol
+# table rather than after, because the symbol table turns `\%` into a bare `%`: the deck
+# writes "5\%" and "100\%", and stripping comments afterwards truncated that card at
+# "e.g. 5".
+COMMENT = re.compile(r'(?<!\\)%[^\n]*')
 
-    THE OUTPUT IS A PARAGRAPH, and that is a constraint from the other side rather than a
-    preference: ab-ovo renders a body as a single `<p>`, so a line break or a bullet does
-    not survive the journey. Rather than ship text whose shape depends on markup the
-    renderer collapses, this turns every `\\\\` break and every `\\item` into a sentence and
-    joins them with a space -- adding a full stop where a line has no closing punctuation,
-    because two statements run together without one read as one broken sentence.
-    """
-    text = latex
+# A line that Markdown would read as block structure if this script emitted it verbatim.
+# The deck writes `#define`, `- 1` and `1. Something` inside ordinary prose, and each of
+# those at the start of a line is a heading, a bullet or an ordered list to a lexer.
+LEADING_BLOCK = re.compile(r'^(\s*)([#>|]|[-+*](?=\s)|\d+[.)](?=\s))')
 
-    # \href{url}{label} -> label. Before UNWRAP, which would otherwise take the url.
-    text = re.sub(r'\\href\{[^}]*\}\{((?:[^{}]|\{[^{}]*\})*)\}', r'\1', text)
-    # \resizebox{a}{b}{ ... } -> the group's contents; the two measurements are layout.
+
+def inline_pass(text: str) -> str:
+    """Everything that is the same whether the result is a paragraph, a title or a cell."""
+    text = COMMENT.sub('', text)            # first, and see COMMENT for why it is first
+    # \href{url}{label} -> [label](url). Before the wrappers, which would take the url.
+    text = re.sub(r'\\href\{([^}]*)\}\{((?:[^{}]|\{[^{}]*\})*)\}', r'[\2](\1)', text)
     text = re.sub(r'\\resizebox\{[^}]*\}\{[^}]*\}\{%?', ' ', text)
-    text = re.sub(r'\\(?:multicolumn|renewcommand)\{[^}]*\}(?:\{[^}]*\})+', ' ', text)
+    text = re.sub(r'\\multicolumn\{[^}]*\}\{[^}]*\}\{((?:[^{}]|\{[^{}]*\})*)\}', r'\1', text)
+    # TWO-ARGUMENT LAYOUT COMMANDS, and they need their own rule rather than a place on
+    # DISCARD_WITH_ARGUMENT: that list removes ONE brace group, so `\setlength{\tabcolsep}{3pt}`
+    # lost the name and left the measurement, and "3pt" was published as a paragraph above a
+    # comparison table.
+    text = re.sub(r'\\(?:renewcommand|setlength|addtolength)\{[^}]*\}(?:\{[^}]*\})+', ' ', text)
 
     for name in DISCARD_WITH_ARGUMENT:
         text = re.sub(r'\\' + name + r'\*?\{[^{}]*\}', ' ', text)
 
     for _ in range(4):                       # \textbf{\texttt{x}} is two rounds
         before = text
-        for name in UNWRAP:
-            text = re.sub(r'\\' + name + r'\{((?:[^{}]|\{[^{}]*\})*)\}', r'\1', text)
+        for name, (open_with, close_with) in WRAPPERS.items():
+            text = re.sub(
+                r'\\' + name + r'\{((?:[^{}]|\{[^{}]*\})*)\}',
+                lambda m, o=open_with, c=close_with: o + m.group(1) + c if m.group(1).strip() else '',
+                text,
+            )
         if text == before:
             break
 
-    # Lists become sentences. `\item` is the separator; the environment itself is gone by
-    # the time this runs for the dropped ones, and itemize/enumerate are unwrapped here.
-    text = re.sub(r'\\(?:begin|end)\{(?:itemize|enumerate|description)\}', '\n', text)
-    text = re.sub(r'\\item(?:\[[^\]]*\])?', '\n', text)
-    text = text.replace('\\\\', '\n')
-
     for symbol, replacement in SYMBOLS.items():
         text = text.replace(symbol, replacement)
-    # After the escapes, so `\#` is not mistaken for a comment.
-    text = re.sub(r'(?<!\\)%.*', '', text)
 
     for name in DISCARD_BARE:
         text = re.sub(r'\\' + name + r'\b', ' ', text)
@@ -261,122 +303,12 @@ def normalise(latex: str, *, sentences: bool = True) -> str:
     text = re.sub(r'\$([^$]*)\$', r'\1', text)
     text = re.sub(r'\\[()\[\]]', '', text)
     text = text.replace('---', '—').replace('--', '–')
-    text = re.sub(r'[{}]', ' ', text)
-
-    lines = [re.sub(r'\s+', ' ', line).strip(' &|') for line in text.split('\n')]
-    lines = [line.strip() for line in lines if line.strip()]
-
-    # A BODY IS SENTENCES AND A TITLE IS NOT. Without the distinction a heading reads
-    # "Databases." and a unit reads "C# Language: Beginner.", which is a full stop this
-    # deck never wrote and no reader can remove.
-    if not sentences:
-        return ' '.join(lines).strip()
-
-    return ' '.join(
-        line if line[-1] in '.!?:;,' else line + '.'
-        for line in lines
-    ).strip()
+    return text
 
 
-# ANY surviving backslash, not just a `\word`: the deck's maths is written `\(O(1)\)`
-# and a guard that only looked for letters after the backslash let every one of them
-# through to a reader. Measured on the first full compile.
-LEFTOVER_COMMAND = re.compile(r'\\[^\s]*')
-
-
-# ──────────────────────────────────────────────────────────────────────────────────────
-# Cards
-# ──────────────────────────────────────────────────────────────────────────────────────
-
-class Card:
-    __slots__ = ('question', 'answer', 'code', 'category', 'line', 'dropped')
-
-    def __init__(self, question, answer, code, category, line, dropped):
-        self.question = question
-        self.answer = answer
-        self.code = code
-        self.category = category
-        self.line = line
-        self.dropped = dropped
-
-
-def read_cards(path: str, source: str, problems: list[str],
-               omitted: list[tuple[str, str, str]]) -> list[Card]:
-    cards: list[Card] = []
-
-    for match in QUESTION.finditer(source):
-        line = lineno(source, match.start())
-        where = f'{path}:{line}'
-        question_latex, after = braced(source, match.end() - 1)
-
-        badge = BADGE.search(match.group('badge') or '')
-        category = normalise(badge.group(1), sentences=False) if badge else ''
-
-        frame = FRAME.search(source, after)
-        if frame is None:
-            problems.append(f'{where}: question slide with no answer frame after it')
-            continue
-
-        body = frame.group(1)
-
-        # The title is the question again; the deck repeats it so the answer slide can be
-        # read on its own. Dropping it here is not a loss -- the question is already the
-        # step's body, and keeping it would print every question twice.
-        title = body.find('\\frametitle')
-        if title != -1:
-            open_brace = body.index('{', title)
-            _, end = braced(body, open_brace)
-            body = body[:title] + body[end:]
-
-        code = '\n\n'.join(listing(block.group(1)) for block in MINTED.finditer(body))
-        body = MINTED.sub(' ', body)
-
-        dropped = [name for name in DROPPED_ENVIRONMENTS if f'\\begin{{{name}}}' in body]
-        for name in DROPPED_ENVIRONMENTS:
-            body = strip_environment(body, name)
-        body = TABULAR.sub(flatten_table, body)
-        for name in UNWRAPPED_ENVIRONMENTS:
-            body = unwrap_environment(body, name)
-
-        question = normalise(question_latex)
-        answer = normalise(body)
-
-        excused = CANNOT_CROSS.get((path, question))
-        empty = not answer and not code
-
-        # BOTH DIRECTIONS. A card that stops compiling and is not on the list is a defect
-        # in this script; a card on the list that has started compiling is a stale excuse,
-        # and the entry has to go in the same commit as whatever fixed it.
-        if excused and not empty:
-            problems.append(
-                f'{where}: CANNOT_CROSS excuses this card ("{excused}") and it now '
-                f'compiles. Remove the entry.'
-            )
-        if empty and not excused:
-            problems.append(
-                f'{where}: the answer normalises to nothing and carries no code. Either '
-                f'this script dropped something it should have kept, or the card is a '
-                f'picture and nothing else -- in which case add, with the reason:\n'
-                f"        ('{path}', {question!r}): '...'," 
-            )
-        if excused:
-            omitted.append((where, question, excused))
-            continue
-
-        for label, text in (('question', question), ('answer', answer)):
-            leftover = LEFTOVER_COMMAND.search(text)
-            if leftover:
-                problems.append(
-                    f'{where}: the {label} still holds "{leftover.group(0)}" after '
-                    f'normalisation. Teach scripts/compile-bundle.py what it means '
-                    f'rather than letting a reader meet a backslash.'
-                )
-        if not question:
-            problems.append(f'{where}: the question normalises to nothing')
-
-        cards.append(Card(question, answer, code, category, line, dropped))
-
-    return cards
+def tidy(text: str) -> str:
+    """One line of inline Markdown: braces gone, whitespace collapsed."""
+    return re.sub(r'\s+', ' ', re.sub(r'[{}]', ' ', text)).strip()
 
 
 def listing(source: str) -> str:
@@ -399,6 +331,247 @@ def listing(source: str) -> str:
     return '\n'.join(line[indent:] for line in lines)
 
 
+def gfm_table(body: str) -> str:
+    """A LaTeX `tabular` as a GFM table.
+
+    The deck's comparison cards are their tables -- three of them have no prose at all --
+    and a grid is the one thing a paragraph cannot carry. `table` is in ab-ovo's renderer
+    allow-list, so the grid survives as a grid.
+
+    THE FIRST ROW IS TAKEN AS THE HEADER, which is what every one of these tables means
+    by its first row (`\\textbf{SQL Server} & \\textbf{Oracle DB}`), and GFM has no table
+    without one. A `|` inside a cell is escaped, because it would otherwise open a column
+    the row does not have.
+    """
+    rows: list[list[str]] = []
+    for raw in re.split(r'\\\\', body):
+        raw = re.sub(r'\\hline', ' ', raw)
+        if not raw.strip():
+            continue
+        cells = [tidy(inline_pass(cell)).replace('|', r'\|') for cell in re.split(r'(?<!\\)&', raw)]
+        if any(cells):
+            rows.append(cells)
+    if not rows:
+        return ''
+
+    width = max(len(row) for row in rows)
+    rows = [row + [''] * (width - len(row)) for row in rows]
+    header, *rest = rows
+    lines = ['| ' + ' | '.join(header) + ' |', '|' + ' --- |' * width]
+    lines += ['| ' + ' | '.join(row) + ' |' for row in rest]
+    return '\n'.join(lines)
+
+
+def to_markdown(latex: str, *, inline: bool = False) -> tuple[str, list[str]]:
+    """One card's LaTeX as Markdown, plus the names of any environments dropped.
+
+    `inline=True` is for a TITLE, and it is not a cosmetic difference: ab-ovo lexes a
+    title with `parseInline`, which throws on block structure rather than rendering the
+    first paragraph and dropping the rest. So a title gets no lists, no tables, no fences
+    and no blank lines -- and a dropped block in a title would be a defect rather than a
+    loss, which is why lifting is skipped there entirely.
+    """
+    blocks: list[str] = []
+    dropped: list[str] = []
+
+    def lift(markdown: str) -> str:
+        if not markdown:
+            return ' '
+        blocks.append(markdown)
+        return BLOCK.format(len(blocks) - 1)
+
+    text = latex
+
+    if not inline:
+        for name in DROPPED_ENVIRONMENTS:
+            if f'\\begin{{{name}}}' in text:
+                dropped.append(name)
+                text = strip_environment(text, name)
+        for name in UNWRAPPED_ENVIRONMENTS:
+            text = unwrap_environment(text, name)
+
+        text = MINTED.sub(
+            lambda m: lift(f'```{CODE_FENCE_LANGUAGE}\n{listing(m.group(1))}\n```'
+                           if listing(m.group(1)) else ''),
+            text,
+        )
+        text = TABULAR.sub(lambda m: lift(gfm_table(m.group(1))), text)
+
+        # Comments go now: after the listings and tables are lifted, because `%` is the
+        # modulo operator in C# and a `%` inside a `minted` block is code; and before the
+        # newlines are collapsed below, because a comment ends at the end of its line and
+        # after the collapse there are no lines left for it to end at.
+        text = COMMENT.sub('', text)
+
+        # A list item begins at `\item` and ends at the next one or at the environment's
+        # end. The markers are placed before the inline pass so that a `\item` inside a
+        # `\textbf{}` -- there is none, but nothing stops one -- could not survive it.
+        text = re.sub(r'\\(?:begin|end)\{(?:itemize|enumerate|description)\}', BREAK, text)
+        text = re.sub(r'\\item(?:\[[^\]]*\])?', BREAK + ITEM, text)
+        text = re.sub(r'\\\\', BREAK, text)
+        text = re.sub(r'\n[ \t]*\n', BREAK, text)      # a blank line is the author's own break
+        text = text.replace('\n', ' ')                 # and every other newline is wrapping
+
+    text = inline_pass(text)
+
+    if inline:
+        return tidy(text), dropped
+
+    # ── assembly ──────────────────────────────────────────────────────────────────────
+    # Each non-empty line is a paragraph or a bullet; runs of bullets become one list.
+    out: list[str] = []
+    bullets: list[str] = []
+
+    def flush() -> None:
+        if bullets:
+            out.append('\n'.join(f'- {item}' for item in bullets))
+            bullets.clear()
+
+    for raw in text.split(BREAK):
+        is_item = raw.lstrip().startswith(ITEM)
+        line = tidy(raw.replace(ITEM, ' '))
+        if not line:
+            flush()
+            continue
+
+        held = BLOCK_AT.fullmatch(line)
+        if held:
+            flush()
+            out.append(blocks[int(held.group(1))])
+            continue
+
+        # A lifted block that shares its line with prose: the prose becomes a paragraph
+        # and the block follows it, because a fenced listing cannot sit inside one.
+        parts = BLOCK_AT.split(line)
+        if len(parts) > 1:
+            flush()
+            for index, part in enumerate(parts):
+                if index % 2:
+                    out.append(blocks[int(part)])
+                elif part.strip():
+                    out.append(escape_leading(part.strip()))
+            continue
+
+        if is_item:
+            bullets.append(escape_leading(line))
+        else:
+            flush()
+            out.append(escape_leading(line))
+
+    flush()
+    return '\n\n'.join(block for block in out if block.strip()), dropped
+
+
+def escape_leading(line: str) -> str:
+    """Stop a line of prose from being read as block structure.
+
+    `#define`, `- 1` and `1. Something` all open a card's sentence somewhere in this deck,
+    and each of them at the start of a line is a heading, a bullet or an ordered list to a
+    GFM lexer. Escaping is done HERE, at assembly, rather than in the inline pass: by this
+    point every `**`, backtick and `- ` bullet in the string was put there by this script,
+    so what is left at the start of a line is the card's own text.
+    """
+    return LEADING_BLOCK.sub(lambda m: m.group(1) + '\\' + m.group(2), line)
+
+
+# ──────────────────────────────────────────────────────────────────────────────────────
+# Cards
+# ──────────────────────────────────────────────────────────────────────────────────────
+
+class Card:
+    __slots__ = ('question', 'answer', 'category', 'line', 'dropped', 'fenced')
+
+    def __init__(self, question, answer, category, line, dropped, fenced):
+        self.question = question
+        self.answer = answer
+        self.category = category
+        self.line = line
+        self.dropped = dropped
+        self.fenced = fenced
+
+
+def read_cards(path: str, source: str, problems: list[str],
+               omitted: list[tuple[str, str, str]]) -> list[Card]:
+    cards: list[Card] = []
+
+    for match in QUESTION.finditer(source):
+        line = lineno(source, match.start())
+        where = f'{path}:{line}'
+        question_latex, after = braced(source, match.end() - 1)
+
+        badge = BADGE.search(match.group('badge') or '')
+        category = to_markdown(badge.group(1), inline=True)[0] if badge else ''
+
+        frame = FRAME.search(source, after)
+        if frame is None:
+            problems.append(f'{where}: question slide with no answer frame after it')
+            continue
+
+        body = frame.group(1)
+
+        # The title is the question again; the deck repeats it so the answer slide can be
+        # read on its own. Dropping it here is not a loss -- the question is already the
+        # step's body, and keeping it would print every question twice.
+        title = body.find('\\frametitle')
+        if title != -1:
+            open_brace = body.index('{', title)
+            _, end = braced(body, open_brace)
+            body = body[:title] + body[end:]
+
+        question = to_markdown(question_latex, inline=True)[0]
+        answer, dropped = to_markdown(body)
+
+        excused = CANNOT_CROSS.get((path, question))
+        empty = not answer
+
+        # BOTH DIRECTIONS. A card that stops compiling and is not on the list is a defect
+        # in this script; a card on the list that has started compiling is a stale excuse,
+        # and the entry has to go in the same commit as whatever fixed it.
+        if excused and not empty:
+            problems.append(
+                f'{where}: CANNOT_CROSS excuses this card ("{excused}") and it now '
+                f'compiles. Remove the entry.'
+            )
+        if empty and not excused:
+            problems.append(
+                f'{where}: the answer normalises to nothing. Either this script dropped '
+                f'something it should have kept, or the card is a picture and nothing '
+                f'else -- in which case add, with the reason:\n'
+                f"        ('{path}', {question!r}): '...',"
+            )
+        if excused:
+            omitted.append((where, question, excused))
+            continue
+
+        for label, text in (('question', question), ('answer', answer)):
+            leftover = LEFTOVER_COMMAND.search(strip_fences(text))
+            if leftover:
+                problems.append(
+                    f'{where}: the {label} still holds "{leftover.group(0)}" after '
+                    f'normalisation. Teach scripts/compile-bundle.py what it means '
+                    f'rather than letting a reader meet a backslash.'
+                )
+        if not question:
+            problems.append(f'{where}: the question normalises to nothing')
+
+        cards.append(Card(question, answer, category, line, dropped, '```' in answer))
+
+    return cards
+
+
+FENCE = re.compile(r'^```.*?^```', re.S | re.M)
+
+
+def strip_fences(markdown: str) -> str:
+    """The text outside every fenced block.
+
+    The leftover-backslash guard must not read a listing: `\\n` in a C# string and `\\d`
+    in a regular expression are the code doing its job, and a guard that flagged them
+    would be switched off within a week.
+    """
+    return FENCE.sub(' ', markdown)
+
+
 def slug(text: str) -> str:
     out = re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-')
     return out or 'cards'
@@ -411,22 +584,16 @@ def unit_for(number: int, title: str, cards: list[Card]) -> dict:
         step: dict = {'n': index + 1, 'kind': 'frame'}
         if index > 0:
             step['answer'] = {LANGUAGE: cards[index - 1].answer}
-            if cards[index - 1].code:
-                step['code'] = {'language': CODE_LANGUAGE, 'source': cards[index - 1].code}
         step['body'] = {LANGUAGE: card.question}
         step['cue'] = True
         steps.append(step)
 
-    last = cards[-1]
-    closing: dict = {
+    steps.append({
         'n': len(cards) + 1,
         'kind': 'prose',
-        'answer': {LANGUAGE: last.answer},
+        'answer': {LANGUAGE: cards[-1].answer},
         'body': {LANGUAGE: CLOSING_BODY},
-    }
-    if last.code:
-        closing['code'] = {'language': CODE_LANGUAGE, 'source': last.code}
-    steps.append(closing)
+    })
 
     # A heading per RUN of one badge, not per distinct badge: the deck returns to a
     # category later in an area, and a section's span in ab-ovo ends where the next one
@@ -452,11 +619,6 @@ def unit_for(number: int, title: str, cards: list[Card]) -> dict:
         for position, section in enumerate(sections):
             for n in range(boundaries[position], boundaries[position + 1]):
                 steps[n - 1]['section'] = section['id']
-        for step in steps:
-            step.setdefault('section', None)
-        for step in steps:
-            if step['section'] is None:
-                del step['section']
 
     unit: dict = {'id': f'A{number:02d}', 'titles': {LANGUAGE: title}}
     if sections:
@@ -467,7 +629,7 @@ def unit_for(number: int, title: str, cards: list[Card]) -> dict:
 
 def order_step(step: dict) -> dict:
     """Schema order, so a diff of two compiles is a diff of content."""
-    keys = ('n', 'kind', 'section', 'titles', 'answer', 'body', 'code', 'cue', 'check')
+    keys = ('n', 'kind', 'section', 'titles', 'answer', 'body', 'cue', 'check')
     return {key: step[key] for key in keys if key in step}
 
 
@@ -521,10 +683,18 @@ def verify(bundle: dict) -> list[str]:
             if step.get('cue') is not True and answered:
                 problems.append(f'{at}: the next step opens with an answer and nothing announces it')
 
-    for text in (bundle['track']['titles'],):
-        missing = [code for code in languages if code not in text]
-        if missing:
-            problems.append(f'track titles are missing {missing}')
+    missing = [code for code in languages if code not in bundle['track']['titles']]
+    if missing:
+        problems.append(f'track titles are missing {missing}')
+
+    # A TITLE MUST LEX AS INLINE TEXT. ab-ovo's `parseInline` throws on block structure
+    # rather than rendering part of a title, so a heading or a bullet that reached one
+    # would be a 500 on the index rather than a tidy-looking mistake.
+    for unit in bundle['units']:
+        for title in [unit['titles']] + [s['titles'] for s in unit.get('sections', [])]:
+            for written in title.values():
+                if '\n' in written or LEADING_BLOCK.match(written) or '```' in written:
+                    problems.append(f'unit {unit["id"]}: the title {written!r} is not inline text')
 
     return problems
 
@@ -555,7 +725,7 @@ def compile_bundle() -> tuple[dict, list[Card], list[tuple[str, str, str]], list
             problems.append(f'{path}: no cards')
             continue
         every_card.extend(cards)
-        units.append(unit_for(number, normalise(title_latex, sentences=False), cards))
+        units.append(unit_for(number, to_markdown(title_latex, inline=True)[0], cards))
 
     bundle = {
         'schemaVersion': 1,
@@ -589,12 +759,16 @@ def render(bundle: dict) -> str:
 
 def report(bundle: dict, cards: list[Card],
            omitted: list[tuple[str, str, str]]) -> None:
-    with_code = sum(1 for card in cards if card.code)
+    fenced = sum(1 for card in cards if card.fenced)
+    tables = sum(1 for card in cards if '| --- |' in card.answer)
+    lists = sum(1 for card in cards if re.search(r'^- ', card.answer, re.M))
     lost = [card for card in cards if card.dropped]
+
     print(f'track      {bundle["track"]["id"]} @ {bundle["tag"]}')
     print(f'units      {len(bundle["units"])}')
-    print(f'cards      {len(cards)}  ({with_code} carry a code listing)')
+    print(f'cards      {len(cards)}')
     print(f'steps      {sum(len(unit["steps"]) for unit in bundle["units"])}')
+    print(f'markdown   {fenced} with a code fence, {tables} with a table, {lists} with a list')
 
     if lost:
         print(f'\n{len(lost)} card(s) lose a diagram the schema cannot hold:')
@@ -611,9 +785,9 @@ def report(bundle: dict, cards: list[Card],
         with open(summary, 'a', encoding='utf-8') as handle:
             handle.write(
                 f'\n## Bundle\n\n`{bundle["track"]["id"]}` at **{bundle["tag"]}** — '
-                f'{len(cards)} cards in {len(bundle["units"])} units, '
-                f'{with_code} with code, {len(lost)} losing a diagram, '
-                f'{len(omitted)} not crossing at all.\n'
+                f'{len(cards)} cards in {len(bundle["units"])} units; '
+                f'{fenced} carry a code fence, {tables} a table, {lists} a list. '
+                f'{len(lost)} lose a diagram, {len(omitted)} do not cross.\n'
             )
 
 
