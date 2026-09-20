@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: xu-cheng/latex-action@v4
         with:
           root_file: main.tex
@@ -52,7 +52,7 @@ jobs:
           latexmk_shell_escape: true
       - name: Rename PDF
         run: mv main.pdf CSharp_FlashCards.pdf
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: CSharp_FlashCards
           path: CSharp_FlashCards.pdf
@@ -70,10 +70,10 @@ jobs:
     permissions:
       contents: write   # create a release and upload its asset
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: CSharp_FlashCards
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: CSharp_FlashCards.pdf
           fail_on_unmatched_files: true
